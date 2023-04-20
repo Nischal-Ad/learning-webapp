@@ -10,7 +10,7 @@ interface helmetProps {
 const index: React.FC<helmetProps> = ({ title, name, content }) => {
 	return (
 		<Helmet>
-			<title>{title} - App</title>
+			<title>{title} - E-Learning</title>
 			<meta name={name} content={content} />
 		</Helmet>
 	);
