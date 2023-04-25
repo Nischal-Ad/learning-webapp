@@ -1,17 +1,16 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 
-interface helmetProps {
+interface THelmet {
 	title: string;
-	name?: string;
 	content?: string;
 }
 
-const index: React.FC<helmetProps> = ({ title, name, content }) => {
+const index: React.FC<THelmet> = ({ title, content }) => {
 	return (
 		<Helmet>
 			<title>{title} - E-Learning</title>
-			<meta name={name} content={content} />
+			<meta name={title} content={content} />
 		</Helmet>
 	);
 };
