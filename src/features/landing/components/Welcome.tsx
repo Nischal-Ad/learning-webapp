@@ -1,4 +1,3 @@
-import React from 'react';
 import Box from '@mui/material/Box';
 import SectionWrapper from '@Components/SectionWrapper';
 import { Image, WaveWrapper } from '../styles';

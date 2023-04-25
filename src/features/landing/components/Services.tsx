@@ -1,8 +1,6 @@
-import React from 'react';
 import SectionWrapper from '@Components/SectionWrapper';
 import Heading from '@Components/Heading/LandingHeading';
 import Grid from '@mui/material/Grid';
-import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
@@ -10,7 +8,6 @@ import { CardActionArea } from '@mui/material';
 import File from '@Svg/file.svg';
 import Calender from '@Svg/calendar.svg';
 import User from '@Svg/user.svg';
-import Box from '@mui/material/Box';
 import { CardImageWrapper, CardWrapper } from '../styles';
 
 const Cards = ({ heading, img, desc }: ICards) => {
