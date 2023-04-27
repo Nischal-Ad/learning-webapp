@@ -13,19 +13,19 @@ const Welcome = () => {
 			<SectionWrapper id='welcome'>
 				<Box
 					display='flex'
-					justifyContent='space-around'
 					alignItems='center'
-					py={4}
+					pb={4}
+					pt={{ lg: 4, xs: 12 }}
 					flexDirection={{ xs: 'column', lg: 'row' }}
 				>
-					<Box paddingRight={3}>
+					<Box pr={{ lg: 4, xs: 0 }}>
 						<Typography
 							fontWeight={700}
 							fontSize={'3rem'}
-							component='h1'
+							variant='h1'
 							color='white'
 							sx={{
-								lineHeight: '81px',
+								lineHeight: '70px',
 								span: {
 									color: '#f48c06',
 								},
@@ -36,8 +36,8 @@ const Welcome = () => {
 						<Typography
 							mt={5}
 							paragraph
-							fontSize={20}
 							letterSpacing={0.5}
+							textAlign={'justify'}
 							color={'white'}
 						>
 							E-learning is an interesting platform that will teach you in more
