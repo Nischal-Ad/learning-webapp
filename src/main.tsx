@@ -3,10 +3,20 @@ import App from './App';
 import { Provider } from 'react-redux';
 import store from '@Store';
 import { GlobalStyles } from '@Styles/GlobalStyle';
+import { SnackbarProvider } from 'notistack';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 	<Provider store={store}>
 		<GlobalStyles />
-		<App />
+		<SnackbarProvider
+			maxSnack={1}
+			autoHideDuration={1000}
+			anchorOrigin={{
+				vertical: 'top',
+				horizontal: 'right',
+			}}
+		>
+			<App />
+		</SnackbarProvider>
 	</Provider>
 );

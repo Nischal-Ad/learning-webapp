@@ -2,7 +2,7 @@ import authSlice from '@Slices/auth.slice';
 import { useAppDispatch } from '@Store';
 import { onLogin } from '../data/auth.service';
 import { authLogin } from '../data/auth.model';
-import Toast from '@Utils/Toast';
+import { notifyError, notifySuccess } from '@Utils/alerts';
 
 export const useAuth = () => {
 	const dispatch = useAppDispatch();
@@ -20,8 +20,10 @@ export const useAuth = () => {
 			//main code
 			// const res = await onLogin(payload);
 			// dispatch(authSlice.actions.setData(res));
+			// notifySuccess('you are now logged in')
 		} catch (error: any) {
 			dispatch(authSlice.actions.setError(error.message));
+			notifyError(error.message);
 		}
 	};
 
