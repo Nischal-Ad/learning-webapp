@@ -1,0 +1,15 @@
+:root {
+	/* color  */
+	--black: #191919;
+	--white: #f3f3f3;
+	--dark: #696984;
+
+	--height: 100dvh;
+
+	/* font family */
+	--ff-poppins: 'Poppins';
+	--ff-quicksand: 'quicksand';
+	--ff-bruno: 'Bruno Ace SC', cursive;
+
+	/* gradients */
+}

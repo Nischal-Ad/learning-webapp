@@ -4,7 +4,6 @@ import styled from 'styled-components';
 const LoadingWrapper = styled.div`
 	display: grid;
 	place-items: center;
-	height: 100dvh;
 `;
 
 const index = () => {
