@@ -12,7 +12,6 @@ import Loading from '@Components/Loader';
 const Navbar = lazy(() => import('@Shared/navbar/landing'));
 const Footer = lazy(() => import('@Shared/footer/landing'));
 const Landing = lazy(() => import('@Features/landing'));
-const Auth = lazy(() => import('@Features/user/Auth'));
 const Dashboard = lazy(() => import('@Features/user/Dashboard'));
 
 const auth = localStorage.getItem('auth') || '';

@@ -1,13 +1,6 @@
-import {
-	Box,
-	Button,
-	CardMedia,
-	Divider,
-	TextField,
-	Typography,
-} from '@mui/material';
+import { Box, Button, CardMedia, Divider, Typography } from '@mui/material';
 import SectionWrapper from '@Components/SectionWrapper';
-import logo from '@Svg/logo.svg';
+import logo from '@Svg/logo_text.svg';
 import { FooterInput } from '../style';
 
 const FooterLanding = () => {
@@ -28,12 +21,10 @@ const FooterLanding = () => {
 						image={logo}
 						alt=''
 						sx={{
-							width: '4rem',
+							width: '10rem',
 						}}
 					/>
-					<Typography variant='h6' component={'span'}>
-						ELMS
-					</Typography>
+
 					<Divider
 						orientation='vertical'
 						variant='middle'

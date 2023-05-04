@@ -9,13 +9,13 @@ import IconButton from '@mui/material/IconButton';
 
 const Welcome = () => {
 	return (
-		<Box bgcolor='#49BBBD' position='relative'>
+		<Box bgcolor='#49BBBD' component={'main'} position='relative'>
 			<SectionWrapper id='welcome'>
 				<Box
 					display='flex'
 					alignItems='center'
 					pb={4}
-					pt={{ lg: 4, xs: 12 }}
+					pt={{ lg: 4, xs: 9 }}
 					flexDirection={{ xs: 'column', lg: 'row' }}
 				>
 					<Box pr={{ lg: 4, xs: 0 }}>

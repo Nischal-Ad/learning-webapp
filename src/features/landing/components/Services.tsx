@@ -44,7 +44,7 @@ const Cards = ({ heading, img, desc }: ICards) => {
 
 const Services = () => {
 	return (
-		<SectionWrapper id='Services'>
+		<SectionWrapper id='services'>
 			<Heading
 				heading='All-In-One'
 				title='Cloud Softwore'
