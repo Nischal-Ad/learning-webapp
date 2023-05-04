@@ -6,15 +6,11 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { memo } from 'react';
+import { IProps } from './data/auth.model';
 
-interface IAuth {
-	open: boolean;
-	test: (val: boolean) => void;
-}
-
-const index = ({ open, test }: IAuth) => {
+const index = ({ open, showAuth }: IProps) => {
 	const handleClose = () => {
-		test(false);
+		showAuth(false);
 	};
 
 	return (

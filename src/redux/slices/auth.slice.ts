@@ -1,20 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { CaseReducer, PayloadAction } from '@reduxjs/toolkit';
-import { authLogin, authState } from '@Features/user/Auth/data/auth.model';
+import { ILogin, ILoginState } from '@Features/user/Auth/data/auth.model';
 
-const initialState: authState = {
+const initialState: ILoginState = {
 	status: 'idle',
-	data: {} as authLogin,
+	data: {} as ILogin,
 	error: '',
 };
 
-const setLoading: CaseReducer<authState> = (state) => ({
+const setLoading: CaseReducer<ILoginState> = (state) => ({
 	...state,
 	status: 'loading',
 	error: '',
 });
 
-const setData: CaseReducer<authState, PayloadAction<authLogin>> = (
+const setData: CaseReducer<ILoginState, PayloadAction<ILogin>> = (
 	state,
 	action
 ) => ({
@@ -23,7 +23,7 @@ const setData: CaseReducer<authState, PayloadAction<authLogin>> = (
 	error: '',
 });
 
-const setError: CaseReducer<authState, PayloadAction<any>> = (
+const setError: CaseReducer<ILoginState, PayloadAction<any>> = (
 	state,
 	action
 ) => ({

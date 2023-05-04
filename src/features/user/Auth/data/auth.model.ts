@@ -1,11 +1,16 @@
-export interface authLogin {
+export interface IProps {
+	open: boolean;
+	showAuth: (val: boolean) => void;
+}
+
+export interface ILogin {
 	email: string;
 	password: string;
 	isAuth: boolean;
 }
 
-export interface authState {
+export interface ILoginState {
 	status: 'idle' | 'loading' | 'success' | 'error';
-	data: authLogin;
+	data: ILogin;
 	error: any;
 }

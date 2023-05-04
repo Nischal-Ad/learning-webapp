@@ -1,12 +1,12 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 
-interface THelmet {
+interface IHelmet {
 	title: string;
 	content?: string;
 }
 
-const index: React.FC<THelmet> = ({ title, content }) => {
+const index: React.FC<IHelmet> = ({ title, content }) => {
 	return (
 		<Helmet>
 			<title>{title} - E-Learning</title>

@@ -10,7 +10,7 @@ interface INavLinks {
 const Navlinks = ({ NavDrop }: INavLinks) => {
 	const [open, setOpen] = useState(false);
 
-	const test = (val: boolean) => {
+	const showAuth = (val: boolean) => {
 		setOpen(val);
 	};
 
@@ -52,7 +52,7 @@ const Navlinks = ({ NavDrop }: INavLinks) => {
 				>
 					Join Us
 				</Button>
-				<Auth open={open} test={test} />
+				<Auth open={open} showAuth={showAuth} />
 			</MenuItem>
 		</MenuList>
 	);

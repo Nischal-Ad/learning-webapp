@@ -1,13 +1,13 @@
 import authSlice from '@Slices/auth.slice';
 import { useAppDispatch } from '@Store';
 import { onLogin } from '../data/auth.service';
-import { authLogin } from '../data/auth.model';
+import { ILogin } from '../data/auth.model';
 import { notifyError, notifySuccess } from '@Utils/alerts';
 
 export const useAuth = () => {
 	const dispatch = useAppDispatch();
 
-	const onLoginUser = async (payload: authLogin) => {
+	const onLoginUser = async (payload: ILogin) => {
 		try {
 			dispatch(authSlice.actions.setLoading());
 
