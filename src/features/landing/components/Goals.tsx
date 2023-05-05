@@ -8,7 +8,7 @@ import CopyIcon from '@Svg/usercopy.svg';
 
 const Goals = () => {
 	return (
-		<SectionWrapper id='Goals'>
+		<SectionWrapper id='goals'>
 			<Heading
 				heading='Our'
 				title='Goals'

@@ -8,6 +8,10 @@ const globalCss = css`
 		min-height: var(--height);
 	}
 
+	html {
+		scroll-behavior: smooth;
+	}
+
 	* {
 		font-family: var(--ff-poppins) !important;
 	}

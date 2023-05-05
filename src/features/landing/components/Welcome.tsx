@@ -6,16 +6,24 @@ import { Button, Stack, Typography } from '@mui/material';
 import heading_img from '@Img/heading-img.png';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import IconButton from '@mui/material/IconButton';
+import { useState } from 'react';
+import Auth from '@Features/user/Auth';
 
 const Welcome = () => {
+	const [open, setOpen] = useState(false);
+
+	const showAuth = (val: boolean) => {
+		setOpen(val);
+	};
+
 	return (
-		<Box bgcolor='#49BBBD' position='relative'>
+		<Box bgcolor='#49BBBD' component={'main'} position='relative'>
 			<SectionWrapper id='welcome'>
 				<Box
 					display='flex'
 					alignItems='center'
 					pb={4}
-					pt={{ lg: 4, xs: 12 }}
+					pt={{ lg: 4, xs: 9 }}
 					flexDirection={{ xs: 'column', lg: 'row' }}
 				>
 					<Box pr={{ lg: 4, xs: 0 }}>
@@ -52,6 +60,7 @@ const Welcome = () => {
 						>
 							<Button
 								variant='contained'
+								onClick={() => setOpen(true)}
 								size='large'
 								sx={{
 									bgcolor: '#80CFD1',
@@ -97,6 +106,7 @@ const Welcome = () => {
 				<WaveWrapper>
 					<img src={wave} alt='' />
 				</WaveWrapper>
+				<Auth open={open} showAuth={showAuth} />
 			</SectionWrapper>
 		</Box>
 	);

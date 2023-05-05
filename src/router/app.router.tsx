@@ -4,12 +4,14 @@ import {
 	createBrowserRouter,
 	createRoutesFromElements,
 } from 'react-router-dom';
-import { lazy, Suspense } from 'react';
+import { Suspense, lazy } from 'react';
 import ProtectedRoute from './ProtectedRoute';
+import Loading from '@Components/Loader';
 
 // Lazy load components
+const Navbar = lazy(() => import('@Shared/navbar/landing'));
+const Footer = lazy(() => import('@Shared/footer/landing'));
 const Landing = lazy(() => import('@Features/landing'));
-const Auth = lazy(() => import('@Features/user/Auth'));
 const Dashboard = lazy(() => import('@Features/user/Dashboard'));
 
 const auth = localStorage.getItem('auth') || '';
@@ -19,13 +21,32 @@ const router = createBrowserRouter(
 	createRoutesFromElements(
 		<>
 			{/* test routes */}
-			<Route path='/landing' element={<Landing />} />
+			<Route
+				path='/landing'
+				element={
+					<Suspense fallback={<Loading />}>
+						<Navbar />
+						<Landing />
+						<Footer />
+					</Suspense>
+				}
+			/>
 			{/* end of test routes */}
 
 			{/* normal routes */}
 			<Route
 				path='/'
-				element={!isAuth ? <Landing /> : <Navigate to={'/dashboard'} replace />}
+				element={
+					!isAuth ? (
+						<Suspense fallback={<Loading />}>
+							<Navbar />
+							<Landing />
+							<Footer />
+						</Suspense>
+					) : (
+						<Navigate to={'/dashboard'} replace />
+					)
+				}
 			/>
 			{/* end of normal routes */}
 

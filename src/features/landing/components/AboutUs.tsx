@@ -9,7 +9,7 @@ import Stack from '@mui/material/Stack';
 
 const AboutUs = () => {
 	return (
-		<SectionWrapper id='About-Us'>
+		<SectionWrapper id='about us'>
 			<Heading
 				heading='What Is'
 				title='E-Learning'

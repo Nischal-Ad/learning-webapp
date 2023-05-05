@@ -22,6 +22,7 @@
 			"@Svg/*": ["src/assets/svg/*"],
 			"@Components/*": ["src/common/components/*"],
 			"@Utils/*": ["src/common/utils/*"],
+			"@Shared/*": ["src/common/shared/*"],
 			"@Features/*": ["src/features/*"],
 			"@Slices/*": ["src/redux/slices/*"],
 			"@Store": ["src/redux/store.ts"]

@@ -6,7 +6,7 @@ import { SuccessNumber } from '../styles';
 
 const Success = () => {
 	return (
-		<SectionWrapper id='our Success'>
+		<SectionWrapper id='our success'>
 			<Heading
 				margin={false}
 				heading='Our'
