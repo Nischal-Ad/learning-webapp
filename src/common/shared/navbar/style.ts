@@ -24,15 +24,14 @@ export const NavMenu = styled(Toolbar)`
 `;
 
 export const NavbarSmallWrapper = styled(Box)`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
 	width: 100%;
 	height: 100dvh;
 
 	a {
 		color: #5b5b5b;
 		text-decoration: none;
+		display: grid;
+		place-content: center;
 	}
 
 	li {

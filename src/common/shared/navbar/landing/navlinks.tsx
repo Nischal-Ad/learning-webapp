@@ -34,7 +34,9 @@ const Navlinks = ({ NavDrop }: INavLinks) => {
 			<Box component={'a'} href='#testimonial'>
 				<MenuItem>Testomonials</MenuItem>
 			</Box>
-			<MenuItem sx={{ padding: 0, marginX: 1 }}>
+			<MenuItem
+				sx={{ padding: 0, marginX: 1, display: { lg: 'block', xs: 'none' } }}
+			>
 				<Button
 					variant='contained'
 					endIcon={<ArrowForwardIcon />}

@@ -77,7 +77,7 @@ const NabarLanding = () => {
 					</Toolbar>
 				</NavMenu>
 				<Slide direction='left' in={drop} mountOnEnter unmountOnExit>
-					<NavbarSmallWrapper>
+					<NavbarSmallWrapper display={{ xs: 'block', lg: 'none' }}>
 						<Navlinks NavDrop={hideDrop} />
 					</NavbarSmallWrapper>
 				</Slide>
