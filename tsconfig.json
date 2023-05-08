@@ -18,6 +18,7 @@
 		"baseUrl": ".",
 		"paths": {
 			"@Img/*": ["src/assets/img/*"],
+			"@Data/*": ["src/assets/data/*"],
 			"@Styles/*": ["src/assets/styles/*"],
 			"@Svg/*": ["src/assets/svg/*"],
 			"@Components/*": ["src/common/components/*"],

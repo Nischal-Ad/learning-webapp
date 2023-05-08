@@ -28,6 +28,7 @@
 		"react-router-dom": "^6.9.0",
 		"react-stars": "^2.2.5",
 		"styled-components": "^5.3.9",
+		"swiper": "^9.2.4",
 		"webfontloader": "^1.6.28",
 		"yup": "^1.1.1"
 	},

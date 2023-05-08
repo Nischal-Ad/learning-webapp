@@ -4,6 +4,9 @@ import { Provider } from 'react-redux';
 import store from '@Store';
 import { GlobalStyles } from '@Styles/GlobalStyle';
 import { SnackbarProvider } from 'notistack';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 	<Provider store={store}>
