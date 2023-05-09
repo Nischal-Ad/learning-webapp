@@ -1,7 +1,10 @@
 import Helmet from '@Components/Helmet';
 import Slider from './components/Slider';
 import Section from '@Components/SectionWrapper';
-import { Slides } from '@Data/UserHomeSlider';
+import { Slides, Category } from '@Data/UserHome';
+import AppsCategory from './components/Category';
+import NextCoursesCard from '@Components/courses';
+import { courses } from '@Data/Courses';
 
 const Index = () => {
 	return (
@@ -12,6 +15,8 @@ const Index = () => {
 			/>
 			<Section id='dashboard'>
 				<Slider slides={Slides} />
+				<AppsCategory category={Category} />
+				<NextCoursesCard title='What is Next?' courses={courses} />;
 			</Section>
 		</>
 	);

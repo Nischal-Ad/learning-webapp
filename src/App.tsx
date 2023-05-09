@@ -7,7 +7,7 @@ const App = () => {
 	useEffect(() => {
 		WebFont.load({
 			google: {
-				families: ['Nunito', 'Quicksand', 'Poppins', 'Bruno Ace SC'],
+				families: ['Nunito', 'Quicksand', 'Poppins', 'Bruno Ace SC', 'Cinzel'],
 			},
 		});
 	}, []);

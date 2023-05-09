@@ -3,6 +3,8 @@
 	--black: #191919;
 	--white: #f3f3f3;
 	--dark: #696984;
+	--primary: #49bbbd;
+	--secondary: #252641;
 
 	--height: 100dvh;
 
@@ -11,6 +13,7 @@
 	--ff-quicksand: 'quicksand';
 	--ff-bruno: 'Bruno Ace SC', cursive;
 	--ff-nunito: 'nunito';
+	--ff-Cinzel: 'Cinzel';
 
 	/* gradients */
 }

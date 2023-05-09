@@ -7,6 +7,7 @@ import { SnackbarProvider } from 'notistack';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import '@Styles/Root.css';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 	<Provider store={store}>
