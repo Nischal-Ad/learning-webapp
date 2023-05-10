@@ -14,27 +14,33 @@ export const NavMenu = styled(Toolbar)`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-
-	ul {
-		display: flex;
-		align-items: center;
-		margin: revert;
-		padding: 0;
-	}
+	position: relative;
 `;
 
-export const NavbarSmallWrapper = styled(Box)`
-	width: 100%;
-	height: 100dvh;
-
-	a {
-		color: #5b5b5b;
-		text-decoration: none;
-		display: grid;
-		place-content: center;
+export const NavbarWrapper = styled(Box)`
+	&.nav {
+		ul {
+			display: flex;
+			align-items: center;
+			margin: revert;
+			padding: 0;
+		}
 	}
 
-	li {
-		margin: 10px 0;
+	&.smallNav {
+		width: 100vw;
+		top: 0;
+		margin-top: 3.5rem;
+		width: 100vw;
+		height: 100dvh;
+		position: absolute;
+		background-color: white;
+		z-index: 10;
+		margin-left: -1rem;
+
+		ul {
+			display: flex;
+			flex-direction: column;
+		}
 	}
 `;

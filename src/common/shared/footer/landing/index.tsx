@@ -5,7 +5,7 @@ import { FooterInput } from '../style';
 
 const FooterLanding = () => {
 	return (
-		<Box component={'footer'} bgcolor={'#252641'} mt={10}>
+		<Box component={'footer'} bgcolor={'#252641'} mt={'1rem'}>
 			<SectionWrapper id='footer'>
 				<Box
 					sx={{
@@ -13,7 +13,7 @@ const FooterLanding = () => {
 						display: 'flex',
 						alignItems: 'center',
 						justifyContent: 'center',
-						paddingY: 2,
+						paddingTop: 2,
 					}}
 				>
 					<CardMedia

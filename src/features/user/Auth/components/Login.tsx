@@ -42,7 +42,6 @@ const Login = ({ reset }: IAuth) => {
 			<TextField
 				fullWidth
 				required
-				id='email'
 				name='email'
 				label='Email'
 				variant='standard'
@@ -58,7 +57,6 @@ const Login = ({ reset }: IAuth) => {
 			<TextField
 				fullWidth
 				required
-				id='password'
 				name='password'
 				label='Password'
 				type='password'

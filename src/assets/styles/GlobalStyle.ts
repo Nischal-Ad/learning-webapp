@@ -1,5 +1,4 @@
 import { createGlobalStyle, css } from 'styled-components';
-import '@Styles/Root.css';
 
 const globalCss = css`
 	body {
@@ -8,12 +7,21 @@ const globalCss = css`
 		min-height: var(--height);
 	}
 
-	html {
-		scroll-behavior: smooth;
+	input[type='number']::-webkit-inner-spin-button,
+	input[type='number']::-webkit-outer-spin-button {
+		-webkit-appearance: none !important;
+		margin: 0 !important;
 	}
 
 	* {
 		font-family: var(--ff-poppins) !important;
+		scroll-behavior: smooth;
+	}
+
+	*::-webkit-scrollbar {
+		display: none;
+		-ms-overflow-style: none;
+		scrollbar-width: none;
 	}
 `;
 

@@ -1,14 +1,13 @@
 import { useState, useEffect } from 'react';
 import Section from '@Components/SectionWrapper';
-import { Box, CardMedia, Toolbar } from '@mui/material';
+import { Box, CardMedia } from '@mui/material';
 import logo from '@Svg/logo_text.svg';
 import logo_black from '@Svg/logo_text_black.svg';
-import { NavMenu, Navbar, NavbarSmallWrapper } from '../style';
+import { NavMenu, Navbar, NavbarWrapper } from '../style';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import Navlinks from './navlinks';
 import { Link } from 'react-router-dom';
-import Slide from '@mui/material/Slide';
 
 const NabarLanding = () => {
 	const [scrollY, setScrollY] = useState(false);
@@ -45,6 +44,22 @@ const NabarLanding = () => {
 							}}
 						/>
 					</Link>
+
+					<NavbarWrapper
+						className={drop ? 'smallNav' : 'nav'}
+						sx={{
+							display: !drop ? { lg: 'block', xs: 'none' } : 'block',
+
+							a: {
+								color: scrollY || drop ? '#5b5b5b' : 'white',
+								textDecoration: 'none',
+								display: 'grid',
+								placeContent: 'center',
+							},
+						}}
+					>
+						<Navlinks NavDrop={hideDrop} />
+					</NavbarWrapper>
 					<Box component={'span'} display={{ lg: 'none', xs: 'block' }}>
 						{drop ? (
 							<CloseIcon
@@ -62,25 +77,7 @@ const NabarLanding = () => {
 							/>
 						)}
 					</Box>
-					<Toolbar
-						disableGutters
-						sx={{
-							display: { lg: 'block', xs: 'none' },
-
-							a: {
-								color: scrollY || drop ? '#5b5b5b' : 'white',
-								textDecoration: 'none',
-							},
-						}}
-					>
-						<Navlinks NavDrop={hideDrop} />
-					</Toolbar>
 				</NavMenu>
-				<Slide direction='left' in={drop} mountOnEnter unmountOnExit>
-					<NavbarSmallWrapper display={{ xs: 'block', lg: 'none' }}>
-						<Navlinks NavDrop={hideDrop} />
-					</NavbarSmallWrapper>
-				</Slide>
 			</Section>
 		</Navbar>
 	);
