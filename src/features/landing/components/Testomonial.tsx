@@ -28,6 +28,7 @@ const Testomonial = () => {
 				color={'#696984'}
 				direction={{ lg: 'row', xs: 'column' }}
 				alignItems={'center'}
+				mb={12}
 			>
 				<Stack spacing={5} direction={'column'} width='100%'>
 					<Typography paragraph>

@@ -44,7 +44,7 @@ const CourseCard: React.FC<ICourses> = ({
 				<Typography variant='body1' component={'span'} fontWeight={'bold'}>
 					${price}
 					<Typography variant='body2' component={'span'} className='disable'>
-						${Dprice}
+						{Dprice && `$${Dprice}`}
 					</Typography>
 				</Typography>
 			</Box>

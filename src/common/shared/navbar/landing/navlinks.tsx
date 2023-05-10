@@ -25,6 +25,9 @@ const Navlinks = ({ NavDrop }: INavLinks) => {
 			<Box component={'a'} href='#services'>
 				<MenuItem>Services</MenuItem>
 			</Box>
+			<Box component={'a'} href='#courses'>
+				<MenuItem>Courses</MenuItem>
+			</Box>
 			<Box component={'a'} href='#about us'>
 				<MenuItem>About Us</MenuItem>
 			</Box>

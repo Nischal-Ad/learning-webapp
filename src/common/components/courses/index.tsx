@@ -45,18 +45,20 @@ const Index: React.FC<ICoruseSlide> = ({ courses, title }) => {
 
 	return (
 		<CourseWrapper position={'relative'}>
-			<Typography
-				variant='h3'
-				component={'h1'}
-				sx={{
-					fontFamily: 'var(--ff-Cinzel) !important',
-					fontWeight: 'bold',
-					fontSize: '2.6rem',
-					margin: '1rem 0',
-				}}
-			>
-				{title}
-			</Typography>
+			{title && (
+				<Typography
+					variant='h3'
+					component={'h1'}
+					sx={{
+						fontFamily: 'var(--ff-Cinzel) !important',
+						fontWeight: 'bold',
+						fontSize: '2.6rem',
+						margin: '1rem 0',
+					}}
+				>
+					{title}
+				</Typography>
+			)}
 			<Stack direction={'row'} spacing={2} overflow={'auto'} ref={scroll}>
 				{showCourses()}
 			</Stack>

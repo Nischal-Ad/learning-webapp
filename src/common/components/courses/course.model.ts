@@ -9,5 +9,5 @@ export interface ICourses {
 
 export interface ICoruseSlide {
 	courses: ICourses[];
-	title: string;
+	title?: string;
 }

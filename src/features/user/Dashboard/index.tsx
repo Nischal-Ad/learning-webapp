@@ -3,7 +3,7 @@ import Slider from './components/Slider';
 import Section from '@Components/SectionWrapper';
 import { Slides, Category } from '@Data/UserHome';
 import AppsCategory from './components/Category';
-import NextCoursesCard from '@Components/courses';
+import CourseList from '@Components/courses';
 import { courses } from '@Data/Courses';
 
 const Index = () => {
@@ -16,7 +16,9 @@ const Index = () => {
 			<Section id='dashboard'>
 				<Slider slides={Slides} />
 				<AppsCategory category={Category} />
-				<NextCoursesCard title='What is Next?' courses={courses} />;
+				<CourseList title='What is Next?' courses={courses} />
+				<CourseList title='Recommended for you' courses={courses} />
+				<CourseList title='you may also like' courses={courses} />
 			</Section>
 		</>
 	);

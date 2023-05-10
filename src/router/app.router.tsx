@@ -51,7 +51,15 @@ const router = createBrowserRouter(
 			{/* end of normal routes */}
 
 			{/* protected routes for user */}
-			<Route element={<ProtectedRoute auth={isAuth.isAuth} />}>
+			<Route
+				element={
+					<ProtectedRoute
+						auth={isAuth.isAuth}
+						Navbar={<Navbar />}
+						Footer={<Footer />}
+					/>
+				}
+			>
 				<Route path='/dashboard' element={<Dashboard />} />
 			</Route>
 			{/* end of protected routes for user */}
