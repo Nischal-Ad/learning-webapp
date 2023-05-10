@@ -33,10 +33,10 @@ const CourseCard: React.FC<ICourses> = ({
 				<Typography variant='caption'>{author}</Typography>
 				<Box display='flex' alignItems='center'>
 					<ReactStars
-						count={rating}
+						count={5}
 						size={20}
 						edit={false}
-						value={4}
+						value={rating}
 						color2={'#e59819'}
 					/>
 					<Typography variant='caption'>(10)</Typography>
