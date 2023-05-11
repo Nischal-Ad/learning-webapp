@@ -15,6 +15,14 @@ export const CourseCardWrapper = styled(Box)`
 		overflow: hidden;
 	}
 
+	p {
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		text-overflow: ellipsis;
+		overflow: hidden;
+	}
+
 	h6 {
 		display: -webkit-box;
 		-webkit-line-clamp: 1;

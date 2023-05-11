@@ -1,11 +1,11 @@
 import { Typography, IconButton } from '@mui/material';
 import Stack from '@mui/material/Stack';
-import CourseCard from './CourseCard';
+import CourseCard from './components/CourseCard';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import { CourseWrapper } from './style';
 import { useRef } from 'react';
-import { ICoruseSlide } from './course.model';
+import { ICoruseSlide } from './data/course.model';
 
 const Index: React.FC<ICoruseSlide> = ({ courses, title }) => {
 	const scroll = useRef<HTMLDivElement>(null);
@@ -30,17 +30,7 @@ const Index: React.FC<ICoruseSlide> = ({ courses, title }) => {
 	const showCourses = () => {
 		return courses
 			.slice(0, 8)
-			.map((course) => (
-				<CourseCard
-					key={course.title}
-					img={course.img}
-					title={course.title}
-					author={course.author}
-					rating={course.rating}
-					price={course.price}
-					Dprice={course.Dprice}
-				/>
-			));
+			.map((course, i) => <CourseCard key={i} courses={course} list={false} />);
 	};
 
 	return (

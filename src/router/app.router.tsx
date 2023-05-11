@@ -13,6 +13,8 @@ const Navbar = lazy(() => import('@Shared/navbar/landing'));
 const Footer = lazy(() => import('@Shared/footer/landing'));
 const Landing = lazy(() => import('@Features/landing'));
 const Dashboard = lazy(() => import('@Features/user/Dashboard'));
+const Courses = lazy(() => import('@Features/user/courses'));
+const CoursesDetails = lazy(() => import('@Features/user/courses/Details'));
 
 const auth = localStorage.getItem('auth') || '';
 const isAuth = auth && JSON.parse(auth);
@@ -61,6 +63,8 @@ const router = createBrowserRouter(
 				}
 			>
 				<Route path='/dashboard' element={<Dashboard />} />
+				<Route path='/courses' element={<Courses />} />
+				<Route path='/courses/:id' element={<CoursesDetails />} />
 			</Route>
 			{/* end of protected routes for user */}
 

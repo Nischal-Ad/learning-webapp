@@ -23,6 +23,10 @@ const globalCss = css`
 		-ms-overflow-style: none;
 		scrollbar-width: none;
 	}
+
+	a {
+		text-decoration: none !important;
+	}
 `;
 
 export const GlobalStyles = createGlobalStyle`
