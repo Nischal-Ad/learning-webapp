@@ -3,10 +3,7 @@ import { Box } from '@mui/material';
 
 export const CourseCardWrapper = styled(Box)`
 	overflow: auto;
-
-	a {
-		color: var(--black);
-	}
+	color: var(--black);
 
 	h1 {
 		max-height: 4rem;

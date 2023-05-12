@@ -12,25 +12,25 @@ const CourseCard = ({
 	list?: boolean;
 }) => {
 	return (
-		<CourseCardWrapper
-			sx={{
-				minWidth: list ? '100%' : ['100%', '14.3rem'],
-				maxWidth: list ? '100%' : ['100%', '14.3rem'],
-				display: list ? { md: 'flex', xs: 'block' } : 'block',
-				flexDirection: 'row',
-			}}
-		>
-			<CardMedia
-				component={'img'}
-				image={courses.img}
+		<Link to={`/courses/${courses.id}`}>
+			<CourseCardWrapper
 				sx={{
-					height: !list ? '10rem' : '100%',
-					width: list ? { md: '16rem', xs: '100%' } : '100%',
-					objectFit: 'fill',
-					marginRight: list ? { md: '1rem', xs: 0 } : 0,
+					minWidth: list ? '100%' : ['100%', '14.3rem'],
+					maxWidth: list ? '100%' : ['100%', '14.3rem'],
+					display: list ? { md: 'flex', xs: 'block' } : 'block',
+					flexDirection: 'row',
 				}}
-			/>
-			<Link to={`/courses/${courses.id}`}>
+			>
+				<CardMedia
+					component={'img'}
+					image={courses.img}
+					sx={{
+						height: !list ? '10rem' : '100%',
+						width: list ? { md: '16rem', xs: '100%' } : '100%',
+						objectFit: 'fill',
+						marginRight: list ? { md: '1rem', xs: 0 } : 0,
+					}}
+				/>
 				<Box>
 					<Typography variant='h6' component={'h1'} fontWeight={'bold'}>
 						{courses.title}
@@ -58,8 +58,8 @@ const CourseCard = ({
 						Best Seller
 					</Typography>
 				</Box>
-			</Link>
-		</CourseCardWrapper>
+			</CourseCardWrapper>
+		</Link>
 	);
 };
 
