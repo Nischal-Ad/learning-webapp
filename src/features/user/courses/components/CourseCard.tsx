@@ -20,17 +20,17 @@ const CourseCard = ({
 				flexDirection: 'row',
 			}}
 		>
+			<CardMedia
+				component={'img'}
+				image={courses.img}
+				sx={{
+					height: !list ? '10rem' : '100%',
+					width: list ? { md: '16rem', xs: '100%' } : '100%',
+					objectFit: 'fill',
+					marginRight: list ? { md: '1rem', xs: 0 } : 0,
+				}}
+			/>
 			<Link to={`/courses/${courses.id}`}>
-				<CardMedia
-					component={'img'}
-					image={courses.img}
-					sx={{
-						height: !list ? '10rem' : '100%',
-						width: list ? { md: '16rem', xs: '100%' } : '100%',
-						objectFit: 'fill',
-						marginRight: list ? { md: '1rem', xs: 0 } : 0,
-					}}
-				/>
 				<Box>
 					<Typography variant='h6' component={'h1'} fontWeight={'bold'}>
 						{courses.title}
