@@ -12,15 +12,15 @@ const CourseCard = ({
 	list?: boolean;
 }) => {
 	return (
-		<Link to={`/courses/${courses.id}`}>
-			<CourseCardWrapper
-				sx={{
-					minWidth: list ? '100%' : ['100%', '14.3rem'],
-					maxWidth: list ? '100%' : ['100%', '14.3rem'],
-					display: list ? { md: 'flex', xs: 'block' } : 'block',
-					flexDirection: 'row',
-				}}
-			>
+		<CourseCardWrapper
+			sx={{
+				minWidth: list ? '100%' : ['100%', '14.3rem'],
+				maxWidth: list ? '100%' : ['100%', '14.3rem'],
+				display: list ? { md: 'flex', xs: 'block' } : 'block',
+				flexDirection: 'row',
+			}}
+		>
+			<Link to={`/courses/${courses.id}`}>
 				<CardMedia
 					component={'img'}
 					image={courses.img}
@@ -58,8 +58,8 @@ const CourseCard = ({
 						Best Seller
 					</Typography>
 				</Box>
-			</CourseCardWrapper>
-		</Link>
+			</Link>
+		</CourseCardWrapper>
 	);
 };
 

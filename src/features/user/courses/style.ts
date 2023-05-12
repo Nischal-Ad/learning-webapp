@@ -3,7 +3,10 @@ import { Box } from '@mui/material';
 
 export const CourseCardWrapper = styled(Box)`
 	overflow: auto;
-	color: var(--black);
+
+	a {
+		color: var(--black);
+	}
 
 	h1 {
 		max-height: 4rem;
@@ -69,4 +72,56 @@ export const CourseWrapper = styled(Box)`
 			color: var(--primary);
 		}
 	}
+`;
+
+export const CourseDetailsBoxWrapper = styled(Box)`
+	box-shadow: 0px 10px 60px rgba(38, 45, 118, 0.08);
+	position: sticky;
+	top: 5rem;
+	padding: 10px;
+	border-radius: 5px;
+	color: var(--black);
+
+	h1,
+	h2,
+	button {
+		font-weight: bold;
+	}
+
+	img {
+		object-fit: fill;
+	}
+
+	.disable {
+		color: gray;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
+		text-decoration-line: line-through;
+		margin-left: 1rem;
+	}
+
+	.data {
+		padding: 1rem;
+	}
+
+	button {
+		margin: 10px 0;
+		width: 100%;
+
+		&.buy {
+			background-color: var(--primary);
+			margin-top: 1rem;
+
+			&:hover {
+				background-color: var(--primary-hover);
+			}
+		}
+	}
+`;
+
+export const CourseDetailsOverViewWrapper = styled(Box)`
+	box-shadow: 0px 10px 60px rgba(38, 45, 118, 0.08);
+	padding: 1rem;
+	border-radius: 5px;
 `;

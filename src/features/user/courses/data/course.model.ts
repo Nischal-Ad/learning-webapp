@@ -13,3 +13,7 @@ export interface ICoruseSlide {
 	courses: ICourses[];
 	title?: string;
 }
+
+export interface IContentWrapper extends React.PropsWithChildren {
+	title: string;
+}
