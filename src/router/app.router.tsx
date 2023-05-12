@@ -26,11 +26,13 @@ const router = createBrowserRouter(
 			<Route
 				path='/landing'
 				element={
-					<Suspense fallback={<Loading />}>
+					<>
 						<Navbar />
-						<Landing />
+						<Suspense fallback={<Loading />}>
+							<Landing />
+						</Suspense>
 						<Footer />
-					</Suspense>
+					</>
 				}
 			/>
 			{/* end of test routes */}

@@ -27,11 +27,13 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
 	// }
 
 	return (
-		<Suspense fallback={<Loading />}>
+		<>
 			{Navbar}
-			<Outlet />
+			<Suspense fallback={<Loading />}>
+				<Outlet />
+			</Suspense>
 			{Footer}
-		</Suspense>
+		</>
 	);
 };
 
