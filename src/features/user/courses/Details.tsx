@@ -12,10 +12,7 @@ const Details = () => {
 
 	return (
 		<>
-			<Helmet
-				title='Courses'
-				content='choose your favourate course and start building your carrier'
-			/>
+			<Helmet title={courseDetails?.title} content={courseDetails?.desc} />
 			<Section id='course-details'>
 				{courseDetails ? (
 					<>

@@ -128,22 +128,18 @@ const CourseDetailsCard = ({ details }: { details: ICourses }) => {
 							<CourseRequirement />
 						</ContentWrapper>
 						<ContentWrapper title='Rating'>
-							<Box display='flex' alignItems='center' mb={4}>
-								<ReactStars
-									count={5}
-									size={20}
-									edit={false}
-									value={details.rating}
-									color2={'#e59819'}
-								/>
-								<Typography
-									variant='caption'
-									component={'pre'}
-									fontWeight={'bold'}
-								>
-									(10)
-								</Typography>
-							</Box>
+							<Typography variant='h5' component={'span'} fontWeight={'bold'}>
+								Top Rating {`${details.rating} of 5`}
+							</Typography>
+							<ReactStars
+								count={5}
+								size={20}
+								edit={false}
+								value={details.rating}
+								color2={'#e59819'}
+							/>
+
+							<TestomonialCard />
 							<TestomonialCard />
 						</ContentWrapper>
 					</CourseDetailsOverViewWrapper>

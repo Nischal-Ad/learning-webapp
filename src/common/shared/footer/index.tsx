@@ -1,7 +1,7 @@
 import { Box, Button, CardMedia, Divider, Typography } from '@mui/material';
 import SectionWrapper from '@Components/SectionWrapper';
 import logo from '@Svg/logo_text.svg';
-import { FooterInput } from '../style';
+import { FooterInput } from './style';
 
 const FooterLanding = () => {
 	return (

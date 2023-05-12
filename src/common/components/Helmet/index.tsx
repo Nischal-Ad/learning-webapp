@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 
 interface IHelmet {
-	title: string;
+	title?: string;
 	content?: string;
 }
 

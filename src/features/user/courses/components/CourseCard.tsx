@@ -12,54 +12,65 @@ const CourseCard = ({
 	list?: boolean;
 }) => {
 	return (
-		<Link to={`/courses/${courses.id}`}>
-			<CourseCardWrapper
-				sx={{
-					minWidth: list ? '100%' : ['100%', '14.3rem'],
-					maxWidth: list ? '100%' : ['100%', '14.3rem'],
-					display: list ? { md: 'flex', xs: 'block' } : 'block',
-					flexDirection: 'row',
-				}}
-			>
-				<CardMedia
-					component={'img'}
-					image={courses.img}
+		<Box
+			sx={{
+				minWidth: list ? '100%' : ['100%', '14.3rem'],
+				maxWidth: list ? '100%' : ['100%', '14.3rem'],
+			}}
+		>
+			<Link to={`/courses/${courses.id}`}>
+				<CourseCardWrapper
 					sx={{
-						height: !list ? '10rem' : '100%',
-						width: list ? { md: '16rem', xs: '100%' } : '100%',
-						objectFit: 'fill',
-						marginRight: list ? { md: '1rem', xs: 0 } : 0,
+						display: list ? { md: 'flex', xs: 'block' } : 'block',
+						flexDirection: 'row',
 					}}
-				/>
-				<Box>
-					<Typography variant='h6' component={'h1'} fontWeight={'bold'}>
-						{courses.title}
-					</Typography>
-					{list && <Typography variant='subtitle2'>{courses.desc}</Typography>}
-					<Typography variant='caption'>{courses.author}</Typography>
-					<Box display='flex' alignItems='center'>
-						<ReactStars
-							count={5}
-							size={20}
-							edit={false}
-							value={courses.rating}
-							color2={'#e59819'}
-						/>
-						<Typography variant='caption'>(10)</Typography>
-					</Box>
-					<Typography variant='body1' component={'span'} fontWeight={'bold'}>
-						${courses.price}
-						<Typography variant='body2' component={'span'} className='disable'>
-							{courses.Dprice && `$${courses.Dprice}`}
+				>
+					<CardMedia
+						component={'img'}
+						image={courses.img}
+						sx={{
+							height: !list ? '10rem' : '100%',
+							width: list ? { md: '16rem', xs: '100%' } : '100%',
+							objectFit: 'fill',
+							marginRight: list ? { md: '1rem', xs: 0 } : 0,
+						}}
+					/>
+					<Box>
+						<Typography variant='h6' component={'h1'} fontWeight={'bold'}>
+							{courses.title}
 						</Typography>
-					</Typography>
-					<br />
-					<Typography variant='body2' component={'span'} className='best'>
-						Best Seller
-					</Typography>
-				</Box>
-			</CourseCardWrapper>
-		</Link>
+						{list && (
+							<Typography variant='subtitle2'>{courses.desc}</Typography>
+						)}
+						<Typography variant='caption'>{courses.author}</Typography>
+						<Box display='flex' alignItems='center'>
+							<ReactStars
+								count={5}
+								size={20}
+								edit={false}
+								value={courses.rating}
+								color2={'#e59819'}
+							/>
+							<Typography variant='caption'>(10)</Typography>
+						</Box>
+						<Typography variant='body1' component={'span'} fontWeight={'bold'}>
+							${courses.price}
+							<Typography
+								variant='body2'
+								component={'span'}
+								className='disable'
+							>
+								{courses.Dprice && `$${courses.Dprice}`}
+							</Typography>
+						</Typography>
+						<br />
+						<Typography variant='body2' component={'span'} className='best'>
+							Best Seller
+						</Typography>
+					</Box>
+				</CourseCardWrapper>
+			</Link>
+		</Box>
 	);
 };
 

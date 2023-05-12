@@ -5,5 +5,5 @@ export const notifySuccess = (message: string) => {
 };
 
 export const notifyError = (message: string) => {
-	enqueueSnackbar({ message, variant: 'warning' });
+	enqueueSnackbar({ message, variant: 'error' });
 };
