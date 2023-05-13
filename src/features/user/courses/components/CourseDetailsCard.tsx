@@ -76,7 +76,17 @@ const CourseDetailsCard = ({ details }: { details: ICourses }) => {
 							<Typography variant='h5' component={'span'} fontWeight={'bold'}>
 								Share this course
 							</Typography>
-							<Stack component={'span'} direction={'row'} spacing={2} mt={2}>
+							<Stack
+								component={'span'}
+								direction={'row'}
+								spacing={2}
+								mt={2}
+								sx={{
+									img: {
+										cursor: 'pointer',
+									},
+								}}
+							>
 								<CardMedia
 									component={'img'}
 									alt=''
