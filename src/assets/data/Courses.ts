@@ -3,7 +3,7 @@ import { ICourses } from '@Features/user/courses/data/course.model';
 export const courses: ICourses[] = [
 	{
 		id: '1',
-		img: 'https://example.com/image1.jpg',
+		img: 'https://cdn.pixabay.com/photo/2022/01/22/13/30/mother-and-child-6957312_960_720.jpg',
 		title: 'Course 1',
 		desc: 'This is the first course',
 		author: 'John Doe',
@@ -11,7 +11,7 @@ export const courses: ICourses[] = [
 		price: 9.99,
 		requirements: [
 			'Bachelor’s degree in Business Administration or related field',
-			'Experience with project management',
+			'Experience with project management loream djakod aeodf oe we ofjfo fg jo eg uoh go kj g he;oa goeg g iogeriog eaig8p9roigf harofg  og gh ojg al wrogfhjwuogawrkjhekiljerag earih uiwrif hwaoifh waf awurfhof awrojfwoji rwifjhgiaw fkjwar a9wg ljrh 9uoug 4',
 			'Excellent communication skills',
 		],
 		Dprice: 7.99,
