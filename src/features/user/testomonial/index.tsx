@@ -2,30 +2,28 @@ import { Box, Typography, Stack } from '@mui/material';
 import test from '@Img/test.jpg';
 import { ImageWrapper } from './style';
 import ReactStars from 'react-stars';
+import { ITestomonial } from './data/testomonial.model';
 
-const index = () => {
+const index = ({ testomonial }: { testomonial: ITestomonial }) => {
 	return (
-		<Box my={2} color={'var(--black)'}>
+		<Box mb={3} mt={2} color={'var(--black)'}>
 			<Stack spacing={1} direction={'row'} alignItems={'center'}>
-				<ImageWrapper src={test} />
+				<ImageWrapper src={testomonial.img} />
 				<Box>
 					<ReactStars
 						count={5}
 						size={20}
 						edit={false}
-						value={5}
+						value={testomonial.rating}
 						color2={'#e59819'}
 					/>
 					<Typography variant='caption' component={'h6'} fontWeight={'bold'}>
-						Nischal
+						{testomonial.name}
 					</Typography>
 				</Box>
 			</Stack>
-			<Typography component='p' variant='subtitle2' px={2} mt={2}>
-				Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur,
-				libero. Minus tenetur, praesentium vero neque recusandae quo doloribus
-				exercitationem eveniet, delectus deserunt sunt obcaecati, quas sint
-				itaque nihil voluptates atque.
+			<Typography component='p' variant='subtitle2' px={2} mt={1}>
+				{testomonial.desc}
 			</Typography>
 		</Box>
 	);

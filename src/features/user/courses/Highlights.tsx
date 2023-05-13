@@ -5,9 +5,9 @@ import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import { CourseWrapper } from './style';
 import { useRef } from 'react';
-import { ICoruseSlide } from './data/course.model';
+import { ICoruseHighlight } from './data/course.model';
 
-const Index: React.FC<ICoruseSlide> = ({ courses, title }) => {
+const Index: React.FC<ICoruseHighlight> = ({ courses, title }) => {
 	const scroll = useRef<HTMLDivElement>(null);
 	const scrollDistance = 700;
 

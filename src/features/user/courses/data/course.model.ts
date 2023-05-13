@@ -1,3 +1,5 @@
+import { ITestomonial } from '@Features/user/testomonial/data/testomonial.model';
+
 export interface ICourses {
 	id: string;
 	img: string;
@@ -6,12 +8,13 @@ export interface ICourses {
 	author: string;
 	rating: 0 | 1 | 2 | 3 | 4 | 5;
 	price: number;
-	Dprice?: number;
+	Dprice: number;
+	testomonial: ITestomonial[];
 }
 
-export interface ICoruseSlide {
+export interface ICoruseHighlight {
 	courses: ICourses[];
-	title?: string;
+	title: string;
 }
 
 export interface IContentWrapper extends React.PropsWithChildren {

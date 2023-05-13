@@ -2,9 +2,10 @@ import {
 	CardMedia,
 	Typography,
 	Box,
-	Button,
 	Divider,
 	Stack,
+	CardActions,
+	Button,
 } from '@mui/material';
 import { ICourses } from '../data/course.model';
 import Grid from '@mui/material/Grid';
@@ -138,10 +139,20 @@ const CourseDetailsCard = ({ details }: { details: ICourses }) => {
 								value={details.rating}
 								color2={'#e59819'}
 							/>
-
-							<TestomonialCard />
-							<TestomonialCard />
+							{details.testomonial.map((data, i) => {
+								return <TestomonialCard key={i} testomonial={data} />;
+							})}
 						</ContentWrapper>
+						<CardActions
+							sx={{
+								display: 'flex',
+								justifyContent: 'end',
+							}}
+						>
+							<Button size='medium' color='success'>
+								Next →
+							</Button>
+						</CardActions>
 					</CourseDetailsOverViewWrapper>
 				</Grid>
 			</Grid>
