@@ -1,7 +1,7 @@
 import { Box, Button, CardMedia, Divider, Typography } from '@mui/material';
 import SectionWrapper from '@Components/SectionWrapper';
 import logo from '@Svg/logo_text.svg';
-import { FooterInput } from '../style';
+import { FooterInput } from './style';
 
 const FooterLanding = () => {
 	return (
@@ -36,7 +36,6 @@ const FooterLanding = () => {
 						}}
 					/>
 					<Box>
-						{' '}
 						<Typography variant='h6' component={'span'}>
 							Virtual Class for Zoom
 						</Typography>
@@ -49,27 +48,6 @@ const FooterLanding = () => {
 					color='#B2B3CF'
 					mt={2}
 				>
-					<Typography variant='h6' component={'span'}>
-						Subscribe to get our Newsletter
-					</Typography>
-					<Box>
-						<FooterInput type='email' />
-						<Button
-							variant='contained'
-							size='large'
-							sx={{
-								borderRadius: '9999px',
-								background: '#49BBBD',
-								marginLeft: 2,
-
-								'&:hover': {
-									background: '#399ea0',
-								},
-							}}
-						>
-							Suscribe
-						</Button>
-					</Box>
 					<Box
 						sx={{
 							display: 'flex',

@@ -5,14 +5,20 @@ import {
 	createRoutesFromElements,
 } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
-import ProtectedRoute from './ProtectedRoute';
+
+//normal components
 import Loading from '@Components/Loader';
+import ProtectedRoute from './ProtectedRoute';
+import NavbarLanding from '@Shared/navbar/landing';
+import NavbarUser from '@Shared/navbar/user';
+import Footer from '@Shared/footer';
+import Error from '@Components/Error';
 
 // Lazy load components
-const Navbar = lazy(() => import('@Shared/navbar/landing'));
-const Footer = lazy(() => import('@Shared/footer/landing'));
 const Landing = lazy(() => import('@Features/landing'));
 const Dashboard = lazy(() => import('@Features/user/Dashboard'));
+const Courses = lazy(() => import('@Features/user/courses'));
+const CoursesDetails = lazy(() => import('@Features/user/courses/Details'));
 
 const auth = localStorage.getItem('auth') || '';
 const isAuth = auth && JSON.parse(auth);
@@ -24,11 +30,13 @@ const router = createBrowserRouter(
 			<Route
 				path='/landing'
 				element={
-					<Suspense fallback={<Loading />}>
-						<Navbar />
-						<Landing />
+					<>
+						<NavbarLanding />
+						<Suspense fallback={<Loading />}>
+							<Landing />
+						</Suspense>
 						<Footer />
-					</Suspense>
+					</>
 				}
 			/>
 			{/* end of test routes */}
@@ -39,7 +47,7 @@ const router = createBrowserRouter(
 				element={
 					!isAuth ? (
 						<Suspense fallback={<Loading />}>
-							<Navbar />
+							<NavbarLanding />
 							<Landing />
 							<Footer />
 						</Suspense>
@@ -48,6 +56,7 @@ const router = createBrowserRouter(
 					)
 				}
 			/>
+			<Route path='*' element={<Error />} />
 			{/* end of normal routes */}
 
 			{/* protected routes for user */}
@@ -55,12 +64,14 @@ const router = createBrowserRouter(
 				element={
 					<ProtectedRoute
 						auth={isAuth.isAuth}
-						Navbar={<Navbar />}
+						Navbar={<NavbarUser />}
 						Footer={<Footer />}
 					/>
 				}
 			>
 				<Route path='/dashboard' element={<Dashboard />} />
+				<Route path='/courses' element={<Courses />} />
+				<Route path='/courses/:id' element={<CoursesDetails />} />
 			</Route>
 			{/* end of protected routes for user */}
 

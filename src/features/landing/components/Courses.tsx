@@ -1,4 +1,4 @@
-import CoursesList from '@Components/courses';
+import CoursesList from '@Features/user/courses/Highlights';
 import { courses } from '@Data/Courses';
 import SectionWrapper from '@Components/SectionWrapper';
 import Heading from '@Components/Heading/LandingHeading';

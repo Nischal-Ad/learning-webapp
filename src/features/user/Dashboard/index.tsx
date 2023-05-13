@@ -3,7 +3,7 @@ import Slider from './components/Slider';
 import Section from '@Components/SectionWrapper';
 import { Slides, Category } from '@Data/UserHome';
 import AppsCategory from './components/Category';
-import CourseList from '@Components/courses';
+import CourseList from '@Features/user/courses/Highlights';
 import { courses } from '@Data/Courses';
 
 const Index = () => {
