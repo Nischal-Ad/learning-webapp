@@ -131,10 +131,15 @@ export const RequirementWrapper = styled(List)`
 		padding: 0;
 		position: relative;
 
-		svg {
-			font-size: 0.8rem;
+		pre {
 			position: absolute;
-			top: 0.5rem;
+			top: 0;
+		}
+
+		svg {
+			position: absolute;
+			font-size: 0.8rem;
+			top: 0.4rem;
 		}
 
 		span {

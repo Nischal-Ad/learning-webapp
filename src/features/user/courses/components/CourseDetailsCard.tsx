@@ -22,8 +22,8 @@ import youtube from '@Svg/youtube.svg';
 import ReactStars from 'react-stars';
 import ContentWrapper from './ContentWrapper';
 import TestomonialCard from '@Features/user/testomonial';
-import CourseRequirement from './CourseRequirement';
-import CourseContent from './CourseContent';
+import CourseRequirement from './CourseDataList';
+import CourseContent from './CourseDataList';
 
 const CourseDetailsCard = ({ details }: { details: ICourses }) => {
 	return (
@@ -120,16 +120,21 @@ const CourseDetailsCard = ({ details }: { details: ICourses }) => {
 				<Grid item xs={12} md={8}>
 					<CourseDetailsOverViewWrapper>
 						<ContentWrapper title='Overview'>
-							<Typography variant='subtitle2' component={'pre'}>
+							<Typography variant='subtitle1' component={'pre'}>
 								{details.desc}
 							</Typography>
 						</ContentWrapper>
 						<ContentWrapper title='Course Content'>
-							<CourseContent />
+							<Typography variant='h5' component={'span'} fontWeight={'bold'}>
+								This Course Contains:
+							</Typography>
+							{details.requirements.map((data, i) => {
+								return <CourseContent key={i} sn={i + 1} data={data} />;
+							})}
 						</ContentWrapper>
 						<ContentWrapper title='Requirements'>
 							{details.requirements.map((data, i) => {
-								return <CourseRequirement key={i} requirement={data} />;
+								return <CourseRequirement key={i} data={data} />;
 							})}
 						</ContentWrapper>
 						<ContentWrapper title='Rating'>

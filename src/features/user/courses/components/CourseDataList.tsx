@@ -2,17 +2,24 @@ import { ListItem, Typography } from '@mui/material';
 import { RequirementWrapper } from '../style';
 import CircleIcon from '@mui/icons-material/Circle';
 
-const CourseRequirement = ({ requirement }: { requirement: string }) => {
+const CourseDataList = ({ data, sn }: { data: string; sn?: number }) => {
 	return (
 		<RequirementWrapper>
 			<ListItem>
-				<CircleIcon />
+				{!sn ? (
+					<CircleIcon className='bullet' />
+				) : (
+					<Typography variant='subtitle1' component={'pre'}>
+						{sn}.
+					</Typography>
+				)}
+
 				<Typography variant='subtitle1' component={'span'}>
-					{requirement}
+					{data}
 				</Typography>
 			</ListItem>
 		</RequirementWrapper>
 	);
 };
 
-export default CourseRequirement;
+export default CourseDataList;
