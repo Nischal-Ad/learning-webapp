@@ -128,7 +128,7 @@ const CourseDetailsCard = ({ details }: { details: ICourses }) => {
 							<Typography variant='h5' component={'span'} fontWeight={'bold'}>
 								This Course Contains:
 							</Typography>
-							{details.requirements.map((data, i) => {
+							{details.contents.map((data, i) => {
 								return <CourseContent key={i} sn={i + 1} data={data} />;
 							})}
 						</ContentWrapper>
