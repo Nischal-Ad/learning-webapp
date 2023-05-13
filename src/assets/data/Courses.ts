@@ -9,6 +9,11 @@ export const courses: ICourses[] = [
 		author: 'John Doe',
 		rating: 4,
 		price: 9.99,
+		contents: [
+			'High school diploma or equivalent',
+			'Experience with customer service',
+			'Ability to work flexible hours',
+		],
 		requirements: [
 			'Bachelor’s degree in Business Administration or related field',
 			'Experience with project management loream djakod aeodf oe we ofjfo fg jo eg uoh go kj g he;oa goeg g iogeriog eaig8p9roigf harofg  og gh ojg al wrogfhjwuogawrkjhekiljerag earih uiwrif hwaoifh waf awurfhof awrojfwoji rwifjhgiaw fkjwar a9wg ljrh 9uoug 4',
@@ -37,6 +42,11 @@ export const courses: ICourses[] = [
 		desc: 'This is the second course',
 		author: 'Jane Doe',
 		rating: 5,
+		contents: [
+			'High school diploma or equivalent',
+			'Experience with customer service',
+			'Ability to work flexible hours',
+		],
 		requirements: [
 			'High school diploma or equivalent',
 			'Experience with customer service',
@@ -66,6 +76,11 @@ export const courses: ICourses[] = [
 		desc: 'This is the first course',
 		author: 'John Doe',
 		rating: 4,
+		contents: [
+			'High school diploma or equivalent',
+			'Experience with customer service',
+			'Ability to work flexible hours',
+		],
 		requirements: [
 			'High school diploma or equivalent',
 			'Experience with customer service',
@@ -96,6 +111,11 @@ export const courses: ICourses[] = [
 		author: 'John Doe',
 		rating: 4,
 		price: 9.99,
+		contents: [
+			'High school diploma or equivalent',
+			'Experience with customer service',
+			'Ability to work flexible hours',
+		],
 		requirements: [
 			'High school diploma or equivalent',
 			'Experience with customer service',
@@ -125,6 +145,11 @@ export const courses: ICourses[] = [
 		author: 'John Doe',
 		rating: 4,
 		price: 9.99,
+		contents: [
+			'High school diploma or equivalent',
+			'Experience with customer service',
+			'Ability to work flexible hours',
+		],
 		requirements: [
 			'High school diploma or equivalent',
 			'Experience with customer service',
@@ -154,6 +179,11 @@ export const courses: ICourses[] = [
 		author: 'John Doe',
 		rating: 4,
 		price: 9.99,
+		contents: [
+			'High school diploma or equivalent',
+			'Experience with customer service',
+			'Ability to work flexible hours',
+		],
 		requirements: [
 			'High school diploma or equivalent',
 			'Experience with customer service',
@@ -179,6 +209,11 @@ export const courses: ICourses[] = [
 		id: '7',
 		img: 'https://example.com/image1.jpg',
 		title: 'Course 1',
+		contents: [
+			'High school diploma or equivalent',
+			'Experience with customer service',
+			'Ability to work flexible hours',
+		],
 		requirements: [
 			'High school diploma or equivalent',
 			'Experience with customer service',
@@ -208,6 +243,11 @@ export const courses: ICourses[] = [
 		id: '8',
 		img: 'https://example.com/image1.jpg',
 		title: 'Course 1',
+		contents: [
+			'High school diploma or equivalent',
+			'Experience with customer service',
+			'Ability to work flexible hours',
+		],
 		requirements: [
 			'High school diploma or equivalent',
 			'Experience with customer service',
@@ -240,6 +280,11 @@ export const courses: ICourses[] = [
 		desc: 'This is the first course',
 		author: 'John Doe',
 		rating: 4,
+		contents: [
+			'High school diploma or equivalent',
+			'Experience with customer service',
+			'Ability to work flexible hours',
+		],
 		requirements: [
 			'High school diploma or equivalent',
 			'Experience with customer service',
@@ -267,6 +312,11 @@ export const courses: ICourses[] = [
 		img: 'https://example.com/image1.jpg',
 		title: 'Course 1',
 		desc: 'This is the first course',
+		contents: [
+			'High school diploma or equivalent',
+			'Experience with customer service',
+			'Ability to work flexible hours',
+		],
 		requirements: [
 			'High school diploma or equivalent',
 			'Experience with customer service',
@@ -298,6 +348,11 @@ export const courses: ICourses[] = [
 		desc: 'This is the first course',
 		author: 'John Doe',
 		rating: 4,
+		contents: [
+			'High school diploma or equivalent',
+			'Experience with customer service',
+			'Ability to work flexible hours',
+		],
 		requirements: [
 			'High school diploma or equivalent',
 			'Experience with customer service',
