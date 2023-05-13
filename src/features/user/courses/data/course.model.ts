@@ -9,6 +9,7 @@ export interface ICourses {
 	rating: 0 | 1 | 2 | 3 | 4 | 5;
 	price: number;
 	Dprice: number;
+	requirements: string[];
 	testomonial: ITestomonial[];
 }
 

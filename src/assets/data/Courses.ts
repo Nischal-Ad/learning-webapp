@@ -9,6 +9,11 @@ export const courses: ICourses[] = [
 		author: 'John Doe',
 		rating: 4,
 		price: 9.99,
+		requirements: [
+			'Bachelor’s degree in Business Administration or related field',
+			'Experience with project management',
+			'Excellent communication skills',
+		],
 		Dprice: 7.99,
 		testomonial: [
 			{
@@ -32,6 +37,11 @@ export const courses: ICourses[] = [
 		desc: 'This is the second course',
 		author: 'Jane Doe',
 		rating: 5,
+		requirements: [
+			'High school diploma or equivalent',
+			'Experience with customer service',
+			'Ability to work flexible hours',
+		],
 		price: 19.99,
 		Dprice: 16.99,
 		testomonial: [
@@ -56,6 +66,11 @@ export const courses: ICourses[] = [
 		desc: 'This is the first course',
 		author: 'John Doe',
 		rating: 4,
+		requirements: [
+			'High school diploma or equivalent',
+			'Experience with customer service',
+			'Ability to work flexible hours',
+		],
 		price: 9.99,
 		Dprice: 7.99,
 		testomonial: [
@@ -81,6 +96,11 @@ export const courses: ICourses[] = [
 		author: 'John Doe',
 		rating: 4,
 		price: 9.99,
+		requirements: [
+			'High school diploma or equivalent',
+			'Experience with customer service',
+			'Ability to work flexible hours',
+		],
 		Dprice: 7.99,
 		testomonial: [
 			{
@@ -105,6 +125,11 @@ export const courses: ICourses[] = [
 		author: 'John Doe',
 		rating: 4,
 		price: 9.99,
+		requirements: [
+			'High school diploma or equivalent',
+			'Experience with customer service',
+			'Ability to work flexible hours',
+		],
 		Dprice: 7.99,
 		testomonial: [
 			{
@@ -129,6 +154,11 @@ export const courses: ICourses[] = [
 		author: 'John Doe',
 		rating: 4,
 		price: 9.99,
+		requirements: [
+			'High school diploma or equivalent',
+			'Experience with customer service',
+			'Ability to work flexible hours',
+		],
 		Dprice: 7.99,
 		testomonial: [
 			{
@@ -149,6 +179,11 @@ export const courses: ICourses[] = [
 		id: '7',
 		img: 'https://example.com/image1.jpg',
 		title: 'Course 1',
+		requirements: [
+			'High school diploma or equivalent',
+			'Experience with customer service',
+			'Ability to work flexible hours',
+		],
 		desc: 'This is the first course',
 		author: 'John Doe',
 		rating: 4,
@@ -173,6 +208,11 @@ export const courses: ICourses[] = [
 		id: '8',
 		img: 'https://example.com/image1.jpg',
 		title: 'Course 1',
+		requirements: [
+			'High school diploma or equivalent',
+			'Experience with customer service',
+			'Ability to work flexible hours',
+		],
 		desc: 'This is the first course',
 		author: 'John Doe',
 		rating: 4,
@@ -200,6 +240,11 @@ export const courses: ICourses[] = [
 		desc: 'This is the first course',
 		author: 'John Doe',
 		rating: 4,
+		requirements: [
+			'High school diploma or equivalent',
+			'Experience with customer service',
+			'Ability to work flexible hours',
+		],
 		price: 9.99,
 		Dprice: 7.99,
 		testomonial: [
@@ -222,6 +267,11 @@ export const courses: ICourses[] = [
 		img: 'https://example.com/image1.jpg',
 		title: 'Course 1',
 		desc: 'This is the first course',
+		requirements: [
+			'High school diploma or equivalent',
+			'Experience with customer service',
+			'Ability to work flexible hours',
+		],
 		author: 'John Doe',
 		rating: 4,
 		price: 9.99,
@@ -248,6 +298,11 @@ export const courses: ICourses[] = [
 		desc: 'This is the first course',
 		author: 'John Doe',
 		rating: 4,
+		requirements: [
+			'High school diploma or equivalent',
+			'Experience with customer service',
+			'Ability to work flexible hours',
+		],
 		price: 9.99,
 		Dprice: 7.99,
 		testomonial: [

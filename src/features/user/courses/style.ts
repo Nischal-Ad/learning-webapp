@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Box } from '@mui/material';
+import { Box, List } from '@mui/material';
 
 export const CourseCardWrapper = styled(Box)`
 	overflow: auto;
@@ -121,4 +121,24 @@ export const CourseDetailsOverViewWrapper = styled(Box)`
 	box-shadow: 0px 10px 60px rgba(38, 45, 118, 0.08);
 	padding: 1rem;
 	border-radius: 5px;
+`;
+
+export const RequirementWrapper = styled(List)`
+	padding: 0 !important;
+
+	li {
+		margin: 1rem 0;
+		padding: 0;
+		position: relative;
+
+		svg {
+			font-size: 0.8rem;
+			position: absolute;
+			top: 0.5rem;
+		}
+
+		span {
+			margin-left: 1.5rem;
+		}
+	}
 `;

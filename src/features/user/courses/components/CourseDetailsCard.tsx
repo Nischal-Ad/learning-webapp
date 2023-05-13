@@ -120,25 +120,38 @@ const CourseDetailsCard = ({ details }: { details: ICourses }) => {
 				<Grid item xs={12} md={8}>
 					<CourseDetailsOverViewWrapper>
 						<ContentWrapper title='Overview'>
-							<Typography variant='subtitle2'>{details.desc}</Typography>
+							<Typography variant='subtitle2' component={'pre'}>
+								{details.desc}
+							</Typography>
 						</ContentWrapper>
 						<ContentWrapper title='Course Content'>
 							<CourseContent />
 						</ContentWrapper>
 						<ContentWrapper title='Requirements'>
-							<CourseRequirement />
+							{details.requirements.map((data, i) => {
+								return <CourseRequirement key={i} requirement={data} />;
+							})}
 						</ContentWrapper>
 						<ContentWrapper title='Rating'>
 							<Typography variant='h5' component={'span'} fontWeight={'bold'}>
 								Top Rating {`${details.rating} of 5`}
 							</Typography>
-							<ReactStars
-								count={5}
-								size={20}
-								edit={false}
-								value={details.rating}
-								color2={'#e59819'}
-							/>
+							<Stack spacing={1} direction={'row'} my={1} alignItems={'center'}>
+								<ReactStars
+									count={5}
+									size={20}
+									edit={false}
+									value={details.rating}
+									color2={'#e59819'}
+								/>
+								<Typography
+									variant='subtitle2'
+									component={'span'}
+									fontWeight={'bold'}
+								>
+									(10)
+								</Typography>
+							</Stack>
 							{details.testomonial.map((data, i) => {
 								return <TestomonialCard key={i} testomonial={data} />;
 							})}
