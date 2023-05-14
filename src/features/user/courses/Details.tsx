@@ -4,6 +4,7 @@ import CourseDetailsCard from './components/CourseDetailsCard';
 import { useParams } from 'react-router-dom';
 import { courses } from '@Data/Courses';
 import HighlightsCourses from './Highlights';
+import Error from '@Components/Error';
 
 const Details = () => {
 	const { id } = useParams();
@@ -20,7 +21,7 @@ const Details = () => {
 						<HighlightsCourses title='You may also like' courses={courses} />
 					</>
 				) : (
-					<p>No course found with the given ID.</p>
+					<Error />
 				)}
 			</Section>
 		</>

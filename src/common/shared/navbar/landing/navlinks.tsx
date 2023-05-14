@@ -1,4 +1,4 @@
-import { Box, Button, MenuList, MenuItem } from '@mui/material';
+import { Box, Button, Stack, MenuItem } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Auth from '@Features/user/Auth';
 import { useState } from 'react';
@@ -15,31 +15,50 @@ const Navlinks = ({ NavDrop }: INavLinks) => {
 	};
 
 	return (
-		<MenuList onClick={() => NavDrop(false)}>
-			<Box component={'a'} href='#welcome' display={'block'}>
-				<MenuItem>Home</MenuItem>
-			</Box>
-			<Box component={'a'} href='#our success'>
-				<MenuItem>Our Success</MenuItem>
-			</Box>
-			<Box component={'a'} href='#services'>
-				<MenuItem>Services</MenuItem>
-			</Box>
-			<Box component={'a'} href='#courses'>
-				<MenuItem>Courses</MenuItem>
-			</Box>
-			<Box component={'a'} href='#about us'>
-				<MenuItem>About Us</MenuItem>
-			</Box>
-			<Box component={'a'} href='#goals'>
-				<MenuItem>Goals</MenuItem>
-			</Box>
-			<Box component={'a'} href='#testimonial'>
-				<MenuItem>Testomonials</MenuItem>
-			</Box>
-			<MenuItem
-				sx={{ padding: 0, marginX: 1, display: { lg: 'block', xs: 'none' } }}
-			>
+		<Stack
+			direction={{ md: 'row', xs: 'column' }}
+			spacing={{ md: 0, xs: 2 }}
+			margin={0}
+			padding={0}
+			component={'ul'}
+			onClick={() => NavDrop(false)}
+		>
+			<MenuItem>
+				<Box component={'a'} href='#welcome'>
+					Home
+				</Box>
+			</MenuItem>
+			<MenuItem>
+				<Box component={'a'} href='#our success'>
+					Our Success
+				</Box>
+			</MenuItem>
+			<MenuItem>
+				<Box component={'a'} href='#services'>
+					Services
+				</Box>
+			</MenuItem>
+			<MenuItem>
+				<Box component={'a'} href='#courses'>
+					Courses
+				</Box>
+			</MenuItem>
+			<MenuItem>
+				<Box component={'a'} href='#about us'>
+					About Us
+				</Box>
+			</MenuItem>
+			<MenuItem>
+				<Box component={'a'} href='#goals'>
+					Goals
+				</Box>
+			</MenuItem>
+			<MenuItem>
+				<Box component={'a'} href='#testimonial'>
+					Testomonials
+				</Box>
+			</MenuItem>
+			<MenuItem>
 				<Button
 					variant='contained'
 					endIcon={<ArrowForwardIcon />}
@@ -59,7 +78,7 @@ const Navlinks = ({ NavDrop }: INavLinks) => {
 				</Button>
 				<Auth open={open} showAuth={showAuth} />
 			</MenuItem>
-		</MenuList>
+		</Stack>
 	);
 };
 

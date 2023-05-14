@@ -6,7 +6,7 @@ interface IHelmet {
 	content?: string;
 }
 
-const index: React.FC<IHelmet> = ({ title, content }) => {
+const index: React.FC<IHelmet> = ({ title = '', content = '' }) => {
 	return (
 		<Helmet>
 			<title>{title} - E-Learning</title>

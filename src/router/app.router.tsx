@@ -63,7 +63,7 @@ const router = createBrowserRouter(
 			<Route
 				element={
 					<ProtectedRoute
-						auth={isAuth.isAuth}
+						auth={true}
 						Navbar={<NavbarUser />}
 						Footer={<Footer />}
 					/>

@@ -55,6 +55,10 @@ const FooterLanding = () => {
 							justifyContent: 'space-evenly',
 							width: { sm: '24rem', xs: '100%' },
 							paddingBottom: 1,
+
+							span: {
+								fontSize: { sm: '1rem', xs: '14px' },
+							},
 						}}
 					>
 						<Typography variant='subtitle1' component={'span'}>

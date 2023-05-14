@@ -37,12 +37,11 @@ const Index: React.FC<ICoruseHighlight> = ({ courses, title }) => {
 		<CourseWrapper position={'relative'}>
 			{title && (
 				<Typography
-					variant='h3'
 					component={'h1'}
 					sx={{
 						fontFamily: 'var(--ff-Cinzel) !important',
 						fontWeight: 'bold',
-						fontSize: '2.6rem',
+						fontSize: { md: '2.4rem', xs: '1.5rem' },
 						margin: '1rem 0',
 					}}
 				>
