@@ -19,6 +19,9 @@ const Landing = lazy(() => import('@Features/landing'));
 const Dashboard = lazy(() => import('@Features/user/Dashboard'));
 const Courses = lazy(() => import('@Features/user/courses'));
 const CoursesDetails = lazy(() => import('@Features/user/courses/Details'));
+const Cart = lazy(() => import('@Features/user/cart/Index'));
+const Profile = lazy(() => import('@Features/user/profile/Index'));
+const MyLearnings = lazy(() => import('@Features/user/profile/MyLearnings'));
 
 const auth = localStorage.getItem('auth') || '';
 const isAuth = auth && JSON.parse(auth);
@@ -72,6 +75,9 @@ const router = createBrowserRouter(
 				<Route path='/dashboard' element={<Dashboard />} />
 				<Route path='/courses' element={<Courses />} />
 				<Route path='/courses/:id' element={<CoursesDetails />} />
+				<Route path='/profile' element={<Profile />} />
+				<Route path='/cart' element={<Cart />} />
+				<Route path='/my-learnings' element={<MyLearnings />} />
 			</Route>
 			{/* end of protected routes for user */}
 
