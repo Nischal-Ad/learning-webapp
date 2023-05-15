@@ -11,6 +11,11 @@ import {
 	IconButton,
 	DialogContent,
 	MenuItem,
+	Button,
+	Badge,
+	Divider,
+	Typography,
+	Popover,
 } from '@mui/material';
 import { ImageWrapper, SearchFormWrapper } from '../style';
 import { Link } from 'react-router-dom';
@@ -23,21 +28,29 @@ import PersonIcon from '@mui/icons-material/Person';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { useNavigate } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
+import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
+import NotificationList from './components/NotificationList';
 
 const Index = () => {
-	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+	const [userMenu, setUserMenu] = React.useState<null | HTMLElement>(null);
 	const [search, setSearch] = React.useState('');
 	const [showSearch, setShowSearch] = React.useState(false);
+	const [openNotification, setOpenNotification] =
+		React.useState<null | HTMLElement>(null);
 
-	const open = Boolean(anchorEl);
 	const navigate = useNavigate();
 
 	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-		setAnchorEl(event.currentTarget);
+		setUserMenu(event.currentTarget);
+	};
+
+	const handleNotification = (event: React.MouseEvent<HTMLElement>) => {
+		setOpenNotification(event.currentTarget);
 	};
 
 	const handleClose = () => {
-		setAnchorEl(null);
+		setUserMenu(null);
+		setOpenNotification(null);
 	};
 
 	const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
@@ -64,6 +77,95 @@ const Index = () => {
 					}}
 				/>
 			</SearchFormWrapper>
+		);
+	};
+
+	const displayMenu = () => {
+		return (
+			<Menu
+				id='user-menu'
+				anchorEl={userMenu}
+				open={Boolean(userMenu)}
+				onClose={handleClose}
+				onClick={handleClose}
+				PaperProps={{
+					sx: {
+						filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+						mt: 1.5,
+						paddingX: 1,
+
+						svg: {
+							marginRight: 1,
+						},
+
+						a: {
+							display: 'flex',
+							alignItems: 'center',
+							color: 'var(--black)',
+							my: 0.5,
+						},
+					},
+				}}
+			>
+				<MenuItem>
+					<Link to={'/profile'}>
+						<PersonIcon /> Profile
+					</Link>
+				</MenuItem>
+				<MenuItem>
+					<Link to={'/my-learnings'}>
+						<LocalLibraryIcon /> My Learnings
+					</Link>
+				</MenuItem>
+				<Divider />
+				<MenuItem>
+					<ExitToAppIcon /> Logout
+				</MenuItem>
+			</Menu>
+		);
+	};
+
+	const displayNotification = () => {
+		return (
+			<Menu
+				id='notification'
+				anchorEl={openNotification}
+				open={Boolean(openNotification)}
+				onClose={handleClose}
+				onClick={handleClose}
+				PaperProps={{
+					sx: {
+						overflow: 'auto',
+						filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+						paddingX: 2,
+						pb: 1,
+						mt: 1.5,
+						height: { sm: '25rem', xs: '50dvh' },
+						width: { sm: '25rem', xs: '80dvw' },
+					},
+				}}
+			>
+				<Stack
+					direction={'row'}
+					justifyContent={'space-between'}
+					alignItems={'center'}
+					paddingBottom={1}
+				>
+					<Typography variant='h6' component={'span'} fontWeight={'bold'}>
+						Notifications
+					</Typography>
+					<Button>clear all</Button>
+				</Stack>
+				<Divider />
+				<NotificationList />
+				<NotificationList /> <NotificationList />
+				<NotificationList /> <NotificationList />
+				<NotificationList /> <NotificationList />
+				<NotificationList /> <NotificationList />
+				<NotificationList /> <NotificationList />
+				<NotificationList /> <NotificationList />
+				<NotificationList />
+			</Menu>
 		);
 	};
 
@@ -97,69 +199,42 @@ const Index = () => {
 						{displaySearch()}
 					</Box>
 					<Stack
-						spacing={{ sm: 3, xs: '12px' }}
+						spacing={{ sm: 2 }}
 						direction={'row'}
-						color='var(--black)'
+						alignItems={'center'}
 						sx={{
 							'img, svg': {
 								cursor: 'pointer',
+								color: 'black',
 							},
 						}}
 					>
-						<SearchIcon
+						<IconButton
+							aria-label='search'
 							onClick={() => setShowSearch(!showSearch)}
 							sx={{
-								display: { md: 'none', xs: 'block' },
+								display: { md: 'none' },
 							}}
-						/>
-						<AddShoppingCartIcon />
-						<NotificationsNoneIcon />
-						<ImageWrapper
-							onClick={handleClick}
-							aria-controls={open ? 'user-menu' : undefined}
-							aria-haspopup='true'
-							aria-expanded={open ? 'true' : undefined}
-							src='https://cdn.pixabay.com/photo/2023/04/15/14/42/baby-7927866_960_720.jpg'
-						/>
+						>
+							<SearchIcon />
+						</IconButton>
+						<Link to={'/cart'}>
+							<IconButton aria-label='cart'>
+								<AddShoppingCartIcon />
+							</IconButton>
+						</Link>
+						<IconButton aria-label='notification' onClick={handleNotification}>
+							<Badge color='error' variant='dot' invisible={false}>
+								<NotificationsNoneIcon />
+							</Badge>
+						</IconButton>
+
+						<IconButton aria-label='profile' onClick={handleClick}>
+							<ImageWrapper src='https://cdn.pixabay.com/photo/2023/04/15/14/42/baby-7927866_960_720.jpg' />
+						</IconButton>
 					</Stack>
 				</Stack>
 			</Section>
-			<Menu
-				id='user-menu'
-				anchorEl={anchorEl}
-				open={open}
-				onClose={handleClose}
-				onClick={handleClose}
-				PaperProps={{
-					sx: {
-						overflow: 'visible',
-						filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-						mt: 2,
-						paddingX: 1,
-
-						svg: {
-							marginRight: 1,
-						},
-
-						'&:before': {
-							content: '""',
-							position: 'absolute',
-							right: 14,
-							width: 10,
-							height: 10,
-							bgcolor: 'background.paper',
-							transform: 'translateY(-50%) rotate(45deg)',
-						},
-					},
-				}}
-			>
-				<MenuItem>
-					<PersonIcon /> Profile
-				</MenuItem>
-				<MenuItem>
-					<ExitToAppIcon /> Logout
-				</MenuItem>
-			</Menu>
 			{showSearch && (
 				<Dialog open={showSearch}>
 					<DialogTitle>
@@ -176,6 +251,8 @@ const Index = () => {
 					<DialogContent>{displaySearch()}</DialogContent>
 				</Dialog>
 			)}
+			{displayMenu()}
+			{displayNotification()}
 		</AppBar>
 	);
 };
