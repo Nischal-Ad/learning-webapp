@@ -65,13 +65,6 @@ export const NavbarWrapper = styled(Box)`
 	}
 `;
 
-export const ImageWrapper = styled.img`
-	object-fit: fill;
-	border-radius: 999px;
-	width: 1.6rem;
-	height: 1.6rem;
-`;
-
 export const SearchFormWrapper = styled.form`
 	width: 100%;
 `;

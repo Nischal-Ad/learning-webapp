@@ -14,17 +14,17 @@ import {
 	Button,
 	Badge,
 	Divider,
+	Avatar,
 	Typography,
-	Popover,
 } from '@mui/material';
-import { ImageWrapper, SearchFormWrapper } from '../style';
+import { SearchFormWrapper } from '../style';
 import { Link } from 'react-router-dom';
 import logo from '@Svg/logo_text_black.svg';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import SearchIcon from '@mui/icons-material/Search';
 import React from 'react';
-import PersonIcon from '@mui/icons-material/Person';
+import LockIcon from '@mui/icons-material/Lock';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { useNavigate } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
@@ -39,6 +39,7 @@ const Index = () => {
 		React.useState<null | HTMLElement>(null);
 
 	const navigate = useNavigate();
+	const color = Math.floor(100 + Math.random() * 900);
 
 	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
 		setUserMenu(event.currentTarget);
@@ -108,13 +109,28 @@ const Index = () => {
 				}}
 			>
 				<MenuItem>
-					<Link to={'/profile'}>
-						<PersonIcon /> Profile
-					</Link>
+					<Typography
+						variant='subtitle1'
+						fontWeight={'bold'}
+						display={'flex'}
+						flexDirection={'column'}
+						textAlign={'center'}
+					>
+						Nischal Adhikari
+						<Typography variant='caption'>
+							nischaladhikari101@gmail.com
+						</Typography>
+					</Typography>
 				</MenuItem>
+				<Divider />
 				<MenuItem>
 					<Link to={'/my-learnings'}>
 						<LocalLibraryIcon /> My Learnings
+					</Link>
+				</MenuItem>
+				<MenuItem>
+					<Link to={'/changepassword'}>
+						<LockIcon /> Change Password
 					</Link>
 				</MenuItem>
 				<Divider />
@@ -228,9 +244,16 @@ const Index = () => {
 								<NotificationsNoneIcon />
 							</Badge>
 						</IconButton>
-
 						<IconButton aria-label='profile' onClick={handleClick}>
-							<ImageWrapper src='https://cdn.pixabay.com/photo/2023/04/15/14/42/baby-7927866_960_720.jpg' />
+							<Avatar
+								sx={{
+									width: 30,
+									height: 30,
+									bgcolor: `#${color}`,
+								}}
+							>
+								N
+							</Avatar>
 						</IconButton>
 					</Stack>
 				</Stack>
