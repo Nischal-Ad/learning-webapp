@@ -1,6 +1,6 @@
 import { Typography, IconButton } from '@mui/material';
 import Stack from '@mui/material/Stack';
-import CourseCard from './components/CourseCard';
+import CourseCard from '@Components/Courses/Index';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import { CourseWrapper } from './style';

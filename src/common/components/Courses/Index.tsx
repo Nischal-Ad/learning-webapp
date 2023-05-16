@@ -1,7 +1,7 @@
 import { Box, Typography, CardMedia } from '@mui/material';
-import { CourseCardWrapper } from '../style';
+import { CourseCardWrapper } from './style';
 import ReactStars from 'react-stars';
-import { ICourses } from '../data/course.model';
+import { ICourses } from '@Features/user/courses/data/course.model';
 import { Link } from 'react-router-dom';
 
 const CourseCard = ({
@@ -29,7 +29,7 @@ const CourseCard = ({
 						component={'img'}
 						image={courses.img}
 						sx={{
-							height: !list ? '10rem' : '100%',
+							height: '10rem',
 							width: list ? { md: '16rem', xs: '100%' } : '100%',
 							objectFit: 'fill',
 							marginRight: list ? { md: '1rem', xs: 0 } : 0,
