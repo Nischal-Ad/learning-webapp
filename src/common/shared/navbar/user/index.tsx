@@ -108,7 +108,11 @@ const Index = () => {
 					},
 				}}
 			>
-				<MenuItem>
+				<MenuItem
+					sx={{
+						cursor: 'auto',
+					}}
+				>
 					<Typography
 						variant='subtitle1'
 						fontWeight={'bold'}
