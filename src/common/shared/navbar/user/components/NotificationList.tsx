@@ -1,4 +1,4 @@
-import { Typography, Stack, IconButton, Divider } from '@mui/material';
+import { Typography, Stack, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 const NotificationList = () => {

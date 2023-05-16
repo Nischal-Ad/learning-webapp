@@ -1,5 +1,4 @@
 import { Box, Typography, Stack } from '@mui/material';
-import test from '@Img/test.jpg';
 import { ImageWrapper } from './style';
 import ReactStars from 'react-stars';
 import { ITestomonial } from './data/testomonial.model';
