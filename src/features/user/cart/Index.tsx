@@ -30,6 +30,10 @@ const Index = () => {
 									size='large'
 									sx={{
 										display: { md: 'block', xs: 'none' },
+
+										'&:hover': {
+											background: 'none',
+										},
 									}}
 								>
 									<DeleteIcon fontSize='inherit' />
