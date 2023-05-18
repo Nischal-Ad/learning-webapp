@@ -1,0 +1,21 @@
+node_modules
+dist
+dist-ssr
+*.local files
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# custom
+.yarn
+.yarnrc.yml
+package-lock.json
+yarn.lock
