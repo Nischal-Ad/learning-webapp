@@ -19,3 +19,4 @@ dist-ssr
 .yarnrc.yml
 package-lock.json
 yarn.lock
+src/config/*.env
