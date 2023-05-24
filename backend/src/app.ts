@@ -12,7 +12,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: '*',
+    origin: 'http://localhost:5173', // Set the specific origin instead of the wildcard '*'
+    credentials: true, // Enable sending cookies and other credentials
   })
 );
 
