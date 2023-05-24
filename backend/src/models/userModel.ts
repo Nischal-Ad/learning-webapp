@@ -1,7 +1,7 @@
-import { InferSchemaType, Schema, model } from 'mongoose';
-import validator from 'validator';
+import { InferSchemaType, Schema, model } from 'mongoose'
+import validator from 'validator'
 
-type TUser = InferSchemaType<typeof userSchema>;
+type TUser = InferSchemaType<typeof userSchema>
 
 const userSchema = new Schema({
   name: {
@@ -22,6 +22,6 @@ const userSchema = new Schema({
     required: [true, 'please enter your password'],
     select: false,
   },
-});
+})
 
-export default model<TUser>('User', userSchema);
+export default model<TUser>('User', userSchema)
