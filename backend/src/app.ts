@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
+import bodyParser from 'body-parser'
 import Error from '@Middleware/error'
 
 //routes
@@ -10,6 +11,7 @@ const app = express()
 
 app.use(express.json())
 app.use(cookieParser())
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(
   cors({
     origin: 'http://localhost:5173', // Set the specific origin instead of the wildcard '*'
