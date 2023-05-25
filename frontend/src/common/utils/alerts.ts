@@ -1,9 +1,9 @@
-import { enqueueSnackbar } from 'notistack';
+import { enqueueSnackbar } from 'notistack'
 
 export const notifySuccess = (message: string) => {
-	enqueueSnackbar({ message, variant: 'success' });
-};
+  enqueueSnackbar({ message, variant: 'success' })
+}
 
 export const notifyError = (message: string) => {
-	enqueueSnackbar({ message, variant: 'error' });
-};
+  enqueueSnackbar({ message, variant: 'error' })
+}

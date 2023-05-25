@@ -1,20 +1,20 @@
 :root {
-	/* color  */
-	--black: #191919;
-	--white: #f3f3f3;
-	--dark: #696984;
-	--primary: #49bbbd;
-	--secondary: #252641;
-	--primary-hover: #52ced0;
+  /* color  */
+  --black: #191919;
+  --white: #f3f3f3;
+  --dark: #696984;
+  --primary: #49bbbd;
+  --secondary: #252641;
+  --primary-hover: #52ced0;
 
-	--height: 100dvh;
+  --height: 100dvh;
 
-	/* font family */
-	--ff-poppins: 'Poppins';
-	--ff-quicksand: 'quicksand';
-	--ff-bruno: 'Bruno Ace SC', cursive;
-	--ff-nunito: 'nunito';
-	--ff-Cinzel: 'Cinzel';
+  /* font family */
+  --ff-poppins: 'Poppins';
+  --ff-quicksand: 'quicksand';
+  --ff-bruno: 'Bruno Ace SC', cursive;
+  --ff-nunito: 'nunito';
+  --ff-Cinzel: 'Cinzel';
 
-	/* gradients */
+  /* gradients */
 }
