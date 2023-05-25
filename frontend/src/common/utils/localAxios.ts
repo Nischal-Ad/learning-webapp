@@ -12,7 +12,7 @@ localAxios.interceptors.request.use((config) => {
 
   const q = new URLSearchParams(queries)
 
-  const apiKey = localStorage.getItem('apiKey')
+  const apiKey = undefined
   if (apiKey) q.set('apiKey', apiKey)
 
   config.url = `${pathname}?${q.toString()}`
