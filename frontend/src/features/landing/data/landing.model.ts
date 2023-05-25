@@ -1,5 +1,5 @@
-interface ICards {
-	heading: string;
-	img: string;
-	desc: string;
+export interface ICards {
+  heading: string
+  img: string
+  desc: string
 }

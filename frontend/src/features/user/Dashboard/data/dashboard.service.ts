@@ -1,3 +1,3 @@
-import localAxios from '@Utils/localAxios';
+import localAxios from '@Utils/localAxios'
 
-export const onTest = (): Promise<any> => localAxios.get(`/api/v1/test`);
+export const onTest = (): Promise<void> => localAxios.get(`/api/v1/test`)

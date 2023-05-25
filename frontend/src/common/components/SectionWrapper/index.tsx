@@ -1,16 +1,16 @@
-import React, { PropsWithChildren } from 'react';
-import Container from '@mui/material/Container';
+import React, { PropsWithChildren } from 'react'
+import Container from '@mui/material/Container'
 
 interface ISection extends PropsWithChildren {
-	id: string;
+  id: string
 }
 
 const Section: React.FC<ISection> = ({ id, children }) => {
-	return (
-		<section id={id}>
-			<Container maxWidth='xl'>{children}</Container>
-		</section>
-	);
-};
+  return (
+    <section id={id}>
+      <Container maxWidth="xl">{children}</Container>
+    </section>
+  )
+}
 
-export default Section;
+export default Section
