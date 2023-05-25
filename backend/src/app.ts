@@ -1,11 +1,11 @@
 import express from 'express'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
+import bodyParser from 'body-parser'
 import Error from '@Middleware/error'
 
 //routes
 import UserRouter from '@Routes/userRoute'
-import bodyParser from 'body-parser'
 
 const app = express()
 
