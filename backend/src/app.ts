@@ -5,11 +5,13 @@ import Error from '@Middleware/error'
 
 //routes
 import UserRouter from '@Routes/userRoute'
+import bodyParser from 'body-parser'
 
 const app = express()
 
 app.use(express.json())
 app.use(cookieParser())
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(
   cors({
     origin: 'http://localhost:5173', // Set the specific origin instead of the wildcard '*'
