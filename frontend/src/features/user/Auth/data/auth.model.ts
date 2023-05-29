@@ -30,9 +30,9 @@ export const LoginSchema = object().shape({
 })
 
 export const RegisterSchema = object().shape({
-  username: string()
-    .max(8, 'username must be less than or equal to 8')
-    .min(3, 'username must be more than or equal to 3')
+  name: string()
+    .max(20, 'username must be less than or equal to 8')
+    .min(4, 'username must be more than or equal to 3')
     .required('please enter username'),
   email: string().email().required('please enter email'),
   password: string()

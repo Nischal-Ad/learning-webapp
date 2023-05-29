@@ -26,7 +26,7 @@ const Register = ({ reset }: IAuth) => {
     handleReset,
   } = useFormik({
     initialValues: {
-      username: '',
+      name: '',
       email: '',
       password: '',
       cPassword: '',
@@ -50,13 +50,13 @@ const Register = ({ reset }: IAuth) => {
       <TextField
         fullWidth
         required
-        name="username"
+        name="name"
         label="Username"
         variant="standard"
-        value={values.username}
+        value={values.name}
         onChange={handleChange}
-        error={Boolean(touched.username && errors.username)}
-        helperText={touched.username && errors.username}
+        error={Boolean(touched.name && errors.name)}
+        helperText={touched.name && errors.name}
         onBlur={handleBlur}
         sx={{
           marginY: 1,
