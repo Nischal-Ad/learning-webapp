@@ -14,7 +14,7 @@ export interface ILogin {
 export interface ILoginState {
   status: 'idle' | 'loading' | 'success' | 'error'
   data: ILogin
-  error: any
+  error: Error
 }
 
 export interface IAuth {
@@ -30,9 +30,9 @@ export const LoginSchema = object().shape({
 })
 
 export const RegisterSchema = object().shape({
-  username: string()
-    .max(8, 'username must be less than or equal to 8')
-    .min(3, 'username must be more than or equal to 3')
+  name: string()
+    .max(20, 'username must be less than or equal to 8')
+    .min(4, 'username must be more than or equal to 3')
     .required('please enter username'),
   email: string().email().required('please enter email'),
   password: string()
@@ -42,4 +42,7 @@ export const RegisterSchema = object().shape({
   cPassword: string()
     .oneOf([ref('password')], 'password doesnot match')
     .required('please enter confirm password'),
+  role: string()
+    .oneOf(['student', 'teacher'], 'Invalid role')
+    .required('Please select a role'),
 })

@@ -19,7 +19,7 @@ const authToken = (
     throw new Error('jwt cookie expire value is missing')
   }
 
-  const token = jwt.sign(user._id, JWT_SECRET, {
+  const token = jwt.sign({ id: user._id }, JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRES_IN,
   })
 

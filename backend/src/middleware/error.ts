@@ -29,6 +29,12 @@ const errorMiddleware = (
     err = new ErrorHandler(message, 400)
   }
 
+  //custom display of mongoose validation error
+  if (err instanceof Error.ValidationError) {
+    const message = err.message.split(': ')
+    err = new ErrorHandler(message[2], 500)
+  }
+
   // wrong JWT errors
   if (err.name === 'JsonWebTokenError') {
     const message = `json web token is invalid try again`
