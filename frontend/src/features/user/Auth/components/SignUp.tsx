@@ -1,7 +1,14 @@
 import { useFormik } from 'formik'
 import { IAuth, RegisterSchema } from '../data/auth.model'
 import TextField from '@mui/material/TextField'
-import { Box, Button } from '@mui/material'
+import {
+  Box,
+  Button,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+  Typography,
+} from '@mui/material'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -23,6 +30,7 @@ const Register = ({ reset }: IAuth) => {
       email: '',
       password: '',
       cPassword: '',
+      role: 'student',
     },
     validationSchema: RegisterSchema,
     onSubmit: (values) => {
@@ -88,8 +96,8 @@ const Register = ({ reset }: IAuth) => {
       <TextField
         fullWidth
         required
-        id="cPassword"
         name="cPassword"
+        type="password"
         label="Confirm Password"
         variant="standard"
         value={values.cPassword}
@@ -101,6 +109,11 @@ const Register = ({ reset }: IAuth) => {
           marginY: 1,
         }}
       />
+      <Typography>Who are you?</Typography>
+      <RadioGroup row value={values.role} name="role" onChange={handleChange}>
+        <FormControlLabel value="student" control={<Radio />} label="Student" />
+        <FormControlLabel value="teacher" control={<Radio />} label="Teacher" />
+      </RadioGroup>
       <Button
         disabled={!isValid}
         color="primary"

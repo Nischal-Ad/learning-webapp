@@ -14,7 +14,7 @@ export interface ILogin {
 export interface ILoginState {
   status: 'idle' | 'loading' | 'success' | 'error'
   data: ILogin
-  error: any
+  error: Error
 }
 
 export interface IAuth {
@@ -42,4 +42,7 @@ export const RegisterSchema = object().shape({
   cPassword: string()
     .oneOf([ref('password')], 'password doesnot match')
     .required('please enter confirm password'),
+  role: string()
+    .oneOf(['student', 'teacher'], 'Invalid role')
+    .required('Please select a role'),
 })
