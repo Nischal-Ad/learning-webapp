@@ -2,7 +2,9 @@ import { CallbackError, InferSchemaType, Schema, model } from 'mongoose'
 import validator from 'validator'
 import bcrypt from 'bcryptjs'
 
-export type TUser = InferSchemaType<typeof userSchema>
+export type TUser = InferSchemaType<typeof userSchema> & {
+  comparePassword: (password: string) => Promise<boolean>
+}
 
 const userSchema = new Schema({
   name: {

@@ -6,6 +6,7 @@ import ErrorHandler from '@Utils/errorHandler'
 
 //routes
 import UserRouter from '@Routes/userRoute'
+import AuthRouter from '@Routes/authRoute'
 
 const app = express()
 
@@ -35,6 +36,7 @@ app.get('/', (req, res) =>
   )
 )
 app.use('/api/v1', UserRouter)
+app.use('/api/v1', AuthRouter)
 
 app.all('*', (req, res, next) => {
   next(new ErrorHandler(`Can't find ${req.originalUrl} on this server!`, 404))
