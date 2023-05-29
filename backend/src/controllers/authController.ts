@@ -3,10 +3,14 @@ import userModel, { TUser } from '@Models/userModel'
 import authToken from '@Utils/authToken'
 import ErrorHandler from '@Utils/errorHandler'
 
-export const RegisterUser = catchAsync(async (req, res, next) => {
-  const { name, email, password, cpassword, role } = req.body
+interface IRemember {
+  remember: boolean
+}
 
-  if (!name || !email || !password || !cpassword || !role)
+export const RegisterUser = catchAsync(async (req, res, next) => {
+  const { name, email, password, cpassword, role }: TUser = req.body
+
+  if (!name || !email || !password || !cpassword)
     return next(new ErrorHandler('Please enter all field', 400))
 
   const user = await userModel.findOne({ email })
@@ -20,6 +24,8 @@ export const RegisterUser = catchAsync(async (req, res, next) => {
     role,
   })
 
+  newUser.password = undefined
+
   res.status(201).json({
     success: true,
     message: 'user register succesfully',
@@ -28,7 +34,8 @@ export const RegisterUser = catchAsync(async (req, res, next) => {
 })
 
 export const LoginUser = catchAsync(async (req, res, next) => {
-  const { email, password } = req.body
+  const { email, password }: TUser = req.body
+  const { remember }: IRemember = req.body
 
   if (!email || !password) {
     return next(new ErrorHandler('Please provide email and password!', 400))
@@ -40,7 +47,7 @@ export const LoginUser = catchAsync(async (req, res, next) => {
     return next(new ErrorHandler('Incorrect email or password', 401))
   }
 
-  authToken(req, res, user, 'logged in succesfully', 200)
+  authToken(req, res, user, remember, 'logged in succesfully', 200)
 })
 
 export const Logout = catchAsync(async (req, res) => {
