@@ -23,7 +23,7 @@ const authToken = (
   }
 
   const token = jwt.sign({ id: user._id }, JWT_SECRET, {
-    expiresIn: remember ? expiresIn : 0,
+    expiresIn: expiresIn,
   })
 
   user.password = undefined
