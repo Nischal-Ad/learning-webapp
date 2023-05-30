@@ -1,5 +1,6 @@
 import catchAsync from '@Middleware/catchAsync'
 import userModel, { TUser } from '@Models/userModel'
+import { IChangePassword } from '@Types/auth.types'
 import authToken from '@Utils/authToken'
 import ErrorHandler from '@Utils/errorHandler'
 
@@ -58,4 +59,28 @@ export const Logout = catchAsync(async (req, res) => {
     secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
   })
   res.status(200).json({ success: true, message: 'logout successful' })
+})
+
+export const ChangePassword = catchAsync(async (req, res, next) => {
+  const { oldPassword, newPassword, cNewPassword }: IChangePassword = req.body
+  if (!oldPassword || !newPassword || !cNewPassword)
+    return next(new ErrorHandler('Please enter all field', 400))
+
+  const user = await userModel.findById(req.user?._id).select('+password')
+
+  if (!user) return next(new ErrorHandler('User not found', 404))
+
+  const isMatch = await user.comparePassword(oldPassword)
+
+  if (!isMatch) return next(new ErrorHandler('Incorrect Old Password', 401))
+
+  user.password = newPassword
+  user.cpassword = cNewPassword
+
+  await user.save()
+
+  res.status(200).json({
+    success: true,
+    message: 'Password Changed Successfully!',
+  })
 })
