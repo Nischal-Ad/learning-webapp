@@ -33,7 +33,7 @@ const userSchema = new Schema({
   role: {
     type: String,
     enum: {
-      values: ['student', 'teacher'],
+      values: ['student', 'teacher'] as const,
       message: 'please enter a valid role',
     },
     default: 'student',

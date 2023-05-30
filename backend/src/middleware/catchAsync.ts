@@ -1,10 +1,14 @@
+import { TUser } from '@Models/userModel'
 import { Request, Response, NextFunction } from 'express'
 
+interface IRequest extends Request {
+  user?: TUser
+}
 const catchAsync =
   (
-    theFunc: (req: Request, res: Response, next: NextFunction) => Promise<void>
+    theFunc: (req: IRequest, res: Response, next: NextFunction) => Promise<void>
   ) =>
-  (req: Request, res: Response, next: NextFunction) => {
+  (req: IRequest, res: Response, next: NextFunction) => {
     Promise.resolve(theFunc(req, res, next)).catch(next)
   }
 
