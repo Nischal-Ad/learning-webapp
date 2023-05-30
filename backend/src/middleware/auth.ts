@@ -24,11 +24,16 @@ export const isAuth = catchAsync(async (req, res, next) => {
     return next(new ErrorHandler('You are not logged in!', 401))
   }
 
-  const decoded = jwt.verify(token, JWT_SECRET)
+  const decoded = jwt.verify(token, JWT_SECRET) as jwt.JwtPayload
 
-  const currentUser = await userModel.findById((decoded as jwt.JwtPayload).id)
+  const currentUser = await userModel.findById(decoded.id)
   if (!currentUser) {
     return next(new ErrorHandler('user doesnot exist', 401))
+  }
+
+  // 4) Check if user changed password after the token was issued
+  if (currentUser.changedPasswordAfter(decoded.iat as number)) {
+    return next(new ErrorHandler('Please log in again.', 401))
   }
 
   req.user = currentUser

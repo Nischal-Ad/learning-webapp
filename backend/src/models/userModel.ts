@@ -5,6 +5,7 @@ import bcrypt from 'bcryptjs'
 export type TUser = InferSchemaType<typeof userSchema> & {
   _id: string
   comparePassword: (password: string) => Promise<boolean>
+  changedPasswordAfter: (timeSpan: number) => boolean
 }
 
 const userSchema = new Schema({
@@ -39,6 +40,7 @@ const userSchema = new Schema({
     },
     default: 'student',
   },
+  passwordChangedAt: Date,
 })
 
 userSchema.path('cpassword').validate(async function (cpassword: string) {
@@ -65,8 +67,29 @@ userSchema.pre('save', async function (next) {
   next()
 })
 
+userSchema.pre('save', function (next) {
+  if (!this.isModified('password') || this.isNew) return next()
+
+  this.passwordChangedAt = new Date(Date.now() - 1000)
+  next()
+})
+
 userSchema.methods.comparePassword = async function (password: string) {
   return await bcrypt.compare(password, this.password)
+}
+
+userSchema.methods.changedPasswordAfter = function (timeSpan: number) {
+  if (this.passwordChangedAt) {
+    const changedTimestamp = parseInt(
+      (this.passwordChangedAt.getTime() / 1000).toString(),
+      10
+    )
+
+    return timeSpan < changedTimestamp
+  }
+
+  // False means NOT changed
+  return false
 }
 
 export default model<TUser>('User', userSchema)
