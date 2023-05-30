@@ -3,6 +3,7 @@ import validator from 'validator'
 import bcrypt from 'bcryptjs'
 
 export type TUser = InferSchemaType<typeof userSchema> & {
+  _id: string
   comparePassword: (password: string) => Promise<boolean>
 }
 
