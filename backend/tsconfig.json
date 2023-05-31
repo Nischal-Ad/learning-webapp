@@ -36,6 +36,7 @@
       "@Middleware/*": ["src/middleware/*"],
       "@Models/*": ["src/models/*"],
       "@Routes/*": ["src/routes/*"],
+      "@Types/*": ["src/types/*"],
       "@Utils/*": ["src/utils/*"]
     } /* Specify a set of entries that re-map imports to additional lookup locations. */,
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
