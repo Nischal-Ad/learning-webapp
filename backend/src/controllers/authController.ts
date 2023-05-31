@@ -3,6 +3,8 @@ import userModel, { TUser } from '@Models/userModel'
 import { IChangePassword } from '@Types/auth.types'
 import authToken from '@Utils/authToken'
 import ErrorHandler from '@Utils/errorHandler'
+import crypto from 'crypto'
+import sendMail from '@Utils/sendMail'
 
 interface IRemember {
   remember: boolean
@@ -78,5 +80,70 @@ export const ChangePassword = catchAsync(async (req, res, next) => {
   res.status(200).json({
     success: true,
     message: 'Password Changed Successfully! please login again',
+  })
+})
+
+export const forgetPassword = catchAsync(async (req, res, next) => {
+  const { email } = req.body
+
+  const user = await userModel.findOne({ email })
+
+  if (!user) return next(new ErrorHandler('User not found', 404))
+
+  const resetToken = user.passReset()
+  await user.save({ validateBeforeSave: false })
+
+  try {
+    const url = `${process.env.FRONTEND_URL}/resetpassword/${resetToken}`
+
+    const message = `Click on the link to reset your password. ${url}. If you have not request then please ignore.`
+
+    await new sendMail(email, 'Password Reset Token', message).send()
+
+    res.status(200).json({
+      success: true,
+      message: `Reset Token has been sent to ${user.email}`,
+    })
+  } catch (err) {
+    user.resetPasswordToken = undefined
+    user.resetPasswordExpire = undefined
+    await user.save({ validateBeforeSave: false })
+    return next(
+      new ErrorHandler(
+        'There was an error sending the email. Try again later!',
+        500
+      )
+    )
+  }
+})
+
+export const resetPassword = catchAsync(async (req, res, next) => {
+  const { newPassword, cNewPassword }: IChangePassword = req.body
+
+  const resetPasswordToken = crypto
+    .createHash('sha256')
+    .update(req.params.token)
+    .digest('hex')
+
+  const user = await userModel.findOne({
+    resetPasswordToken,
+    resetPasswordExpire: {
+      $gt: Date.now(),
+    },
+  })
+
+  if (!user)
+    return next(new ErrorHandler('Token is invalid or has been expired', 400))
+
+  user.password = newPassword
+  user.cpassword = cNewPassword
+  user.resetPasswordToken = undefined
+  user.resetPasswordExpire = undefined
+
+  await user.save()
+
+  res.status(200).json({
+    success: true,
+    message: 'Password Changed Successfully',
   })
 })

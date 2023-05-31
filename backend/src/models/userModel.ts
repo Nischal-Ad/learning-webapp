@@ -1,11 +1,13 @@
 import { CallbackError, InferSchemaType, Schema, model } from 'mongoose'
 import validator from 'validator'
 import bcrypt from 'bcryptjs'
+import crypto from 'crypto'
 
 export type TUser = InferSchemaType<typeof userSchema> & {
   _id: string
   comparePassword: (password: string) => Promise<boolean>
   changedPasswordAfter: (timeSpan: number) => boolean
+  passReset: () => string
 }
 
 const userSchema = new Schema({
@@ -41,6 +43,8 @@ const userSchema = new Schema({
     default: 'student',
   },
   passwordChangedAt: Date,
+  resetPasswordToken: String,
+  resetPasswordExpire: Date,
 })
 
 userSchema.path('cpassword').validate(async function (cpassword: string) {
@@ -84,12 +88,22 @@ userSchema.methods.changedPasswordAfter = function (timeSpan: number) {
       (this.passwordChangedAt.getTime() / 1000).toString(),
       10
     )
-
     return timeSpan < changedTimestamp
   }
-
-  // False means NOT changed
   return false
+}
+
+userSchema.methods.passReset = function () {
+  const resetToken = crypto.randomBytes(32).toString('hex')
+
+  this.passwordResetToken = crypto
+    .createHash('sha256')
+    .update(resetToken)
+    .digest('hex')
+
+  this.passwordResetExpires = Date.now() + 5 * 60 * 1000
+
+  return resetToken
 }
 
 export default model<TUser>('User', userSchema)
