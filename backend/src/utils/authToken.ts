@@ -1,36 +1,39 @@
 import { Request, Response } from 'express'
-import { Document } from 'mongoose'
 import jwt from 'jsonwebtoken'
+import { TUser } from '@Models/userModel'
+import { Document } from 'mongoose'
 
 const authToken = (
   req: Request,
   res: Response,
-  user: Document,
+  user: Document & TUser,
+  remember = false,
   message: string,
   statusCode: number
 ) => {
   const JWT_SECRET = process.env.JWT_SECRET
+  const expiresIn = process.env.JWT_EXPIRES_IN
 
   if (!JWT_SECRET) {
     throw new Error('jwt secret key is missing')
   }
 
-  if (!process.env.JWT_COOKIE_EXPIRES_IN) {
+  if (!expiresIn) {
     throw new Error('jwt cookie expire value is missing')
   }
 
   const token = jwt.sign({ id: user._id }, JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN,
+    expiresIn: expiresIn,
   })
+
+  user.password = undefined
 
   res
     .status(statusCode)
     .cookie('token', token, {
-      expires: new Date(
-        Date.now() +
-          parseInt(process.env.JWT_COOKIE_EXPIRES_IN) * 24 * 60 * 60 * 1000
-      ),
-
+      expires: remember
+        ? new Date(Date.now() + parseInt(expiresIn) * 24 * 60 * 60 * 1000)
+        : undefined,
       httpOnly: true,
       secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
       sameSite: 'none',

@@ -1,9 +1,13 @@
 import { CallbackError, InferSchemaType, Schema, model } from 'mongoose'
 import validator from 'validator'
 import bcrypt from 'bcryptjs'
+import crypto from 'crypto'
 
 export type TUser = InferSchemaType<typeof userSchema> & {
+  _id: string
   comparePassword: (password: string) => Promise<boolean>
+  changedPasswordAfter: (timeSpan: number) => boolean
+  passReset: () => string
 }
 
 const userSchema = new Schema({
@@ -33,11 +37,14 @@ const userSchema = new Schema({
   role: {
     type: String,
     enum: {
-      values: ['student', 'teacher'],
+      values: ['student', 'teacher'] as const,
       message: 'please enter a valid role',
     },
     default: 'student',
   },
+  passwordChangedAt: Date,
+  resetPasswordToken: String,
+  resetPasswordExpire: Date,
 })
 
 userSchema.path('cpassword').validate(async function (cpassword: string) {
@@ -64,8 +71,39 @@ userSchema.pre('save', async function (next) {
   next()
 })
 
+userSchema.pre('save', function (next) {
+  if (!this.isModified('password') || this.isNew) return next()
+
+  this.passwordChangedAt = new Date(Date.now() - 1000)
+  next()
+})
+
 userSchema.methods.comparePassword = async function (password: string) {
   return await bcrypt.compare(password, this.password)
+}
+
+userSchema.methods.changedPasswordAfter = function (timeSpan: number) {
+  if (this.passwordChangedAt) {
+    const changedTimestamp = parseInt(
+      (this.passwordChangedAt.getTime() / 1000).toString(),
+      10
+    )
+    return timeSpan < changedTimestamp
+  }
+  return false
+}
+
+userSchema.methods.passReset = function () {
+  const resetToken = crypto.randomBytes(32).toString('hex')
+
+  this.passwordResetToken = crypto
+    .createHash('sha256')
+    .update(resetToken)
+    .digest('hex')
+
+  this.passwordResetExpires = Date.now() + 5 * 60 * 1000
+
+  return resetToken
 }
 
 export default model<TUser>('User', userSchema)
