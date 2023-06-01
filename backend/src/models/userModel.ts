@@ -67,7 +67,7 @@ userSchema.pre('save', async function (next) {
     return next(error as CallbackError)
   }
 
-  // this.cpassword = undefined
+  this.cpassword = undefined
   next()
 })
 
