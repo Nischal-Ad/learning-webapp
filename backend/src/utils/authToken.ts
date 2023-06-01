@@ -26,7 +26,7 @@ const authToken = (
     expiresIn: expiresIn,
   })
 
-  user.password = undefined
+  // user.password = undefined
 
   res
     .status(statusCode)

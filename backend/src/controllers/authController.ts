@@ -27,7 +27,7 @@ export const RegisterUser = catchAsync(async (req, res, next) => {
     role,
   })
 
-  newUser.password = undefined
+  // newUser.password = undefined
 
   res.status(201).json({
     success: true,
