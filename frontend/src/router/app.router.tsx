@@ -13,6 +13,7 @@ import NavbarLanding from '@Shared/navbar/landing'
 import NavbarUser from '@Shared/navbar/user'
 import Footer from '@Shared/footer'
 import Error from '@Components/Error'
+import ForgetPassword from '@Features/user/Auth/components/ForgetPassword'
 
 // Lazy load components
 const Landing = lazy(() => import('@Features/landing'))
@@ -59,6 +60,7 @@ const router = createBrowserRouter(
           )
         }
       />
+      <Route path="/forgetpassword" element={<ForgetPassword />} />
       <Route path="*" element={<Error />} />
       {/* end of normal routes */}
 

@@ -46,3 +46,7 @@ export const RegisterSchema = object().shape({
     .oneOf(['student', 'teacher'], 'Invalid role')
     .required('Please select a role'),
 })
+
+export const forgetPassowrdSchema = object().shape({
+  email: string().email('enter valid email').required('please enter email'),
+})
