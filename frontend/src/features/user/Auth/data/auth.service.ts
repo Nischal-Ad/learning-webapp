@@ -1,7 +1,7 @@
 import localAxios from '@Utils/localAxios'
-import { IAuth, ILogin, TLogin, TRegister } from './auth.model'
+import { ILogin, IRegister, TLogin, TRegister } from './auth.model'
 
-export const onRegister = (payload: TRegister): Promise<IAuth> =>
+export const onRegister = (payload: TRegister): Promise<IRegister> =>
   localAxios.post(`/register/user`, payload)
 
 export const onLogin = (payload: TLogin): Promise<ILogin> =>

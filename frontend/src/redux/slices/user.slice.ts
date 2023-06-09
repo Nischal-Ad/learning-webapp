@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { CaseReducer, PayloadAction } from '@reduxjs/toolkit'
-import { IAuth } from '@Features/user/Auth/data/auth.model'
 
 interface IAuthState extends IState {
   data: Partial<IAuth>

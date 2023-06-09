@@ -39,7 +39,7 @@ export type TRegister = InferType<typeof RegisterSchema>
 export type TLogin = InferType<typeof LoginSchema>
 export type TForgetPassword = InferType<typeof forgetPassowrdSchema>
 
-export interface IAuth extends IStatus {
+export interface IRegister extends IStatus {
   user: Partial<TRegister>
 }
 
