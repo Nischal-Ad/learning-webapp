@@ -32,7 +32,7 @@ export const RegisterUser = catchAsync(async (req, res, next) => {
   res.status(201).json({
     success: true,
     message: 'user register succesfully',
-    data: newUser,
+    user: newUser,
   })
 })
 

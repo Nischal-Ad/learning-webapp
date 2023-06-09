@@ -35,7 +35,7 @@ const authToken = (
         ? new Date(Date.now() + parseInt(expiresIn) * 24 * 60 * 60 * 1000)
         : undefined,
       httpOnly: true,
-      secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
+      secure: true,
       sameSite: 'none',
     })
     .json({

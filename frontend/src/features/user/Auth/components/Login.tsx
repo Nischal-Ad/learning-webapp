@@ -1,14 +1,15 @@
 import { useFormik } from 'formik'
-import { IAuth, LoginSchema } from '../data/auth.model'
+import { LoginSchema, TLogin } from '../data/auth.model'
 import TextField from '@mui/material/TextField'
 import { Box, Button, Typography } from '@mui/material'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
-import { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '../hooks/useAuth'
 
-const Login = ({ reset }: IAuth) => {
+const Login = () => {
   const navigate = useNavigate()
+  const { onLoginUser } = useAuth()
 
   const {
     handleChange,
@@ -18,24 +19,18 @@ const Login = ({ reset }: IAuth) => {
     handleSubmit,
     isValid,
     touched,
-    handleReset,
-  } = useFormik({
+  } = useFormik<TLogin>({
     initialValues: {
       email: '',
       password: '',
     },
     validationSchema: LoginSchema,
-    onSubmit: (values) => {
-      console.log(values)
-      navigate('/dashboard', { replace: true })
+    onSubmit: (values, action) => {
+      onLoginUser(values)
+      action.resetForm()
+      navigate('/', { replace: true })
     },
   })
-
-  useEffect(() => {
-    if (reset) {
-      handleReset('data')
-    }
-  }, [reset])
 
   return (
     <Box component={'form'} onSubmit={handleSubmit}>

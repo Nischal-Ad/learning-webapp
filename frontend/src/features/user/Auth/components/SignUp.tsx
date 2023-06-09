@@ -1,5 +1,5 @@
 import { useFormik } from 'formik'
-import { IAuth, RegisterSchema } from '../data/auth.model'
+import { TRegister, RegisterSchema } from '../data/auth.model'
 import TextField from '@mui/material/TextField'
 import {
   Box,
@@ -9,11 +9,12 @@ import {
   RadioGroup,
   Typography,
 } from '@mui/material'
-import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../hooks/useAuth'
 
-const Register = ({ reset }: IAuth) => {
+const Register = () => {
   const navigate = useNavigate()
+  const { onRegisterUser } = useAuth()
 
   const {
     handleChange,
@@ -23,27 +24,21 @@ const Register = ({ reset }: IAuth) => {
     handleSubmit,
     isValid,
     touched,
-    handleReset,
-  } = useFormik({
+  } = useFormik<TRegister>({
     initialValues: {
       name: '',
       email: '',
       password: '',
-      cPassword: '',
+      cpassword: '',
       role: 'student',
     },
     validationSchema: RegisterSchema,
-    onSubmit: (values) => {
-      console.log(values)
+    onSubmit: (values, action) => {
+      onRegisterUser(values)
+      action.resetForm()
       navigate('/dashboard', { replace: true })
     },
   })
-
-  useEffect(() => {
-    if (reset) {
-      handleReset('data')
-    }
-  }, [reset])
 
   return (
     <Box component={'form'} onSubmit={handleSubmit}>
@@ -96,14 +91,14 @@ const Register = ({ reset }: IAuth) => {
       <TextField
         fullWidth
         required
-        name="cPassword"
+        name="cpassword"
         type="password"
         label="Confirm Password"
         variant="standard"
-        value={values.cPassword}
+        value={values.cpassword}
         onChange={handleChange}
-        error={Boolean(touched.cPassword && errors.cPassword)}
-        helperText={touched.cPassword && errors.cPassword}
+        error={Boolean(touched.cpassword && errors.cpassword)}
+        helperText={touched.cpassword && errors.cpassword}
         onBlur={handleBlur}
         sx={{
           marginY: 1,

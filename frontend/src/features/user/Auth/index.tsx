@@ -7,23 +7,15 @@ import { IDialog } from './data/auth.model'
 import { IconButton, Typography, CardMedia } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import logo from '@Svg/logo_big.svg'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Login from './components/Login'
 import SignUp from './components/SignUp'
 
 const index = ({ open, showAuth }: IDialog) => {
   const [isLogin, setIsLogin] = useState(true)
-  const [reset, setReset] = useState(false)
-
-  useEffect(() => {
-    if (open) {
-      setReset(false)
-    }
-  }, [open])
 
   const handleClose = () => {
     showAuth(false)
-    setReset(true)
   }
 
   return (
@@ -64,7 +56,7 @@ const index = ({ open, showAuth }: IDialog) => {
             marginBottom: 1,
           }}
         />
-        {isLogin ? <Login reset={reset} /> : <SignUp reset={reset} />}
+        {isLogin ? <Login /> : <SignUp />}
       </DialogContent>
       <DialogActions sx={{ marginY: 1 }}>
         {isLogin ? 'New here? ' : 'Already have an alc? '}
