@@ -3,6 +3,12 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import ErrorHandle from '@Middleware/error'
 import ErrorHandler from '@Utils/errorHandler'
+import { rateLimit } from 'express-rate-limit'
+import helmet from 'helmet'
+import mongoSanitize from 'express-mongo-sanitize'
+import compression from 'compression'
+import hpp from 'hpp'
+import xss from 'xss-clean'
 
 //routes
 import UserRouter from '@Routes/userRoute'
@@ -11,19 +17,38 @@ import CourseRouter from '@Routes/courseRoute'
 import KhaltiRouter from '@Routes/khaltiRoute'
 import CommentRouter from '@Routes/commentRoute'
 
+//start express app
 const app = express()
+app.enable('trust proxy')
 
-app.use(express.json())
+app.use(express.json({ limit: '10kb' }))
+app.use(express.urlencoded({ extended: true, limit: '10kb' }))
+app.use(cookieParser())
+app.use(helmet())
+app.use(mongoSanitize())
+app.use(compression())
+app.use(xss())
+
+// Prevent parameter pollution. look yt if confuse
 app.use(
-  express.urlencoded({
-    extended: true,
+  hpp({
+    whitelist: [
+      // enter the query params here
+    ],
   })
 )
-app.use(cookieParser())
+
+// Limit requests from same API
+const limiter = rateLimit({
+  max: 100,
+  windowMs: 60 * 60 * 1000,
+  message: 'Too many requests from this IP, please try again in an hour!',
+})
+app.use('/api', limiter)
 
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
+    origin: 'http://localhost:5173',
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
   })

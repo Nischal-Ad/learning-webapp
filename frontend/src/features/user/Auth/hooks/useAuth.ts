@@ -1,31 +1,49 @@
-import authSlice from '@Slices/auth.slice'
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useAppDispatch } from '@Store'
-import { onLogin } from '../data/auth.service'
-import { ILogin } from '../data/auth.model'
+import { onLogin, onProfile, onRegister } from '../data/auth.service'
+import { TLogin, TRegister } from '../data/auth.model'
 import { notifyError, notifySuccess } from '@Utils/alerts'
+import userSlice from '@Slices/user.slice'
 
 export const useAuth = () => {
   const dispatch = useAppDispatch()
 
-  const onLoginUser = async (payload: ILogin) => {
+  const onLoginUser = async (payload: TLogin) => {
     try {
-      dispatch(authSlice.actions.setLoading())
+      dispatch(userSlice.actions.setLoading())
 
-      // only for stater  auth test.
-      await onLogin(payload)
-      const data = JSON.parse(localStorage.getItem('auth') || '')
-      dispatch(authSlice.actions.setData(data))
-      // end of stater  auth test
-
-      //main code
-      // const res = await onLogin(payload);
-      // dispatch(authSlice.actions.setData(res));
-      // notifySuccess('you are now logged in')
+      const res = await onLogin(payload)
+      dispatch(userSlice.actions.setData(res))
+      notifySuccess(res.message)
     } catch (error: any) {
-      dispatch(authSlice.actions.setError(error.message))
-      notifyError(error.message)
+      dispatch(userSlice.actions.setError(error.response.data.message))
+      notifyError(error.response.data.message)
     }
   }
 
-  return { onLoginUser }
+  const onRegisterUser = async (payload: TRegister) => {
+    try {
+      dispatch(userSlice.actions.setLoading())
+
+      const res = await onRegister(payload)
+      dispatch(userSlice.actions.setData(res))
+      notifySuccess(res.message)
+    } catch (error: any) {
+      dispatch(userSlice.actions.setError(error.response.data.message))
+      notifyError(error.response.data.message)
+    }
+  }
+
+  const onUserProfile = async () => {
+    try {
+      dispatch(userSlice.actions.setLoading())
+
+      const res = await onProfile()
+      dispatch(userSlice.actions.setData(res))
+    } catch (error: any) {
+      dispatch(userSlice.actions.setError(error.response.data.message))
+    }
+  }
+
+  return { onLoginUser, onRegisterUser, onUserProfile }
 }

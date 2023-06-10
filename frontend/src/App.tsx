@@ -1,18 +1,28 @@
-import { useEffect } from 'react'
+import { memo, useEffect } from 'react'
 import WebFont from 'webfontloader'
-import router from './router/app.router'
-import { RouterProvider } from 'react-router-dom'
+import Router from './router/app.router'
+import { useAuth } from '@Features/user/Auth/hooks/useAuth'
+import { useAppSelector } from '@Store'
+import Loading from '@Components/Loader'
 
 const App = () => {
+  const { onUserProfile } = useAuth()
+  const { status, data } = useAppSelector((store) => store.user)
+
   useEffect(() => {
     WebFont.load({
       google: {
         families: ['Nunito', 'Quicksand', 'Poppins', 'Bruno Ace SC', 'Cinzel'],
       },
     })
+    onUserProfile()
   }, [])
 
-  return <RouterProvider router={router} />
+  if (status === 'loading' || status === 'idle') {
+    return <Loading />
+  }
+
+  return <Router isAuth={data?.success === true} />
 }
 
-export default App
+export default memo(App)

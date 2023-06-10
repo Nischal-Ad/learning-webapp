@@ -1,12 +1,10 @@
-// import localAxios from '@Utils/localAxios'
-import { ILogin } from './auth.model'
+import localAxios from '@Utils/localAxios'
+import { ILogin, IRegister, TLogin, TRegister } from './auth.model'
 
-// only for stater  auth test
-export const onLogin = (payload: ILogin) => {
-  localStorage.setItem('auth', JSON.stringify(payload))
-}
-//end of stater auth test
+export const onRegister = (payload: TRegister): Promise<IRegister> =>
+  localAxios.post(`/register/user`, payload)
 
-//main code
-// export const onLogin = (payload: authLogin): Promise<authLogin> =>
-// localAxios.post(`/yourLoginAPI`, payload);
+export const onLogin = (payload: TLogin): Promise<ILogin> =>
+  localAxios.post(`/login`, payload)
+
+export const onProfile = (): Promise<IAuth> => localAxios.get(`/profile`)
