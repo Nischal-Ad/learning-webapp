@@ -1,4 +1,4 @@
-import { object, string, ref, InferType } from 'yup'
+import { object, string, ref, InferType, boolean } from 'yup'
 
 export interface IDialog {
   open: boolean
@@ -11,6 +11,7 @@ export const LoginSchema = object().shape({
     .max(12, 'password be less than or equal to 12')
     .min(4, 'password be more than or equal to 4')
     .required('please enter password'),
+  remember: boolean(),
 })
 
 export const RegisterSchema = object().shape({
@@ -40,9 +41,9 @@ export type TLogin = InferType<typeof LoginSchema>
 export type TForgetPassword = InferType<typeof forgetPassowrdSchema>
 
 export interface IRegister extends IStatus {
-  user: Partial<TRegister>
+  user: TRegister
 }
 
 export interface ILogin extends IStatus {
-  user: Partial<TLogin>
+  user: TLogin
 }
