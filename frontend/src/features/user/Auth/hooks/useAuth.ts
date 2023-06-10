@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useAppDispatch } from '@Store'
-import { onLogin, onProfile, onRegister } from '../data/auth.service'
+import { onLogin, onLogout, onProfile, onRegister } from '../data/auth.service'
 import { TLogin, TRegister } from '../data/auth.model'
 import { notifyError, notifySuccess } from '@Utils/alerts'
 import userSlice from '@Slices/user.slice'
@@ -13,7 +13,7 @@ export const useAuth = () => {
       dispatch(userSlice.actions.setLoading())
 
       const res = await onLogin(payload)
-      dispatch(userSlice.actions.setData(res))
+      dispatch(userSlice.actions.setData({ ...res, isAuth: true }))
       notifySuccess(res.message)
     } catch (error: any) {
       dispatch(userSlice.actions.setError(error.response.data.message))
@@ -39,11 +39,24 @@ export const useAuth = () => {
       dispatch(userSlice.actions.setLoading())
 
       const res = await onProfile()
-      dispatch(userSlice.actions.setData(res))
+      dispatch(userSlice.actions.setData({ ...res, isAuth: true }))
     } catch (error: any) {
       dispatch(userSlice.actions.setError(error.response.data.message))
     }
   }
 
-  return { onLoginUser, onRegisterUser, onUserProfile }
+  const onUserLogout = async () => {
+    try {
+      dispatch(userSlice.actions.setLoading())
+
+      const res = await onLogout()
+      dispatch(userSlice.actions.setData({ ...res, isAuth: false }))
+      notifySuccess(res.message)
+    } catch (error: any) {
+      dispatch(userSlice.actions.setError(error.response.data.message))
+      notifyError(error.response.data.message)
+    }
+  }
+
+  return { onLoginUser, onRegisterUser, onUserProfile, onUserLogout }
 }

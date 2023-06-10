@@ -19,4 +19,5 @@ interface IUser {
 
 interface IAuth extends IStatus {
   user?: Partial<IUser>
+  isAuth?: boolean
 }

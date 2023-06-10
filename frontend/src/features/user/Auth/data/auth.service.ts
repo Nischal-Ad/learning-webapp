@@ -8,3 +8,5 @@ export const onLogin = (payload: TLogin): Promise<ILogin> =>
   localAxios.post(`/login`, payload)
 
 export const onProfile = (): Promise<IAuth> => localAxios.get(`/profile`)
+
+export const onLogout = (): Promise<IStatus> => localAxios.get(`/logout`)

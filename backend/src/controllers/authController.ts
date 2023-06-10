@@ -54,8 +54,18 @@ export const LoginUser = catchAsync(async (req, res, next) => {
 })
 
 export const Logout = catchAsync(async (req, res) => {
-  res.clearCookie('token')
-  res.status(200).json({ success: true, message: 'logout successful' })
+  res
+    .status(200)
+    .cookie('token', null, {
+      expires: new Date(Date.now()),
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
+    })
+    .json({
+      success: true,
+      message: 'Logout Successfully',
+    })
 })
 
 export const ChangePassword = catchAsync(async (req, res, next) => {

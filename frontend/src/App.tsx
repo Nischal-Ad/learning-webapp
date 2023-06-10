@@ -7,7 +7,7 @@ import Loading from '@Components/Loader'
 
 const App = () => {
   const { onUserProfile } = useAuth()
-  const { status, data } = useAppSelector((store) => store.user)
+  const { status, isAuth } = useAppSelector((store) => store.user)
 
   useEffect(() => {
     WebFont.load({
@@ -22,7 +22,7 @@ const App = () => {
     return <Loading />
   }
 
-  return <Router isAuth={data?.success === true} />
+  return <Router isAuth={isAuth === true} />
 }
 
 export default memo(App)

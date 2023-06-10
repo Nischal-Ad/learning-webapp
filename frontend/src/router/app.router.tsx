@@ -55,7 +55,7 @@ const Router = ({ isAuth }: { isAuth: boolean }) => {
                 <Footer />
               </Suspense>
             ) : (
-              <Navigate to={'/dashboard'} replace />
+              <Navigate to={'/dashboard'} replace={true} />
             )
           }
         />
