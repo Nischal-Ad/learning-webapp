@@ -63,7 +63,7 @@ const Index = () => {
 
   const handleLogout = () => {
     onUserLogout()
-    navigate('/', { replace: true })
+    navigate('/', { replace: true, state: { previousPath: null } })
   }
 
   const displaySearch = () => {
