@@ -1,4 +1,4 @@
-import { memo, useEffect } from 'react'
+import { memo, useEffect, useState } from 'react'
 import WebFont from 'webfontloader'
 import Router from './router/app.router'
 import { useAuth } from '@Features/user/Auth/hooks/useAuth'
@@ -8,6 +8,7 @@ import Loading from '@Components/Loader'
 const App = () => {
   const { onUserProfile } = useAuth()
   const { status, isAuth } = useAppSelector((store) => store.user)
+  const [isPageLoaded, setIsPageLoaded] = useState(false)
 
   useEffect(() => {
     WebFont.load({
@@ -18,8 +19,15 @@ const App = () => {
     onUserProfile()
   }, [])
 
-  if (status === 'loading' || status === 'idle') {
+  if (
+    (!isPageLoaded || isAuth) &&
+    (status === 'loading' || status === 'idle')
+  ) {
     return <Loading />
+  }
+
+  if (!isPageLoaded && (status === 'success' || status === 'error')) {
+    setIsPageLoaded(true)
   }
 
   return <Router isAuth={isAuth === true} />

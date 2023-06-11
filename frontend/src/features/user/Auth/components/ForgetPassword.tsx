@@ -13,9 +13,13 @@ import {
 import { useNavigate } from 'react-router-dom'
 import { forgetPassowrdSchema } from '../data/auth.model'
 import logo from '@Svg/logo_big.svg'
+import { useAppSelector } from '@Store'
+import { useAuth } from '../hooks/useAuth'
 
 const Index = () => {
   const navigate = useNavigate()
+  const { onUserForgetPassword } = useAuth()
+  const { status } = useAppSelector((store) => store.user)
 
   const {
     handleChange,
@@ -31,7 +35,7 @@ const Index = () => {
     },
     validationSchema: forgetPassowrdSchema,
     onSubmit: (values) => {
-      console.log(values)
+      onUserForgetPassword(values)
       navigate('/', { replace: true })
     },
   })
@@ -96,7 +100,7 @@ const Index = () => {
                 }}
               />
               <Button
-                disabled={!isValid}
+                disabled={!isValid || status === 'loading'}
                 variant="contained"
                 type="submit"
                 sx={{
@@ -109,7 +113,7 @@ const Index = () => {
                   },
                 }}
               >
-                Submit
+                {status === 'loading' ? 'Loading...' : 'Submit'}
               </Button>
             </Box>
           </Paper>

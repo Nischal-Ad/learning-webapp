@@ -44,6 +44,10 @@ export interface IRegister extends IStatus {
   user: TRegister
 }
 
+export interface IForgetPassword {
+  email: string
+}
+
 export interface ILogin extends IStatus {
   user: TLogin
 }

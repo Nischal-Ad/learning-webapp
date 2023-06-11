@@ -212,7 +212,7 @@ const Index = () => {
           alignItems={'center'}
           py={1}
         >
-          <Link to="/">
+          <Link to="/dashboard">
             <CardMedia
               image={logo}
               component={'img'}

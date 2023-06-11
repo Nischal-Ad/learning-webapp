@@ -114,7 +114,7 @@ const Register = () => {
         variant="contained"
         type="submit"
       >
-        Submit
+        {status === 'loading' ? 'Loading...' : 'Submit'}
       </Button>
     </Box>
   )

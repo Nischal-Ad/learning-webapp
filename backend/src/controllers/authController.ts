@@ -104,10 +104,10 @@ export const forgetPassword = catchAsync(async (req, res, next) => {
   await user.save({ validateBeforeSave: false })
 
   try {
-    // const url = `${process.env.FRONTEND_URL}/resetpassword/${resetToken}`
-    const url = `${req.protocol}://${req.get(
-      'host'
-    )}/resetpassword/${resetToken}`
+    const url = `${process.env.FRONTEND_URL}/resetpassword/${resetToken}`
+    // const url = `${req.protocol}://${req.get(
+    //   'host'
+    // )}/resetpassword/${resetToken}`
 
     const message = `Click on the link to reset your password. ${url}. If you have not request then please ignore.`
 

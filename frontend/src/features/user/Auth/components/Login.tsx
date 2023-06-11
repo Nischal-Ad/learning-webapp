@@ -86,8 +86,13 @@ const Login = () => {
           }
           label="Remember me"
         />
-        <Link to={'/forgetpassword'}>
-          <Typography variant="subtitle2">Forget Password?</Typography>
+        <Link to={status === 'loading' ? '' : '/forgetpassword'}>
+          <Typography
+            variant="subtitle2"
+            color={status !== 'loading' ? 'blue' : 'gray'}
+          >
+            Forget Password?
+          </Typography>
         </Link>
       </Box>
       <Button
@@ -96,7 +101,7 @@ const Login = () => {
         variant="contained"
         type="submit"
       >
-        Submit
+        {status === 'loading' ? 'Loading...' : 'Submit'}
       </Button>
     </Box>
   )
