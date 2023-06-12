@@ -6,8 +6,14 @@ import {
   onLogout,
   onProfile,
   onRegister,
+  onResetPassword,
 } from '../data/auth.service'
-import { IForgetPassword, TLogin, TRegister } from '../data/auth.model'
+import {
+  IForgetPassword,
+  TLogin,
+  TRegister,
+  TResetPassword,
+} from '../data/auth.model'
 import { notifyError, notifySuccess } from '@Utils/alerts'
 import userSlice from '@Slices/user.slice'
 
@@ -64,6 +70,22 @@ export const useAuth = () => {
     }
   }
 
+  const onUserResetPassword = async (
+    payload: TResetPassword,
+    token: string
+  ) => {
+    try {
+      dispatch(userSlice.actions.setLoading())
+
+      const res = await onResetPassword(payload, token)
+      dispatch(userSlice.actions.setData(res))
+      notifySuccess(res.message)
+    } catch (error: any) {
+      dispatch(userSlice.actions.setError(error.response.data.message))
+      notifyError(error.response.data.message)
+    }
+  }
+
   const onUserLogout = async () => {
     try {
       dispatch(userSlice.actions.setLoading())
@@ -83,5 +105,6 @@ export const useAuth = () => {
     onUserProfile,
     onUserLogout,
     onUserForgetPassword,
+    onUserResetPassword,
   }
 }

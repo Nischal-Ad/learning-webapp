@@ -15,6 +15,7 @@ import NavbarUser from '@Shared/navbar/user'
 import Footer from '@Shared/footer'
 import Error from '@Components/Error'
 import ForgetPassword from '@Features/user/Auth/components/ForgetPassword'
+import ResetPassword from '@Features/user/Auth/components/ResetPassword'
 
 // Lazy load components
 const Landing = lazy(() => import('@Features/landing'))
@@ -60,6 +61,7 @@ const Router = ({ isAuth }: { isAuth: boolean }) => {
           }
         />
         <Route path="/forgetpassword" element={<ForgetPassword />} />
+        <Route path="/resetpassword/:token" element={<ResetPassword />} />
         <Route path="*" element={<Error />} />
         {/* end of normal routes */}
 

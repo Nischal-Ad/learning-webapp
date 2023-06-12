@@ -109,7 +109,7 @@ export const forgetPassword = catchAsync(async (req, res, next) => {
     //   'host'
     // )}/resetpassword/${resetToken}`
 
-    const message = `Click on the link to reset your password. ${url}. If you have not request then please ignore.`
+    const message = `Click on the link to reset your password. ${url} . If you have not request then please ignore.`
 
     await new sendMail(email, 'Password Reset Token', message).send()
 

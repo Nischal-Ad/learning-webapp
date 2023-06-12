@@ -5,6 +5,7 @@ import {
   IRegister,
   TLogin,
   TRegister,
+  TResetPassword,
 } from './auth.model'
 
 export const onRegister = (payload: TRegister): Promise<IRegister> =>
@@ -17,5 +18,10 @@ export const onProfile = (): Promise<IAuth> => localAxios.get(`/profile`)
 
 export const onForgetPassword = (payload: IForgetPassword): Promise<IStatus> =>
   localAxios.post(`/forgotpassword`, payload)
+
+export const onResetPassword = (
+  payload: TResetPassword,
+  token: string
+): Promise<IStatus> => localAxios.put(`/resetpassword/${token}`, payload)
 
 export const onLogout = (): Promise<IStatus> => localAxios.get(`/logout`)

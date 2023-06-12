@@ -96,12 +96,12 @@ userSchema.methods.changedPasswordAfter = function (timeSpan: number) {
 userSchema.methods.passReset = function () {
   const resetToken = crypto.randomBytes(32).toString('hex')
 
-  this.passwordResetToken = crypto
+  this.resetPasswordToken = crypto
     .createHash('sha256')
     .update(resetToken)
     .digest('hex')
 
-  this.passwordResetExpires = Date.now() + 5 * 60 * 1000
+  this.resetPasswordExpire = Date.now() + 5 * 60 * 1000
 
   return resetToken
 }
