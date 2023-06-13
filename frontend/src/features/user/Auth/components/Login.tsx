@@ -6,10 +6,12 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
+import { useAppSelector } from '@Store'
 
 const Login = () => {
   const navigate = useNavigate()
   const { onLoginUser } = useAuth()
+  const { status } = useAppSelector((store) => store.user)
 
   const {
     handleChange,
@@ -23,6 +25,7 @@ const Login = () => {
     initialValues: {
       email: '',
       password: '',
+      remember: false,
     },
     validationSchema: LoginSchema,
     onSubmit: (values, action) => {
@@ -72,18 +75,33 @@ const Login = () => {
         flexDirection={{ sm: 'row', xs: 'column' }}
         alignItems={{ sm: 'center', xs: 'start' }}
       >
-        <FormControlLabel control={<Checkbox />} label="Remember me" />
-        <Link to={'/forgetpassword'}>
-          <Typography variant="subtitle2">Forget Password?</Typography>
+        <FormControlLabel
+          control={
+            <Checkbox
+              name="remember"
+              checked={values.remember}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+          }
+          label="Remember me"
+        />
+        <Link to={status === 'loading' ? '' : '/forgetpassword'}>
+          <Typography
+            variant="subtitle2"
+            color={status !== 'loading' ? 'blue' : 'gray'}
+          >
+            Forget Password?
+          </Typography>
         </Link>
       </Box>
       <Button
-        disabled={!isValid}
+        disabled={!isValid || status === 'loading'}
         color="primary"
         variant="contained"
         type="submit"
       >
-        Submit
+        {status === 'loading' ? 'Loading...' : 'Submit'}
       </Button>
     </Box>
   )

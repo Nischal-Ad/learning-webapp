@@ -9,12 +9,12 @@ import {
   RadioGroup,
   Typography,
 } from '@mui/material'
-import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
+import { useAppSelector } from '@Store'
 
 const Register = () => {
-  const navigate = useNavigate()
   const { onRegisterUser } = useAuth()
+  const { status } = useAppSelector((store) => store.user)
 
   const {
     handleChange,
@@ -36,7 +36,6 @@ const Register = () => {
     onSubmit: (values, action) => {
       onRegisterUser(values)
       action.resetForm()
-      navigate('/dashboard', { replace: true })
     },
   })
 
@@ -110,12 +109,12 @@ const Register = () => {
         <FormControlLabel value="teacher" control={<Radio />} label="Teacher" />
       </RadioGroup>
       <Button
-        disabled={!isValid}
+        disabled={!isValid || status === 'loading'}
         color="primary"
         variant="contained"
         type="submit"
       >
-        Submit
+        {status === 'loading' ? 'Loading...' : 'Submit'}
       </Button>
     </Box>
   )

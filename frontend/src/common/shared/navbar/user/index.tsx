@@ -18,7 +18,7 @@ import {
   Typography,
 } from '@mui/material'
 import { SearchFormWrapper } from '../style'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import logo from '@Svg/logo_text_black.svg'
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
@@ -26,10 +26,10 @@ import SearchIcon from '@mui/icons-material/Search'
 import React from 'react'
 import LockIcon from '@mui/icons-material/Lock'
 import ExitToAppIcon from '@mui/icons-material/ExitToApp'
-import { useNavigate } from 'react-router-dom'
 import CloseIcon from '@mui/icons-material/Close'
 import LocalLibraryIcon from '@mui/icons-material/LocalLibrary'
 import NotificationList from './components/NotificationList'
+import { useAuth } from '@Features/user/Auth/hooks/useAuth'
 
 const Index = () => {
   const [userMenu, setUserMenu] = React.useState<null | HTMLElement>(null)
@@ -38,6 +38,7 @@ const Index = () => {
   const [openNotification, setOpenNotification] =
     React.useState<null | HTMLElement>(null)
 
+  const { onUserLogout } = useAuth()
   const navigate = useNavigate()
   const color = Math.floor(100 + Math.random() * 900)
 
@@ -58,6 +59,11 @@ const Index = () => {
     e.preventDefault()
     setShowSearch(false)
     navigate(`/courses/${search}`)
+  }
+
+  const handleLogout = () => {
+    onUserLogout()
+    navigate('/', { replace: true, state: { previousPath: null } })
   }
 
   const displaySearch = () => {
@@ -138,7 +144,7 @@ const Index = () => {
           </Link>
         </MenuItem>
         <Divider />
-        <MenuItem>
+        <MenuItem onClick={handleLogout}>
           <ExitToAppIcon /> Logout
         </MenuItem>
       </Menu>
@@ -206,7 +212,7 @@ const Index = () => {
           alignItems={'center'}
           py={1}
         >
-          <Link to="/">
+          <Link to="/dashboard">
             <CardMedia
               image={logo}
               component={'img'}

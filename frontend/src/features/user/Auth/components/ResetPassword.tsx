@@ -10,18 +10,25 @@ import {
   Divider,
   CardMedia,
 } from '@mui/material'
-import { forgetPassowrdSchema } from '../data/auth.model'
+import LockIcon from '@mui/icons-material/Lock'
+import { useNavigate, useParams } from 'react-router-dom'
+import { ResetPasswordSchema, TResetPassword } from '../data/auth.model'
 import logo from '@Svg/logo_big.svg'
-import { useAppSelector } from '@Store'
 import { useAuth } from '../hooks/useAuth'
+import Loading from '@Components/Loader'
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useAppSelector } from '@Store'
 
 const Index = () => {
-  const { onUserForgetPassword } = useAuth()
-  const { status, data } = useAppSelector((store) => store.user)
   const navigate = useNavigate()
+  const { onUserResetPassword } = useAuth()
+  const { token } = useParams()
+  const { data, status } = useAppSelector((store) => store.user)
   const [isDone, setIsDone] = useState(false)
+
+  if (typeof token === 'undefined') {
+    return <Loading />
+  }
 
   const {
     handleChange,
@@ -29,17 +36,18 @@ const Index = () => {
     errors,
     values,
     handleSubmit,
+    isSubmitting,
+    resetForm,
     isValid,
     touched,
-    resetForm,
-  } = useFormik({
+  } = useFormik<TResetPassword>({
     initialValues: {
-      email: '',
+      cNewPassword: '',
+      newPassword: '',
     },
-    validationSchema: forgetPassowrdSchema,
+    validationSchema: ResetPasswordSchema,
     onSubmit: (values) => {
-      onUserForgetPassword(values)
-      setIsDone(true)
+      onUserResetPassword(values, token)
     },
   })
 
@@ -53,9 +61,10 @@ const Index = () => {
 
   return (
     <>
-      <Helmet title="Forget Password" />
-      <Section id="forgetPassword">
-        <Box display={'flex'} justifyContent={'center'} mt={'10%'}>
+      1
+      <Helmet title="Reset Password" />
+      <Section id="password reset">
+        <Box display={'flex'} justifyContent={'center'}>
           <Paper
             elevation={3}
             sx={{
@@ -77,7 +86,7 @@ const Index = () => {
                 fontSize: { xs: 25, sm: 35 },
               }}
             >
-              Forget Password
+              Reset Password
             </Typography>
             <Divider
               sx={{
@@ -97,34 +106,50 @@ const Index = () => {
               <TextField
                 fullWidth
                 required
-                name="email"
-                label="Enter your registered email"
-                type="email"
+                name="newPassword"
+                label="Enter new password"
+                type="password"
                 variant="standard"
-                value={values.email}
+                value={values.newPassword}
                 onChange={handleChange}
-                error={Boolean(touched.email && errors.email)}
-                helperText={touched.email && errors.email}
+                error={Boolean(touched.newPassword && errors.newPassword)}
+                helperText={touched.newPassword && errors.newPassword}
+                onBlur={handleBlur}
+                sx={{
+                  marginY: 1,
+                }}
+              />
+              <TextField
+                fullWidth
+                required
+                name="cNewPassword"
+                label="Enter confirm password"
+                type="password"
+                variant="standard"
+                value={values.cNewPassword}
+                onChange={handleChange}
+                error={Boolean(touched.cNewPassword && errors.cNewPassword)}
+                helperText={touched.cNewPassword && errors.cNewPassword}
                 onBlur={handleBlur}
                 sx={{
                   marginY: 1,
                 }}
               />
               <Button
-                disabled={!isValid || status === 'loading'}
+                disabled={!isValid || isSubmitting}
                 variant="contained"
                 type="submit"
+                startIcon={<LockIcon />}
                 sx={{
                   background: 'var(--primary)',
                   mt: 2,
-                  width: '100%',
 
                   '&:hover': {
                     background: 'var(--primary-hover)',
                   },
                 }}
               >
-                {status === 'loading' ? 'Loading...' : 'Submit'}
+                {isSubmitting ? 'Loading...' : 'Reset Password'}
               </Button>
             </Box>
           </Paper>

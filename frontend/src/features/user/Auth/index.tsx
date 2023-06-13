@@ -10,9 +10,11 @@ import logo from '@Svg/logo_big.svg'
 import { useState } from 'react'
 import Login from './components/Login'
 import SignUp from './components/SignUp'
+import { useAppSelector } from '@Store'
 
 const index = ({ open, showAuth }: IDialog) => {
   const [isLogin, setIsLogin] = useState(true)
+  const { status } = useAppSelector((store) => store.user)
 
   const handleClose = () => {
     showAuth(false)
@@ -63,14 +65,14 @@ const index = ({ open, showAuth }: IDialog) => {
         <Typography
           variant="subtitle2"
           component={'span'}
-          onClick={() => setIsLogin(!isLogin)}
+          onClick={() => status !== 'loading' && setIsLogin(!isLogin)}
           sx={{
-            color: 'blue',
+            color: status !== 'loading' ? 'blue' : 'gray',
             fontWeight: 600,
             cursor: 'pointer',
           }}
         >
-          {isLogin ? 'Create Account' : 'Login'}
+          {status !== 'loading' && isLogin ? 'Create Account' : 'Login'}
         </Typography>
       </DialogActions>
     </Dialog>

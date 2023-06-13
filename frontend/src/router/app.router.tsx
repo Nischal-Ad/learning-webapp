@@ -1,20 +1,18 @@
 import {
-  Navigate,
   Route,
   RouterProvider,
   createBrowserRouter,
   createRoutesFromElements,
 } from 'react-router-dom'
-import { Suspense, lazy } from 'react'
+import { lazy } from 'react'
 
 //normal components
-import Loading from '@Components/Loader'
 import ProtectedRoute from './ProtectedRoute'
 import NavbarLanding from '@Shared/navbar/landing'
 import NavbarUser from '@Shared/navbar/user'
 import Footer from '@Shared/footer'
 import Error from '@Components/Error'
-import ForgetPassword from '@Features/user/Auth/components/ForgetPassword'
+import RestrictedRoute from './RestrictedRoute'
 
 // Lazy load components
 const Landing = lazy(() => import('@Features/landing'))
@@ -24,44 +22,37 @@ const CoursesDetails = lazy(() => import('@Features/user/courses/Details'))
 const Cart = lazy(() => import('@Features/user/cart/Index'))
 const ChangePassword = lazy(() => import('@Features/changePassword'))
 const MyLearnings = lazy(() => import('@Features/user/myLearnings/Index'))
+const ForgetPassword = lazy(
+  () => import('@Features/user/Auth/components/ForgetPassword')
+)
+const ResetPassword = lazy(
+  () => import('@Features/user/Auth/components/ResetPassword')
+)
 
 const Router = ({ isAuth }: { isAuth: boolean }) => {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <>
-        {/* test routes */}
-        <Route
-          path="/landing"
-          element={
-            <>
-              <NavbarLanding />
-              <Suspense fallback={<Loading />}>
-                <Landing />
-              </Suspense>
-              <Footer />
-            </>
-          }
-        />
-        {/* end of test routes */}
-
         {/* normal routes */}
-        <Route
-          path="/"
-          element={
-            !isAuth ? (
-              <Suspense fallback={<Loading />}>
+        <Route path="*" element={<Error />} />
+        {/* end of normal routes */}
+
+        {/* restricted routes only assisable when user is logout */}
+        <Route element={<RestrictedRoute auth={isAuth} />}>
+          <Route
+            path="/"
+            element={
+              <>
                 <NavbarLanding />
                 <Landing />
                 <Footer />
-              </Suspense>
-            ) : (
-              <Navigate to={'/dashboard'} replace />
-            )
-          }
-        />
-        <Route path="/forgetpassword" element={<ForgetPassword />} />
-        <Route path="*" element={<Error />} />
-        {/* end of normal routes */}
+              </>
+            }
+          />
+          <Route path="/forgetpassword" element={<ForgetPassword />} />
+          <Route path="/resetpassword/:token" element={<ResetPassword />} />
+        </Route>
+        {/* end of restricted routes */}
 
         {/* protected routes for user */}
         <Route

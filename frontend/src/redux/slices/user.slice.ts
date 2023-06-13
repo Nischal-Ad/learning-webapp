@@ -3,12 +3,14 @@ import type { CaseReducer, PayloadAction } from '@reduxjs/toolkit'
 
 interface IAuthState extends IState {
   data: Partial<IAuth>
+  isAuth?: boolean
 }
 
 const initialState: IAuthState = {
   status: 'idle',
   data: {},
   error: '',
+  isAuth: false,
 }
 
 const setLoading: CaseReducer<IAuthState> = (state) => ({
@@ -20,6 +22,7 @@ const setData: CaseReducer<IAuthState, PayloadAction<IAuth>> = (
   state,
   action
 ) => ({
+  isAuth: action.payload.isAuth,
   status: 'success',
   data: action.payload,
   error: '',

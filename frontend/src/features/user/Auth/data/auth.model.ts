@@ -1,4 +1,4 @@
-import { object, string, ref, InferType } from 'yup'
+import { object, string, ref, InferType, boolean } from 'yup'
 
 export interface IDialog {
   open: boolean
@@ -11,6 +11,7 @@ export const LoginSchema = object().shape({
     .max(12, 'password be less than or equal to 12')
     .min(4, 'password be more than or equal to 4')
     .required('please enter password'),
+  remember: boolean(),
 })
 
 export const RegisterSchema = object().shape({
@@ -35,14 +36,29 @@ export const forgetPassowrdSchema = object().shape({
   email: string().email('enter valid email').required('please enter email'),
 })
 
+export const ResetPasswordSchema = object().shape({
+  newPassword: string()
+    .max(12, 'password be less than or equal to 12')
+    .min(4, 'password be more than or equal to 4')
+    .required('please enter password'),
+  cNewPassword: string()
+    .oneOf([ref('newPassword')], 'password doesnot match')
+    .required('please enter confirm password'),
+})
+
 export type TRegister = InferType<typeof RegisterSchema>
 export type TLogin = InferType<typeof LoginSchema>
 export type TForgetPassword = InferType<typeof forgetPassowrdSchema>
+export type TResetPassword = InferType<typeof ResetPasswordSchema>
 
 export interface IRegister extends IStatus {
-  user: Partial<TRegister>
+  user: TRegister
+}
+
+export interface IForgetPassword {
+  email: string
 }
 
 export interface ILogin extends IStatus {
-  user: Partial<TLogin>
+  user: TLogin
 }
