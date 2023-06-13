@@ -16,11 +16,15 @@ import { ResetPasswordSchema, TResetPassword } from '../data/auth.model'
 import logo from '@Svg/logo_big.svg'
 import { useAuth } from '../hooks/useAuth'
 import Loading from '@Components/Loader'
+import { useEffect, useState } from 'react'
+import { useAppSelector } from '@Store'
 
 const Index = () => {
   const navigate = useNavigate()
   const { onUserResetPassword } = useAuth()
   const { token } = useParams()
+  const { data, status } = useAppSelector((store) => store.user)
+  const [isDone, setIsDone] = useState(false)
 
   if (typeof token === 'undefined') {
     return <Loading />
@@ -33,6 +37,7 @@ const Index = () => {
     values,
     handleSubmit,
     isSubmitting,
+    resetForm,
     isValid,
     touched,
   } = useFormik<TResetPassword>({
@@ -41,12 +46,18 @@ const Index = () => {
       newPassword: '',
     },
     validationSchema: ResetPasswordSchema,
-    onSubmit: (values, { resetForm }) => {
+    onSubmit: (values) => {
       onUserResetPassword(values, token)
-      resetForm()
-      navigate('/', { replace: true })
     },
   })
+
+  useEffect(() => {
+    if (isDone && data?.success && status === 'success') {
+      setIsDone(false)
+      resetForm()
+      navigate('/', { replace: true })
+    }
+  }, [isDone, status])
 
   return (
     <>
@@ -138,7 +149,7 @@ const Index = () => {
                   },
                 }}
               >
-                {isSubmitting ? 'Loading...' : ' Reset Password'}
+                {isSubmitting ? 'Loading...' : 'Reset Password'}
               </Button>
             </Box>
           </Paper>

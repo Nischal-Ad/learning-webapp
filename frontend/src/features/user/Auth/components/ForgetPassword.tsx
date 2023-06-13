@@ -14,10 +14,14 @@ import { forgetPassowrdSchema } from '../data/auth.model'
 import logo from '@Svg/logo_big.svg'
 import { useAppSelector } from '@Store'
 import { useAuth } from '../hooks/useAuth'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const Index = () => {
   const { onUserForgetPassword } = useAuth()
-  const { status } = useAppSelector((store) => store.user)
+  const { status, data } = useAppSelector((store) => store.user)
+  const navigate = useNavigate()
+  const [isDone, setIsDone] = useState(false)
 
   const {
     handleChange,
@@ -27,16 +31,25 @@ const Index = () => {
     handleSubmit,
     isValid,
     touched,
+    resetForm,
   } = useFormik({
     initialValues: {
       email: '',
     },
     validationSchema: forgetPassowrdSchema,
-    onSubmit: (values, { resetForm }) => {
+    onSubmit: (values) => {
       onUserForgetPassword(values)
-      resetForm()
+      setIsDone(true)
     },
   })
+
+  useEffect(() => {
+    if (isDone && data?.success && status === 'success') {
+      setIsDone(false)
+      resetForm()
+      navigate('/', { replace: true })
+    }
+  }, [isDone, status])
 
   return (
     <>
