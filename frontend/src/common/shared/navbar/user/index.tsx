@@ -30,11 +30,13 @@ import CloseIcon from '@mui/icons-material/Close'
 import LocalLibraryIcon from '@mui/icons-material/LocalLibrary'
 import NotificationList from './components/NotificationList'
 import { useAuth } from '@Features/user/Auth/hooks/useAuth'
+import { useAppSelector } from '@Store'
 
 const Index = () => {
   const [userMenu, setUserMenu] = React.useState<null | HTMLElement>(null)
   const [search, setSearch] = React.useState('')
   const [showSearch, setShowSearch] = React.useState(false)
+  const { data } = useAppSelector((store) => store.user)
   const [openNotification, setOpenNotification] =
     React.useState<null | HTMLElement>(null)
 
@@ -126,9 +128,9 @@ const Index = () => {
             flexDirection={'column'}
             textAlign={'center'}
           >
-            Nischal Adhikari
-            <Typography variant="caption">
-              nischaladhikari101@gmail.com
+            {data?.user?.name}
+            <Typography component={'span'} fontSize={'0.9rem'}>
+              {data?.user?.email}
             </Typography>
           </Typography>
         </MenuItem>

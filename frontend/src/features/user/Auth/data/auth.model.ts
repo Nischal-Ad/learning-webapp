@@ -46,7 +46,22 @@ export const ResetPasswordSchema = object().shape({
     .required('please enter confirm password'),
 })
 
+export const ChangePasswordSchema = object().shape({
+  oldPassword: string()
+    .max(12, 'password be less than or equal to 12')
+    .min(4, 'password be more than or equal to 4')
+    .required('please enter password'),
+  newPassword: string()
+    .max(12, 'password be less than or equal to 12')
+    .min(4, 'password be more than or equal to 4')
+    .required('please enter password'),
+  cNewPassword: string()
+    .oneOf([ref('newPassword')], 'password doesnot match')
+    .required('please enter confirm password'),
+})
+
 export type TRegister = InferType<typeof RegisterSchema>
+export type TChangePassword = InferType<typeof ChangePasswordSchema>
 export type TLogin = InferType<typeof LoginSchema>
 export type TForgetPassword = InferType<typeof forgetPassowrdSchema>
 export type TResetPassword = InferType<typeof ResetPasswordSchema>
