@@ -15,6 +15,7 @@ import UserRouter from '@Routes/userRoute'
 import AuthRouter from '@Routes/authRoute'
 import CourseRouter from '@Routes/courseRoute'
 import KhaltiRouter from '@Routes/khaltiRoute'
+import CommentRouter from '@Routes/commentRoute'
 
 //start express app
 const app = express()
@@ -66,6 +67,7 @@ app.use('/api/v1', UserRouter)
 app.use('/api/v1', AuthRouter)
 app.use('/api/v1', CourseRouter)
 app.use('/api/v1', KhaltiRouter)
+app.use('/api/v1', CommentRouter)
 
 app.all('*', (req, res, next) => {
   next(new ErrorHandler(`Can't find ${req.originalUrl} on this server!`, 404))
