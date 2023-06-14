@@ -11,7 +11,6 @@ import {
   CardMedia,
 } from '@mui/material'
 import LockIcon from '@mui/icons-material/Lock'
-import { useNavigate } from 'react-router-dom'
 import logo from '@Svg/logo_big.svg'
 import { useAuth } from '@Features/user/Auth/hooks/useAuth'
 import {
@@ -21,7 +20,6 @@ import {
 import { useAppSelector } from '@Store'
 
 const Index = () => {
-  const navigate = useNavigate()
   const { onUserChangePassword } = useAuth()
   const { status } = useAppSelector((store) => store.user)
 
@@ -42,7 +40,6 @@ const Index = () => {
     validationSchema: ChangePasswordSchema,
     onSubmit: (values) => {
       onUserChangePassword(values)
-      navigate('/', { replace: true, state: { previousPath: null } })
     },
   })
 
