@@ -28,9 +28,8 @@ const Login = () => {
       remember: false,
     },
     validationSchema: LoginSchema,
-    onSubmit: (values, action) => {
+    onSubmit: (values) => {
       onLoginUser(values)
-      action.resetForm()
       navigate('/', { replace: true })
     },
   })
