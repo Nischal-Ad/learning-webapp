@@ -1,8 +1,7 @@
 import React from 'react'
-import { Navigate, Outlet } from 'react-router-dom'
+import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import { Suspense } from 'react'
 import Loading from '@Components/Loader'
-import { notifyError } from '@Utils/alerts'
 
 interface ProtectedRouteProps {
   auth: boolean
@@ -17,9 +16,19 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   Navbar,
   Footer,
 }) => {
+  const location = useLocation()
+
   if (!auth) {
-    notifyError('please login first')
-    return <Navigate to={'/'} replace />
+    const previousPath = location.state?.previousPath
+    if (previousPath !== location.pathname) {
+      return (
+        <Navigate
+          to="/"
+          replace={true}
+          state={{ previousPath: location.pathname }}
+        />
+      )
+    }
   }
 
   // if (!isAdmin) {

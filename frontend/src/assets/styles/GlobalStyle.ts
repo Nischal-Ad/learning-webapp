@@ -16,6 +16,7 @@ const globalCss = css`
   * {
     font-family: var(--ff-poppins) !important;
     scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
   }
 
   *::-webkit-scrollbar {

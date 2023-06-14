@@ -48,7 +48,7 @@ const errorMiddleware = (
   }
 
   res.status(err.statusCode).json({
-    success: err.status,
+    success: false,
     message: err.message,
   })
 }

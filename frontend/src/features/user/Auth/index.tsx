@@ -7,23 +7,17 @@ import { IDialog } from './data/auth.model'
 import { IconButton, Typography, CardMedia } from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
 import logo from '@Svg/logo_big.svg'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Login from './components/Login'
 import SignUp from './components/SignUp'
+import { useAppSelector } from '@Store'
 
 const index = ({ open, showAuth }: IDialog) => {
   const [isLogin, setIsLogin] = useState(true)
-  const [reset, setReset] = useState(false)
-
-  useEffect(() => {
-    if (open) {
-      setReset(false)
-    }
-  }, [open])
+  const { status } = useAppSelector((store) => store.user)
 
   const handleClose = () => {
     showAuth(false)
-    setReset(true)
   }
 
   return (
@@ -64,21 +58,21 @@ const index = ({ open, showAuth }: IDialog) => {
             marginBottom: 1,
           }}
         />
-        {isLogin ? <Login reset={reset} /> : <SignUp reset={reset} />}
+        {isLogin ? <Login /> : <SignUp />}
       </DialogContent>
       <DialogActions sx={{ marginY: 1 }}>
         {isLogin ? 'New here? ' : 'Already have an alc? '}
         <Typography
           variant="subtitle2"
           component={'span'}
-          onClick={() => setIsLogin(!isLogin)}
+          onClick={() => status !== 'loading' && setIsLogin(!isLogin)}
           sx={{
-            color: 'blue',
+            color: status !== 'loading' ? 'blue' : 'gray',
             fontWeight: 600,
             cursor: 'pointer',
           }}
         >
-          {isLogin ? 'Create Account' : 'Login'}
+          {status !== 'loading' && isLogin ? 'Create Account' : 'Login'}
         </Typography>
       </DialogActions>
     </Dialog>

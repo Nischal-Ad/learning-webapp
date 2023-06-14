@@ -11,17 +11,24 @@ import {
   CardMedia,
 } from '@mui/material'
 import LockIcon from '@mui/icons-material/Lock'
+import { useNavigate, useParams } from 'react-router-dom'
+import { ResetPasswordSchema, TResetPassword } from '../data/auth.model'
 import logo from '@Svg/logo_big.svg'
-import { useAuth } from '@Features/user/Auth/hooks/useAuth'
-import {
-  ChangePasswordSchema,
-  TChangePassword,
-} from '@Features/user/Auth/data/auth.model'
+import { useAuth } from '../hooks/useAuth'
+import Loading from '@Components/Loader'
+import { useEffect, useState } from 'react'
 import { useAppSelector } from '@Store'
 
 const Index = () => {
-  const { onUserChangePassword } = useAuth()
-  const { status } = useAppSelector((store) => store.user)
+  const navigate = useNavigate()
+  const { onUserResetPassword } = useAuth()
+  const { token } = useParams()
+  const { data, status } = useAppSelector((store) => store.user)
+  const [isDone, setIsDone] = useState(false)
+
+  if (typeof token === 'undefined') {
+    return <Loading />
+  }
 
   const {
     handleChange,
@@ -29,24 +36,34 @@ const Index = () => {
     errors,
     values,
     handleSubmit,
+    isSubmitting,
+    resetForm,
     isValid,
     touched,
-  } = useFormik<TChangePassword>({
+  } = useFormik<TResetPassword>({
     initialValues: {
-      oldPassword: '',
-      newPassword: '',
       cNewPassword: '',
+      newPassword: '',
     },
-    validationSchema: ChangePasswordSchema,
+    validationSchema: ResetPasswordSchema,
     onSubmit: (values) => {
-      onUserChangePassword(values)
+      onUserResetPassword(values, token)
     },
   })
 
+  useEffect(() => {
+    if (isDone && data?.success && status === 'success') {
+      setIsDone(false)
+      resetForm()
+      navigate('/', { replace: true })
+    }
+  }, [isDone, status])
+
   return (
     <>
-      <Helmet title="Change Password" />
-      <Section id="password change">
+      1
+      <Helmet title="Reset Password" />
+      <Section id="password reset">
         <Box display={'flex'} justifyContent={'center'}>
           <Paper
             elevation={3}
@@ -69,7 +86,7 @@ const Index = () => {
                 fontSize: { xs: 25, sm: 35 },
               }}
             >
-              Change Password
+              Reset Password
             </Typography>
             <Divider
               sx={{
@@ -86,22 +103,6 @@ const Index = () => {
               }}
             />
             <Box component={'form'} onSubmit={handleSubmit}>
-              <TextField
-                fullWidth
-                required
-                name="oldPassword"
-                label="Enter old password"
-                type="password"
-                variant="standard"
-                value={values.oldPassword}
-                onChange={handleChange}
-                error={Boolean(touched.oldPassword && errors.oldPassword)}
-                helperText={touched.oldPassword && errors.oldPassword}
-                onBlur={handleBlur}
-                sx={{
-                  marginY: 1,
-                }}
-              />
               <TextField
                 fullWidth
                 required
@@ -135,7 +136,7 @@ const Index = () => {
                 }}
               />
               <Button
-                disabled={!isValid || status === 'loading'}
+                disabled={!isValid || isSubmitting}
                 variant="contained"
                 type="submit"
                 startIcon={<LockIcon />}
@@ -148,7 +149,7 @@ const Index = () => {
                   },
                 }}
               >
-                {status === 'loading' ? 'loading...' : 'Change Password'}
+                {isSubmitting ? 'Loading...' : 'Reset Password'}
               </Button>
             </Box>
           </Paper>

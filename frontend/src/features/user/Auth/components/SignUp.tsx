@@ -1,5 +1,5 @@
 import { useFormik } from 'formik'
-import { IAuth, RegisterSchema } from '../data/auth.model'
+import { TRegister, RegisterSchema } from '../data/auth.model'
 import TextField from '@mui/material/TextField'
 import {
   Box,
@@ -9,11 +9,13 @@ import {
   RadioGroup,
   Typography,
 } from '@mui/material'
+import { useAuth } from '../hooks/useAuth'
+import { useAppSelector } from '@Store'
 import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
 
-const Register = ({ reset }: IAuth) => {
-  const navigate = useNavigate()
+const Register = () => {
+  const { onRegisterUser } = useAuth()
+  const { status } = useAppSelector((store) => store.user)
 
   const {
     handleChange,
@@ -21,29 +23,29 @@ const Register = ({ reset }: IAuth) => {
     errors,
     values,
     handleSubmit,
+    resetForm,
     isValid,
+    isSubmitting,
     touched,
-    handleReset,
-  } = useFormik({
+  } = useFormik<TRegister>({
     initialValues: {
       name: '',
       email: '',
       password: '',
-      cPassword: '',
+      cpassword: '',
       role: 'student',
     },
     validationSchema: RegisterSchema,
     onSubmit: (values) => {
-      console.log(values)
-      navigate('/dashboard', { replace: true })
+      onRegisterUser(values)
     },
   })
 
   useEffect(() => {
-    if (reset) {
-      handleReset('data')
+    if (isSubmitting && status === 'success') {
+      resetForm()
     }
-  }, [reset])
+  }, [status])
 
   return (
     <Box component={'form'} onSubmit={handleSubmit}>
@@ -96,14 +98,14 @@ const Register = ({ reset }: IAuth) => {
       <TextField
         fullWidth
         required
-        name="cPassword"
+        name="cpassword"
         type="password"
         label="Confirm Password"
         variant="standard"
-        value={values.cPassword}
+        value={values.cpassword}
         onChange={handleChange}
-        error={Boolean(touched.cPassword && errors.cPassword)}
-        helperText={touched.cPassword && errors.cPassword}
+        error={Boolean(touched.cpassword && errors.cpassword)}
+        helperText={touched.cpassword && errors.cpassword}
         onBlur={handleBlur}
         sx={{
           marginY: 1,
@@ -115,12 +117,12 @@ const Register = ({ reset }: IAuth) => {
         <FormControlLabel value="teacher" control={<Radio />} label="Teacher" />
       </RadioGroup>
       <Button
-        disabled={!isValid}
+        disabled={!isValid || status === 'loading'}
         color="primary"
         variant="contained"
         type="submit"
       >
-        Submit
+        {status === 'loading' ? 'Loading...' : 'Submit'}
       </Button>
     </Box>
   )

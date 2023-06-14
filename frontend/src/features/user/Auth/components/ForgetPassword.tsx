@@ -10,18 +10,18 @@ import {
   Divider,
   CardMedia,
 } from '@mui/material'
-import LockIcon from '@mui/icons-material/Lock'
+import { forgetPassowrdSchema } from '../data/auth.model'
 import logo from '@Svg/logo_big.svg'
-import { useAuth } from '@Features/user/Auth/hooks/useAuth'
-import {
-  ChangePasswordSchema,
-  TChangePassword,
-} from '@Features/user/Auth/data/auth.model'
 import { useAppSelector } from '@Store'
+import { useAuth } from '../hooks/useAuth'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const Index = () => {
-  const { onUserChangePassword } = useAuth()
-  const { status } = useAppSelector((store) => store.user)
+  const { onUserForgetPassword } = useAuth()
+  const { status, data } = useAppSelector((store) => store.user)
+  const navigate = useNavigate()
+  const [isDone, setIsDone] = useState(false)
 
   const {
     handleChange,
@@ -31,23 +31,31 @@ const Index = () => {
     handleSubmit,
     isValid,
     touched,
-  } = useFormik<TChangePassword>({
+    resetForm,
+  } = useFormik({
     initialValues: {
-      oldPassword: '',
-      newPassword: '',
-      cNewPassword: '',
+      email: '',
     },
-    validationSchema: ChangePasswordSchema,
+    validationSchema: forgetPassowrdSchema,
     onSubmit: (values) => {
-      onUserChangePassword(values)
+      onUserForgetPassword(values)
+      setIsDone(true)
     },
   })
 
+  useEffect(() => {
+    if (isDone && data?.success && status === 'success') {
+      setIsDone(false)
+      resetForm()
+      navigate('/', { replace: true })
+    }
+  }, [isDone, status])
+
   return (
     <>
-      <Helmet title="Change Password" />
-      <Section id="password change">
-        <Box display={'flex'} justifyContent={'center'}>
+      <Helmet title="Forget Password" />
+      <Section id="forgetPassword">
+        <Box display={'flex'} justifyContent={'center'} mt={'10%'}>
           <Paper
             elevation={3}
             sx={{
@@ -69,7 +77,7 @@ const Index = () => {
                 fontSize: { xs: 25, sm: 35 },
               }}
             >
-              Change Password
+              Forget Password
             </Typography>
             <Divider
               sx={{
@@ -89,46 +97,14 @@ const Index = () => {
               <TextField
                 fullWidth
                 required
-                name="oldPassword"
-                label="Enter old password"
-                type="password"
+                name="email"
+                label="Enter your registered email"
+                type="email"
                 variant="standard"
-                value={values.oldPassword}
+                value={values.email}
                 onChange={handleChange}
-                error={Boolean(touched.oldPassword && errors.oldPassword)}
-                helperText={touched.oldPassword && errors.oldPassword}
-                onBlur={handleBlur}
-                sx={{
-                  marginY: 1,
-                }}
-              />
-              <TextField
-                fullWidth
-                required
-                name="newPassword"
-                label="Enter new password"
-                type="password"
-                variant="standard"
-                value={values.newPassword}
-                onChange={handleChange}
-                error={Boolean(touched.newPassword && errors.newPassword)}
-                helperText={touched.newPassword && errors.newPassword}
-                onBlur={handleBlur}
-                sx={{
-                  marginY: 1,
-                }}
-              />
-              <TextField
-                fullWidth
-                required
-                name="cNewPassword"
-                label="Enter confirm password"
-                type="password"
-                variant="standard"
-                value={values.cNewPassword}
-                onChange={handleChange}
-                error={Boolean(touched.cNewPassword && errors.cNewPassword)}
-                helperText={touched.cNewPassword && errors.cNewPassword}
+                error={Boolean(touched.email && errors.email)}
+                helperText={touched.email && errors.email}
                 onBlur={handleBlur}
                 sx={{
                   marginY: 1,
@@ -138,17 +114,17 @@ const Index = () => {
                 disabled={!isValid || status === 'loading'}
                 variant="contained"
                 type="submit"
-                startIcon={<LockIcon />}
                 sx={{
                   background: 'var(--primary)',
                   mt: 2,
+                  width: '100%',
 
                   '&:hover': {
                     background: 'var(--primary-hover)',
                   },
                 }}
               >
-                {status === 'loading' ? 'loading...' : 'Change Password'}
+                {status === 'loading' ? 'Loading...' : 'Submit'}
               </Button>
             </Box>
           </Paper>

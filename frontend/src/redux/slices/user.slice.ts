@@ -1,25 +1,37 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { CaseReducer, PayloadAction } from '@reduxjs/toolkit'
 
-const initialState = {
-  status: 'idle',
-  data: {} as any,
-  error: '',
+interface IAuthState extends IState {
+  data: Partial<IAuth>
+  isAuth?: boolean
 }
 
-const setLoading: CaseReducer<any> = (state) => ({
+const initialState: IAuthState = {
+  status: 'idle',
+  data: {},
+  error: '',
+  isAuth: false,
+}
+
+const setLoading: CaseReducer<IAuthState> = (state) => ({
   ...state,
   status: 'loading',
-  error: '',
 })
 
-const setData: CaseReducer<any, PayloadAction<any>> = (state, action) => ({
+const setData: CaseReducer<IAuthState, PayloadAction<IAuth>> = (
+  state,
+  action
+) => ({
+  isAuth: action.payload.isAuth,
   status: 'success',
   data: action.payload,
   error: '',
 })
 
-const setError: CaseReducer<any, PayloadAction<any>> = (state, action) => ({
+const setError: CaseReducer<IAuthState, PayloadAction<Error>> = (
+  state,
+  action
+) => ({
   ...state,
   status: 'error',
   error: action.payload,

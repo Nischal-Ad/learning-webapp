@@ -1,14 +1,17 @@
 import { useFormik } from 'formik'
-import { IAuth, LoginSchema } from '../data/auth.model'
+import { LoginSchema, TLogin } from '../data/auth.model'
 import TextField from '@mui/material/TextField'
 import { Box, Button, Typography } from '@mui/material'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
-import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '../hooks/useAuth'
+import { useAppSelector } from '@Store'
 
-const Login = ({ reset }: IAuth) => {
+const Login = () => {
   const navigate = useNavigate()
+  const { onLoginUser } = useAuth()
+  const { status } = useAppSelector((store) => store.user)
 
   const {
     handleChange,
@@ -18,24 +21,18 @@ const Login = ({ reset }: IAuth) => {
     handleSubmit,
     isValid,
     touched,
-    handleReset,
-  } = useFormik({
+  } = useFormik<TLogin>({
     initialValues: {
       email: '',
       password: '',
+      remember: false,
     },
     validationSchema: LoginSchema,
     onSubmit: (values) => {
-      console.log(values)
-      navigate('/dashboard', { replace: true })
+      onLoginUser(values)
+      navigate('/', { replace: true })
     },
   })
-
-  useEffect(() => {
-    if (reset) {
-      handleReset('data')
-    }
-  }, [reset])
 
   return (
     <Box component={'form'} onSubmit={handleSubmit}>
@@ -77,25 +74,33 @@ const Login = ({ reset }: IAuth) => {
         flexDirection={{ sm: 'row', xs: 'column' }}
         alignItems={{ sm: 'center', xs: 'start' }}
       >
-        <FormControlLabel control={<Checkbox />} label="Remember me" />
-        <Typography
-          variant="subtitle2"
-          sx={{
-            color: 'blue',
-            textDecoration: 'underline',
-            cursor: 'pointer',
-          }}
-        >
-          Forget Password?
-        </Typography>
+        <FormControlLabel
+          control={
+            <Checkbox
+              name="remember"
+              checked={values.remember}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+          }
+          label="Remember me"
+        />
+        <Link to={status === 'loading' ? '' : '/forgetpassword'}>
+          <Typography
+            variant="subtitle2"
+            color={status !== 'loading' ? 'blue' : 'gray'}
+          >
+            Forget Password?
+          </Typography>
+        </Link>
       </Box>
       <Button
-        disabled={!isValid}
+        disabled={!isValid || status === 'loading'}
         color="primary"
         variant="contained"
         type="submit"
       >
-        Submit
+        {status === 'loading' ? 'Loading...' : 'Submit'}
       </Button>
     </Box>
   )
