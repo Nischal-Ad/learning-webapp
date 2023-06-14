@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useAppDispatch } from '@Store'
 import {
+  onChangePassword,
   onForgetPassword,
   onLogin,
   onLogout,
@@ -10,6 +11,7 @@ import {
 } from '../data/auth.service'
 import {
   IForgetPassword,
+  TChangePassword,
   TLogin,
   TRegister,
   TResetPassword,
@@ -86,6 +88,19 @@ export const useAuth = () => {
     }
   }
 
+  const onUserChangePassword = async (payload: TChangePassword) => {
+    try {
+      dispatch(userSlice.actions.setLoading())
+
+      const res = await onChangePassword(payload)
+      dispatch(userSlice.actions.setData({ ...res, isAuth: false }))
+      notifySuccess(res.message)
+    } catch (error: any) {
+      dispatch(userSlice.actions.setError(error.response.data.message))
+      notifyError(error.response.data.message)
+    }
+  }
+
   const onUserLogout = async () => {
     try {
       dispatch(userSlice.actions.setLoading())
@@ -106,5 +121,6 @@ export const useAuth = () => {
     onUserLogout,
     onUserForgetPassword,
     onUserResetPassword,
+    onUserChangePassword,
   }
 }

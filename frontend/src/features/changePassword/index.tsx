@@ -11,12 +11,17 @@ import {
   CardMedia,
 } from '@mui/material'
 import LockIcon from '@mui/icons-material/Lock'
-import { useNavigate } from 'react-router-dom'
-import { PasswordChangeSchema } from './data/password.model'
 import logo from '@Svg/logo_big.svg'
+import { useAuth } from '@Features/user/Auth/hooks/useAuth'
+import {
+  ChangePasswordSchema,
+  TChangePassword,
+} from '@Features/user/Auth/data/auth.model'
+import { useAppSelector } from '@Store'
 
 const Index = () => {
-  const navigate = useNavigate()
+  const { onUserChangePassword } = useAuth()
+  const { status } = useAppSelector((store) => store.user)
 
   const {
     handleChange,
@@ -26,16 +31,15 @@ const Index = () => {
     handleSubmit,
     isValid,
     touched,
-  } = useFormik({
+  } = useFormik<TChangePassword>({
     initialValues: {
       oldPassword: '',
       newPassword: '',
-      cPassword: '',
+      cNewPassword: '',
     },
-    validationSchema: PasswordChangeSchema,
+    validationSchema: ChangePasswordSchema,
     onSubmit: (values) => {
-      console.log(values)
-      navigate('/dashboard', { replace: true })
+      onUserChangePassword(values)
     },
   })
 
@@ -117,21 +121,21 @@ const Index = () => {
               <TextField
                 fullWidth
                 required
-                name="cPassword"
+                name="cNewPassword"
                 label="Enter confirm password"
                 type="password"
                 variant="standard"
-                value={values.cPassword}
+                value={values.cNewPassword}
                 onChange={handleChange}
-                error={Boolean(touched.cPassword && errors.cPassword)}
-                helperText={touched.cPassword && errors.cPassword}
+                error={Boolean(touched.cNewPassword && errors.cNewPassword)}
+                helperText={touched.cNewPassword && errors.cNewPassword}
                 onBlur={handleBlur}
                 sx={{
                   marginY: 1,
                 }}
               />
               <Button
-                disabled={!isValid}
+                disabled={!isValid || status === 'loading'}
                 variant="contained"
                 type="submit"
                 startIcon={<LockIcon />}
@@ -144,7 +148,7 @@ const Index = () => {
                   },
                 }}
               >
-                Change Password
+                {status === 'loading' ? 'loading...' : 'Change Password'}
               </Button>
             </Box>
           </Paper>

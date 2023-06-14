@@ -19,10 +19,7 @@ const App = () => {
     onUserProfile()
   }, [])
 
-  if (
-    (!isPageLoaded || isAuth) &&
-    (status === 'loading' || status === 'idle')
-  ) {
+  if (!isPageLoaded && (status === 'loading' || status === 'idle')) {
     return <Loading />
   }
 

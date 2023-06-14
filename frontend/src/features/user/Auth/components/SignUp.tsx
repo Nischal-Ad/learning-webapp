@@ -11,6 +11,7 @@ import {
 } from '@mui/material'
 import { useAuth } from '../hooks/useAuth'
 import { useAppSelector } from '@Store'
+import { useEffect } from 'react'
 
 const Register = () => {
   const { onRegisterUser } = useAuth()
@@ -22,7 +23,9 @@ const Register = () => {
     errors,
     values,
     handleSubmit,
+    resetForm,
     isValid,
+    isSubmitting,
     touched,
   } = useFormik<TRegister>({
     initialValues: {
@@ -33,11 +36,16 @@ const Register = () => {
       role: 'student',
     },
     validationSchema: RegisterSchema,
-    onSubmit: (values, action) => {
+    onSubmit: (values) => {
       onRegisterUser(values)
-      action.resetForm()
     },
   })
+
+  useEffect(() => {
+    if (isSubmitting && status === 'success') {
+      resetForm()
+    }
+  }, [status])
 
   return (
     <Box component={'form'} onSubmit={handleSubmit}>

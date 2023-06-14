@@ -3,6 +3,7 @@ import {
   IForgetPassword,
   ILogin,
   IRegister,
+  TChangePassword,
   TLogin,
   TRegister,
   TResetPassword,
@@ -23,5 +24,8 @@ export const onResetPassword = (
   payload: TResetPassword,
   token: string
 ): Promise<IStatus> => localAxios.put(`/resetpassword/${token}`, payload)
+
+export const onChangePassword = (payload: TChangePassword): Promise<IStatus> =>
+  localAxios.put(`/changepassword`, payload)
 
 export const onLogout = (): Promise<IStatus> => localAxios.get(`/logout`)
