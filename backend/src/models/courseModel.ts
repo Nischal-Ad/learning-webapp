@@ -24,4 +24,4 @@ const courseSchema = new Schema({
   },
 })
 
-export default model<TCourse>('courses', courseSchema)
+export default model<TCourse>('Course', courseSchema)
