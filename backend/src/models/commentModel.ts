@@ -3,6 +3,12 @@ import { InferSchemaType, Schema, model } from 'mongoose'
 export type TComment = InferSchemaType<typeof commentSchema>
 
 const commentSchema = new Schema({
+  rating: {
+    type: Number,
+    min: 1,
+    max: 5,
+    required: [true, 'please provide rating'],
+  },
   comment: {
     type: String,
     required: [true, 'Please enter your comment'],
