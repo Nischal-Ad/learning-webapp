@@ -9,7 +9,7 @@ const commentSchema = new Schema({
     max: 5,
     required: [true, 'please provide rating'],
   },
-  comment: {
+  course_comment: {
     type: String,
     required: [true, 'Please enter your comment'],
   },
