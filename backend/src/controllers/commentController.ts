@@ -7,13 +7,13 @@ import Update from '@Components/updateOne'
 import Delete from '@Components/deleteOne'
 
 export const Createcomment = catchAsync(async (req, res) => {
-  const { course_comment, course_id, user_id,rating }: TComment = req.body
+  const { rating, comment, course, user }: TComment = req.body
 
   const newComment: TComment = await commentModel.create({
-    course_comment,
-    course_id,
-    user_id,
-    rating
+    rating,
+    comment,
+    course,
+    user,
   })
 
   res.status(201).json({

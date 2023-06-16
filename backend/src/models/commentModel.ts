@@ -14,16 +14,18 @@ const commentSchema = new Schema({
     required: [true, 'Please enter your comment'],
   },
 
-  course_id: {
+  course: {
     type: Schema.Types.ObjectId,
     ref: 'Course',
     required: [true, 'Comment must be done to course'],
   },
-  user_id: {
+  user: {
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: [true, 'Comment must belong to a user'],
   },
 })
+
+commentSchema.index({ course: 1, user: 1 }, { unique: true })
 
 export default model<TComment>('Comment', commentSchema)
