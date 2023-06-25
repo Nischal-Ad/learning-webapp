@@ -27,7 +27,6 @@ export const getonecomment = GetOne(commentModel, 'comments')
 
 export const getAllComment = GetAll(commentModel)
 
-
 export const updateoneComment = Update(commentModel, 'comments')
 
 export const deleteoneCoomment = Delete(commentModel, 'comments')
