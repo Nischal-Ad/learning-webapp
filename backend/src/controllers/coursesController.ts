@@ -7,16 +7,20 @@ import Update from '@Components/updateOne'
 import Delete from '@Components/deleteOne'
 
 export const Createcourse = catchAsync(async (req, res, next) => {
-  const { course_title, course_category, topic_id, enroll }: TCourse = req.body
+  const { title, category, price, description, requirements, contains, img }: TCourse = req.body
 
-  if (!course_title || !course_category || !topic_id || !enroll)
+  if (!title || !category || !price || !description || !requirements || !contains || !img)
     return next(new ErrorHandler('Please enter all field', 400))
 
   const newCourse: TCourse = await courseModel.create({
-    course_title,
-    course_category,
-    topic_id,
-    enroll,
+    title,
+    category,
+    price,
+    requirements,
+    contains,
+    img,
+    description,
+    user: req.user?._id,
   })
 
   res.status(201).json({

@@ -5,15 +5,22 @@ import GetOne from '@Components/getOne'
 import GetAll from '@Components/getAll'
 import Update from '@Components/updateOne'
 import Delete from '@Components/deleteOne'
+import ErrorHandler from '@Utils/errorHandler'
+import courseModel from '@Models/courseModel'
 
-export const Createcomment = catchAsync(async (req, res) => {
-  const { rating, comment, course, user }: TComment = req.body
+export const Createcomment = catchAsync(async (req, res, next) => {
+  const { rating, comment, course }: TComment = req.body
+
+  if (!rating || !comment || !course) return next(new ErrorHandler('Please enter all field', 400))
+
+  const validCourse = await courseModel.findOne({ _id: course })
+  if (!validCourse) return next(new ErrorHandler('sorry this course couldnot be found', 400))
 
   const newComment: TComment = await commentModel.create({
     rating,
     comment,
     course,
-    user,
+    user: req.user?._id,
   })
 
   res.status(201).json({
@@ -23,10 +30,10 @@ export const Createcomment = catchAsync(async (req, res) => {
   })
 })
 
-export const getonecomment = GetOne(commentModel, 'comments')
+export const getonecomment = GetOne(commentModel, 'comment')
 
 export const getAllComment = GetAll(commentModel)
 
-export const updateoneComment = Update(commentModel, 'comments')
+export const updateoneComment = Update(commentModel, 'comment')
 
-export const deleteoneCoomment = Delete(commentModel, 'comments')
+export const deleteoneCoomment = Delete(commentModel, 'comment')

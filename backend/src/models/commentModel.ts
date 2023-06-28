@@ -1,8 +1,13 @@
-import { InferSchemaType, Schema, model } from 'mongoose'
+import { InferSchemaType, Query, Schema, model } from 'mongoose'
 import courseModel from './courseModel'
+import ErrorHandler from '@Utils/errorHandler'
 
 export type TComment = InferSchemaType<typeof commentSchema> & {
   calcAverageRatings: (id?: object) => Promise<void>
+}
+
+export interface CommentQuery extends Query<TComment | null, TComment> {
+  temp: TComment
 }
 
 const commentSchema = new Schema(
@@ -70,6 +75,20 @@ commentSchema.pre(['find', 'findOne'], function (next) {
   next()
 })
 
+commentSchema.pre('findOneAndUpdate', async function (next) {
+  const query = this.getQuery()._id
+  const doc = this.getUpdate()
+  const data = await this.model.findOne({ _id: query })
+
+  if (!data) {
+    next(new ErrorHandler('Sorry, comment could not be found', 400))
+  } else if (doc && data.course._id.toString() !== (doc as TComment).course) {
+    next(new ErrorHandler('Sorry, course could not be found', 400))
+  }
+
+  next()
+})
+
 commentSchema.statics.calcAverageRatings = async function (id: object) {
   const stats = await this.aggregate([
     {
@@ -87,13 +106,29 @@ commentSchema.statics.calcAverageRatings = async function (id: object) {
   if (stats.length > 0) {
     await courseModel.findByIdAndUpdate(id, {
       ratings_qty: stats[0].nRating,
-      ratings: stats[0].avgRating,
+      ratings: stats[0].avgRating.toFixed(1),
+    })
+  } else {
+    await courseModel.findByIdAndUpdate(id, {
+      ratings_qty: 0,
+      ratings: 0,
     })
   }
 }
 
 commentSchema.post('save', async function () {
   await (this.constructor as unknown as TComment).calcAverageRatings(this.course)
+})
+
+commentSchema.pre<CommentQuery>(['findOneAndDelete', 'findOneAndUpdate'], async function (next) {
+  const documentId: object = this.getQuery()._id
+  this.temp = (await this.model.findOne({ _id: documentId })) as TComment
+
+  next()
+})
+
+commentSchema.post<CommentQuery>(['findOneAndUpdate', 'findOneAndDelete'], async function () {
+  await (this.temp.constructor as unknown as TComment).calcAverageRatings(this.temp.course?._id)
 })
 
 export default model<TComment>('Comment', commentSchema)
