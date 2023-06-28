@@ -19,7 +19,7 @@ const courseSchema = new Schema({
     minLength: [4, 'description must be at least 4 characters'],
     maxLength: [100, 'description cannot exceed 100 characters'],
   },
-  contains: {
+  contents: {
     type: [String],
     validate: {
       validator: function (value: string[]) {
@@ -45,6 +45,7 @@ const courseSchema = new Schema({
     type: Number,
     required: [true, 'Please enter your course price'],
   },
+  Dprice: Number,
   ratings: {
     type: Number,
     default: 0,
@@ -53,11 +54,16 @@ const courseSchema = new Schema({
     type: Number,
     default: 0,
   },
-  user: {
+  author: {
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: [true, 'course must belong to a user'],
   },
+})
+
+courseSchema.post('findOneAndDelete', async function () {
+  const course = this.getQuery()
+  await model('Comment').deleteMany({ course: course._id })
 })
 
 export default model<TCourse>('Course', courseSchema)
