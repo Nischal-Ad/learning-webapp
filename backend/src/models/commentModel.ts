@@ -69,8 +69,7 @@ commentSchema.virtual('duration').get(function () {
 commentSchema.pre(['find', 'findOne'], function (next) {
   this.populate({
     path: 'user',
-  }).populate({
-    path: 'course',
+    select: 'name',
   })
   next()
 })

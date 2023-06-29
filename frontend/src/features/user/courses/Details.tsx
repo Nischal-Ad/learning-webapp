@@ -5,24 +5,32 @@ import { useParams } from 'react-router-dom'
 import { courses } from '@Data/Courses'
 import HighlightsCourses from './Highlights'
 import Error from '@Components/Error'
+import { useCourse } from './hooks/useCourse'
+import { useAppSelector } from '@Store'
+import { useEffect } from 'react'
+import Loading from '@Components/Loader'
 
 const Details = () => {
   const { id } = useParams()
+  const { ongetOneCourses } = useCourse()
+  const { status, data } = useAppSelector((store) => store.course)
 
-  const courseDetails = courses.find((course) => course.id === id)
+  useEffect(() => {
+    ongetOneCourses(id)
+  }, [id])
 
   return (
     <>
-      <Helmet title={courseDetails?.title} content={courseDetails?.desc} />
+      <Helmet title={data.data?.title} content={data.data?.title} />
+      {status === 'loading' && <Loading />}
       <Section id="course-details">
-        {courseDetails ? (
+        {data?.data && (
           <>
-            <CourseDetailsCard details={courseDetails} />
+            <CourseDetailsCard details={data.data} />
             <HighlightsCourses title="You may also like" courses={courses} />
           </>
-        ) : (
-          <Error />
         )}
+        {status === 'error' && <Error />}
       </Section>
     </>
   )

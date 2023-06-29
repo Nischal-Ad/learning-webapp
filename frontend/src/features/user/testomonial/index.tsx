@@ -1,28 +1,40 @@
-import { Box, Typography, Stack } from '@mui/material'
-import { ImageWrapper } from './style'
+import { Box, Typography, Stack, Avatar } from '@mui/material'
 import ReactStars from 'react-stars'
-import { ITestomonial } from './data/testomonial.model'
 
-const index = ({ testomonial }: { testomonial: ITestomonial }) => {
+const index = ({ testomonial }: { testomonial: IComment }) => {
+  const color = Math.floor(100 + Math.random() * 900)
   return (
-    <Box mb={3} mt={2} color={'var(--black)'}>
+    <Box my={1} color={'var(--black)'} bgcolor={'#efefef'} px={1} py={0.5} borderRadius={2}>
       <Stack spacing={1} direction={'row'} alignItems={'center'}>
-        <ImageWrapper src={testomonial.img} />
-        <Box>
-          <ReactStars
-            count={5}
-            size={20}
-            edit={false}
-            value={testomonial.rating}
-            color2={'#e59819'}
-          />
-          <Typography variant="caption" component={'h6'} fontWeight={'bold'}>
-            {testomonial.name}
+        <Avatar
+          sx={{
+            width: 40,
+            height: 40,
+            bgcolor: `#${color}`,
+          }}
+        >
+          {testomonial?.user?.name.charAt(0).toUpperCase()}
+        </Avatar>
+        <Stack direction={'column'} alignItems={'start'}>
+          <Stack direction={'row'} spacing={1} alignItems={'center'}>
+            <ReactStars
+              count={5}
+              size={20}
+              edit={false}
+              value={testomonial?.rating}
+              color2={'#e59819'}
+            />
+            <Typography variant="caption" component={'span'}>
+              ({testomonial?.duration})
+            </Typography>
+          </Stack>
+          <Typography variant="body1" component={'h6'} fontWeight={'bold'}>
+            {testomonial?.user?.name}
           </Typography>
-        </Box>
+        </Stack>
       </Stack>
       <Typography component="p" variant="subtitle2" px={2} mt={1}>
-        {testomonial.desc}
+        {testomonial?.comment}
       </Typography>
     </Box>
   )

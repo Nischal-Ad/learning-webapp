@@ -36,7 +36,8 @@ const authToken = (
         : undefined,
       httpOnly: true,
       // secure: true, set it to ture after api test in postman is completed . NOTE: it must be true while in production or final product
-      sameSite: 'none',
+      // sameSite: 'none', set it if you want oauth or any thirdparty authentication remember to use secure:true if using this
+      sameSite: 'lax',
     })
     .json({
       success: true,

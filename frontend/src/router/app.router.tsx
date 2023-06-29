@@ -22,12 +22,8 @@ const CoursesDetails = lazy(() => import('@Features/user/courses/Details'))
 const Cart = lazy(() => import('@Features/user/cart/Index'))
 const ChangePassword = lazy(() => import('@Features/changePassword'))
 const MyLearnings = lazy(() => import('@Features/user/myLearnings/Index'))
-const ForgetPassword = lazy(
-  () => import('@Features/user/Auth/components/ForgetPassword')
-)
-const ResetPassword = lazy(
-  () => import('@Features/user/Auth/components/ResetPassword')
-)
+const ForgetPassword = lazy(() => import('@Features/user/Auth/components/ForgetPassword'))
+const ResetPassword = lazy(() => import('@Features/user/Auth/components/ResetPassword'))
 
 const Router = ({ isAuth }: { isAuth: boolean }) => {
   const router = createBrowserRouter(
@@ -56,13 +52,7 @@ const Router = ({ isAuth }: { isAuth: boolean }) => {
 
         {/* protected routes for user */}
         <Route
-          element={
-            <ProtectedRoute
-              auth={isAuth}
-              Navbar={<NavbarUser />}
-              Footer={<Footer />}
-            />
-          }
+          element={<ProtectedRoute auth={isAuth} Navbar={<NavbarUser />} Footer={<Footer />} />}
         >
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/courses" element={<Courses />} />

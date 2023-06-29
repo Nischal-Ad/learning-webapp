@@ -18,20 +18,14 @@ const setLoading: CaseReducer<IAuthState> = (state) => ({
   status: 'loading',
 })
 
-const setData: CaseReducer<IAuthState, PayloadAction<IAuth>> = (
-  state,
-  action
-) => ({
+const setData: CaseReducer<IAuthState, PayloadAction<IAuth>> = (state, action) => ({
   isAuth: action.payload.isAuth,
   status: 'success',
   data: action.payload,
   error: '',
 })
 
-const setError: CaseReducer<IAuthState, PayloadAction<Error>> = (
-  state,
-  action
-) => ({
+const setError: CaseReducer<IAuthState, PayloadAction<Error>> = (state, action) => ({
   ...state,
   status: 'error',
   error: action.payload,
