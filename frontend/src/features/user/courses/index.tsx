@@ -27,11 +27,7 @@ const Index = () => {
             data.data &&
             data?.data?.map((course, i) => {
               if (course) {
-                return (
-                  <>
-                    <CourseCard course={course} key={i} />
-                  </>
-                )
+                return <CourseCard course={course} key={i} />
               }
             })}
         </Stack>
