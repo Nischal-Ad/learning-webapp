@@ -34,7 +34,9 @@ const CourseCard = ({ course, list = true }: { course: ICourse; list?: boolean }
               {course?.title}
             </Typography>
             {list && <Typography variant="subtitle2">{course?.description}</Typography>}
-            <Typography variant="caption">{course?.author?.name}</Typography>
+            <Typography variant="caption" fontWeight={'bold'} color={'GrayText'}>
+              {course?.author?.name}
+            </Typography>
 
             <Box display="flex" alignItems="center">
               <ReactStars
@@ -44,7 +46,9 @@ const CourseCard = ({ course, list = true }: { course: ICourse; list?: boolean }
                 value={course?.ratings}
                 color2={'#e59819'}
               />
-              <Typography variant="caption">({course?.ratings_qty})</Typography>
+              <Typography variant="caption" color={'GrayText'}>
+                ({course?.ratings_qty})
+              </Typography>
             </Box>
             <Typography variant="body1" component={'span'} fontWeight={'bold'}>
               ${course?.price}
