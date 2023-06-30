@@ -3,7 +3,7 @@ import validator from 'validator'
 import bcrypt from 'bcryptjs'
 import crypto from 'crypto'
 
-export type TUser = InferSchemaType<typeof userSchema> & {
+export type TUser = Partial<InferSchemaType<typeof userSchema>> & {
   _id: string
   comparePassword: (password: string) => Promise<boolean>
   changedPasswordAfter: (timeSpan: number) => boolean
@@ -30,7 +30,7 @@ const userSchema = new Schema({
     select: false,
   },
   cpassword: {
-    type: String,
+    type: Schema.Types.Mixed,
     required: [true, 'Please confirm your password'],
   },
 
@@ -84,10 +84,7 @@ userSchema.methods.comparePassword = async function (password: string) {
 
 userSchema.methods.changedPasswordAfter = function (timeSpan: number) {
   if (this.passwordChangedAt) {
-    const changedTimestamp = parseInt(
-      (this.passwordChangedAt.getTime() / 1000).toString(),
-      10
-    )
+    const changedTimestamp = parseInt((this.passwordChangedAt.getTime() / 1000).toString(), 10)
     return timeSpan < changedTimestamp
   }
   return false
@@ -96,10 +93,7 @@ userSchema.methods.changedPasswordAfter = function (timeSpan: number) {
 userSchema.methods.passReset = function () {
   const resetToken = crypto.randomBytes(32).toString('hex')
 
-  this.resetPasswordToken = crypto
-    .createHash('sha256')
-    .update(resetToken)
-    .digest('hex')
+  this.resetPasswordToken = crypto.createHash('sha256').update(resetToken).digest('hex')
 
   this.resetPasswordExpire = Date.now() + 5 * 60 * 1000
 
