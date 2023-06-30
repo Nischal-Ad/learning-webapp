@@ -8,9 +8,8 @@ const GetAll = (Model: Model<any>) =>
 
     res.status(200).json({
       status: 'success',
-      data: {
-        data: data,
-      },
+      total: data.length,
+      data,
     })
   })
 

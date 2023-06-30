@@ -121,22 +121,14 @@ export const forgetPassword = catchAsync(async (req, res, next) => {
     user.resetPasswordToken = undefined
     user.resetPasswordExpire = undefined
     await user.save({ validateBeforeSave: false })
-    return next(
-      new ErrorHandler(
-        'There was an error sending the email. Try again later!',
-        500
-      )
-    )
+    return next(new ErrorHandler('There was an error sending the email. Try again later!', 500))
   }
 })
 
 export const resetPassword = catchAsync(async (req, res, next) => {
   const { newPassword, cNewPassword }: IChangePassword = req.body
 
-  const resetPasswordToken = crypto
-    .createHash('sha256')
-    .update(req.params.token)
-    .digest('hex')
+  const resetPasswordToken = crypto.createHash('sha256').update(req.params.token).digest('hex')
 
   const user = await userModel.findOne({
     resetPasswordToken,
@@ -145,8 +137,7 @@ export const resetPassword = catchAsync(async (req, res, next) => {
     },
   })
 
-  if (!user)
-    return next(new ErrorHandler('Token is invalid or has been expired', 400))
+  if (!user) return next(new ErrorHandler('Token is invalid or has been expired', 400))
 
   user.password = newPassword
   user.cpassword = cNewPassword

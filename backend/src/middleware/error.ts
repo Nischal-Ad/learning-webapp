@@ -8,12 +8,7 @@ interface IError extends ErrorHandler {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const errorMiddleware = (
-  err: IError,
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const errorMiddleware = (err: IError, req: Request, res: Response, next: NextFunction) => {
   err.statusCode = err.statusCode || 500
   err.message = err.message || 'Internal Server Error'
 
@@ -24,8 +19,8 @@ const errorMiddleware = (
   }
 
   // mongoose duplicate key error (MongoError)
-  if (err instanceof MongooseError && err.code === 11000) {
-    const message = `Duplicate value Entered`
+  if (err.code === 11000 || err.code === 11001) {
+    const message = `Duplicate data Entered`
     err = new ErrorHandler(message, 400)
   }
 

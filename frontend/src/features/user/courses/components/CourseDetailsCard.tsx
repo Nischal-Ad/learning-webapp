@@ -1,13 +1,4 @@
-import {
-  CardMedia,
-  Typography,
-  Box,
-  Divider,
-  Stack,
-  CardActions,
-  Button,
-} from '@mui/material'
-import { ICourses } from '../data/course.model'
+import { CardMedia, Typography, Box, Divider, Stack, CardActions, Button } from '@mui/material'
 import Grid from '@mui/material/Grid'
 import { CourseDetailsBoxWrapper, CourseDetailsOverViewWrapper } from '../style'
 import facebook from '@Svg/facebook.svg'
@@ -22,7 +13,7 @@ import TestomonialCard from '@Features/user/testomonial'
 import CourseRequirement from './CourseDataList'
 import CourseContent from './CourseDataList'
 
-const CourseDetailsCard = ({ details }: { details: ICourses }) => {
+const CourseDetailsCard = ({ details }: { details: ICourse }) => {
   return (
     <>
       <CardMedia
@@ -45,13 +36,8 @@ const CourseDetailsCard = ({ details }: { details: ICourses }) => {
               <Typography variant="h4" component={'h1'}>
                 {details.title}
               </Typography>
-              <Typography
-                variant="body1"
-                component={'h2'}
-                my={1}
-                color={'var(--primary)'}
-              >
-                Created by: {details.author}
+              <Typography variant="body1" component={'h2'} my={1} color={'var(--primary)'}>
+                Created by: {details.author?.name}
               </Typography>
               <Typography variant="h5" component={'span'} fontWeight={'bold'}>
                 ${details.price}
@@ -84,42 +70,12 @@ const CourseDetailsCard = ({ details }: { details: ICourses }) => {
                   },
                 }}
               >
-                <CardMedia
-                  component={'img'}
-                  alt=""
-                  image={facebook}
-                  height={30}
-                />
-                <CardMedia
-                  component={'img'}
-                  alt=""
-                  image={twitter}
-                  height={30}
-                />
-                <CardMedia
-                  component={'img'}
-                  alt=""
-                  image={whatapps}
-                  height={30}
-                />
-                <CardMedia
-                  component={'img'}
-                  alt=""
-                  image={telegram}
-                  height={30}
-                />
-                <CardMedia
-                  component={'img'}
-                  alt=""
-                  image={instagram}
-                  height={30}
-                />
-                <CardMedia
-                  component={'img'}
-                  alt=""
-                  image={youtube}
-                  height={30}
-                />
+                <CardMedia component={'img'} alt="" image={facebook} height={30} />
+                <CardMedia component={'img'} alt="" image={twitter} height={30} />
+                <CardMedia component={'img'} alt="" image={whatapps} height={30} />
+                <CardMedia component={'img'} alt="" image={telegram} height={30} />
+                <CardMedia component={'img'} alt="" image={instagram} height={30} />
+                <CardMedia component={'img'} alt="" image={youtube} height={30} />
               </Stack>
             </Box>
           </CourseDetailsBoxWrapper>
@@ -128,56 +84,63 @@ const CourseDetailsCard = ({ details }: { details: ICourses }) => {
           <CourseDetailsOverViewWrapper>
             <ContentWrapper title="Overview">
               <Typography variant="subtitle1" component={'pre'}>
-                {details.desc}
+                {details.description}
               </Typography>
             </ContentWrapper>
             <ContentWrapper title="Course Content">
               <Typography variant="h5" component={'span'} fontWeight={'bold'}>
                 This Course Contains:
               </Typography>
-              {details.contents.map((data, i) => {
+              {details.contents?.map((data, i) => {
                 return <CourseContent key={i} sn={i + 1} data={data} />
               })}
             </ContentWrapper>
             <ContentWrapper title="Requirements">
-              {details.requirements.map((data, i) => {
+              <Typography variant="h5" component={'span'} fontWeight={'bold'}>
+                This Course Requirements:
+              </Typography>
+              {details.requirements?.map((data, i) => {
                 return <CourseRequirement key={i} data={data} />
               })}
             </ContentWrapper>
             <ContentWrapper title="Rating">
-              <Typography variant="h5" component={'span'} fontWeight={'bold'}>
-                Top Rating {`${details.rating} of 5`}
-              </Typography>
-              <Stack spacing={1} direction={'row'} my={1} alignItems={'center'}>
-                <ReactStars
-                  count={5}
-                  size={20}
-                  edit={false}
-                  value={details.rating}
-                  color2={'#e59819'}
-                />
-                <Typography
-                  variant="subtitle2"
-                  component={'span'}
-                  fontWeight={'bold'}
-                >
-                  (10)
+              {details?.comments?.length > 0 ? (
+                <>
+                  <Typography variant="h5" component={'span'} fontWeight={'bold'}>
+                    Our Ratings
+                  </Typography>
+                  <Stack spacing={1} direction={'row'} my={1} alignItems={'center'}>
+                    <ReactStars
+                      count={5}
+                      size={20}
+                      edit={false}
+                      value={details.ratings}
+                      color2={'#e59819'}
+                    />
+                    <Typography variant="subtitle2" component={'span'} fontWeight={'bold'}>
+                      ({details?.ratings_qty})
+                    </Typography>
+                  </Stack>
+                  {details.comments.map((data, i) => {
+                    return <TestomonialCard key={i} testomonial={data} />
+                  })}
+                  <CardActions
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'end',
+                    }}
+                  >
+                    <Button size="medium" color="success">
+                      Next →
+                    </Button>
+                  </CardActions>
+                </>
+              ) : (
+                <Typography variant="h5" component={'span'} fontWeight={'bold'}>
+                  No any comments yet!
                 </Typography>
-              </Stack>
-              {details.testomonial.map((data, i) => {
-                return <TestomonialCard key={i} testomonial={data} />
-              })}
+              )}
             </ContentWrapper>
-            <CardActions
-              sx={{
-                display: 'flex',
-                justifyContent: 'end',
-              }}
-            >
-              <Button size="medium" color="success">
-                Next →
-              </Button>
-            </CardActions>
           </CourseDetailsOverViewWrapper>
         </Grid>
       </Grid>
