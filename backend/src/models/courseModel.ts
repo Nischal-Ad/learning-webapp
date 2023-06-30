@@ -1,3 +1,4 @@
+import ErrorHandler from '@Utils/errorHandler'
 import { InferSchemaType, Schema, model } from 'mongoose'
 
 export type TCourse = InferSchemaType<typeof courseSchema>
@@ -81,6 +82,25 @@ courseSchema.pre(['find', 'findOne'], function (next) {
     path: 'comments',
     select: '-__v -createdAt',
   })
+  next()
+})
+
+courseSchema.pre(['findOneAndUpdate', 'findOneAndDelete'], async function (next) {
+  const doc = this.getUpdate()
+  const query = this.getQuery()._id
+  const user = (await this.model.findOne({ _id: query })) as TCourse | null
+
+  if (!user) {
+    next(new ErrorHandler('Invalid user!', 400))
+  } else if (
+    doc &&
+    'author' in doc &&
+    (doc as TCourse).author.toString() !== user.author._id.toString()
+  ) {
+    next(new ErrorHandler('Sorry, you are not allowed to perform this action', 400))
+  } else if (doc && 'author' in doc && ('ratings' in doc || 'ratings_qty' in doc)) {
+    next(new ErrorHandler('Sorry, you are not allowed to perform this action', 400))
+  }
   next()
 })
 

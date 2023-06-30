@@ -77,14 +77,27 @@ commentSchema.pre(['find', 'findOne'], function (next) {
 commentSchema.pre('findOneAndUpdate', async function (next) {
   const query = this.getQuery()._id
   const doc = this.getUpdate()
-  const data = await this.model.findOne({ _id: query })
+  const data = (await this.model.findOne({ _id: query })) as TComment | null
 
   if (!data) {
     next(new ErrorHandler('Sorry, comment could not be found', 400))
-  } else if (doc && data.course._id.toString() !== (doc as TComment).course) {
+  } else if (doc && data.course._id.toString() !== (doc as TComment).course.toString()) {
     next(new ErrorHandler('Sorry, course could not be found', 400))
   }
 
+  next()
+})
+
+commentSchema.pre(['findOneAndUpdate', 'findOneAndDelete'], async function (next) {
+  const doc = this.getUpdate()
+  const query = this.getQuery()._id
+  const user = (await this.model.findOne({ _id: query })) as TComment | null
+
+  if (!user || user.user === null) {
+    next(new ErrorHandler('invalid user!', 400))
+  } else if (doc && (doc as TComment).user.toString() !== user.user._id.toString()) {
+    next(new ErrorHandler('Sorry, you are not allowed to perform this action', 400))
+  }
   next()
 })
 
