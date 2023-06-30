@@ -89,7 +89,14 @@ commentSchema.pre('findOneAndUpdate', async function (next) {
 })
 
 commentSchema.pre(['findOneAndUpdate', 'findOneAndDelete'], async function (next) {
-  const doc = this.getUpdate()
+  let doc
+
+  if ('user' in this.getOptions()) {
+    doc = this.getOptions()
+  } else {
+    doc = this.getUpdate()
+  }
+
   const query = this.getQuery()._id
   const user = (await this.model.findOne({ _id: query })) as TComment | null
 

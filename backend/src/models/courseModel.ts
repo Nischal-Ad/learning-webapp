@@ -86,16 +86,23 @@ courseSchema.pre(['find', 'findOne'], function (next) {
 })
 
 courseSchema.pre(['findOneAndUpdate', 'findOneAndDelete'], async function (next) {
-  const doc = this.getUpdate()
-  const query = this.getQuery()._id
-  const user = (await this.model.findOne({ _id: query })) as TCourse | null
+  let doc
 
-  if (!user) {
-    next(new ErrorHandler('Invalid user!', 400))
+  if ('author' in this.getOptions()) {
+    doc = this.getOptions()
+  } else {
+    doc = this.getUpdate()
+  }
+
+  const query = this.getQuery()._id
+  const course = (await this.model.findOne({ _id: query })) as TCourse | null
+
+  if (!course) {
+    next(new ErrorHandler('Invalid course!', 400))
   } else if (
     doc &&
     'author' in doc &&
-    (doc as TCourse).author.toString() !== user.author._id.toString()
+    (doc as TCourse).author.toString() !== course.author._id.toString()
   ) {
     next(new ErrorHandler('Sorry, you are not allowed to perform this action', 400))
   } else if (doc && 'author' in doc && ('ratings' in doc || 'ratings_qty' in doc)) {
