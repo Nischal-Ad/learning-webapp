@@ -6,7 +6,6 @@ interface IQueryString {
   limit: number
   sort: string
   fields: string
-  s: string
 }
 
 class ApiFeatures {
@@ -28,9 +27,14 @@ class ApiFeatures {
     const excludedFields = ['page', 'sort', 'limit', 'fields']
     excludedFields.forEach((el) => delete queryObj[el])
 
-    let queryStr = JSON.stringify(queryObj)
+    const query = Object.keys(queryObj).reduce((acc, key) => {
+      acc[key] = { $regex: queryObj[key], $options: 'i' }
+      return acc
+    }, {})
+    let queryStr = JSON.stringify(query)
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`)
     this.query = this.query.find(JSON.parse(queryStr))
+    console.log(JSON.parse(queryStr))
 
     return this
   }
@@ -57,9 +61,15 @@ class ApiFeatures {
     return this
   }
 
-  paginate(page: number, limit: number) {
-    const skip = (page - 1) * limit
+  paginate() {
+    const page = this.queryString.page || 1
+    const limit = this.queryString.limit || 10
 
+    if (page < 1 || limit < 1) {
+      throw new Error('Page and limit must be greater than or equal to 1')
+    }
+
+    const skip = (page - 1) * limit
     this.query = this.query.skip(skip).limit(limit)
 
     return this
