@@ -5,8 +5,7 @@ import { Model } from 'mongoose'
 
 const GetAll = (Model: Model<any>) =>
   catchAsync(async (req, res) => {
-    const features = new ApiFeatures(Model.find(), req.query)
-      .filter()
+    const features = (await new ApiFeatures(Model.find(), req.query).filter())
       .sort()
       .limitFields()
       .paginate()
@@ -15,6 +14,9 @@ const GetAll = (Model: Model<any>) =>
 
     res.status(200).json({
       status: 'success',
+      total: features.total,
+      totalPages: features.totalPages,
+      page: features.page,
       data,
     })
   })

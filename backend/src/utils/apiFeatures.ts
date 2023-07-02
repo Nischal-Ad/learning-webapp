@@ -18,11 +18,12 @@ class ApiFeatures {
   constructor(query: Query<any[], any, any, 'find'>, queryString: Partial<IQueryString>) {
     this.query = query
     this.queryString = queryString
-    ;(this.total = 0), (this.page = 0)
+    this.total = 0
+    this.page = 0
     this.totalPages = 0
   }
 
-  filter() {
+  async filter() {
     const queryObj: { [key: string]: any } = { ...this.queryString }
     const excludedFields = ['page', 'sort', 'limit', 'fields']
     excludedFields.forEach((el) => delete queryObj[el])
@@ -34,7 +35,9 @@ class ApiFeatures {
     let queryStr = JSON.stringify(query)
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`)
     this.query = this.query.find(JSON.parse(queryStr))
-    console.log(JSON.parse(queryStr))
+
+    const countQuery = this.query.model.countDocuments(JSON.parse(queryStr))
+    this.total = await countQuery
 
     return this
   }
@@ -68,6 +71,9 @@ class ApiFeatures {
     if (page < 1 || limit < 1) {
       throw new Error('Page and limit must be greater than or equal to 1')
     }
+
+    this.page = +page
+    this.totalPages = Math.ceil(this.total / +limit)
 
     const skip = (page - 1) * limit
     this.query = this.query.skip(skip).limit(limit)
