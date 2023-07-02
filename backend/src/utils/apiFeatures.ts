@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Query } from 'mongoose'
+import { Query, FilterQuery } from 'mongoose'
 
 interface IQueryString {
   page: number
@@ -28,16 +28,20 @@ class ApiFeatures {
     const excludedFields = ['page', 'sort', 'limit', 'fields']
     excludedFields.forEach((el) => delete queryObj[el])
 
-    const query = Object.keys(queryObj).reduce((acc, key) => {
-      acc[key] = { $regex: queryObj[key], $options: 'i' }
+    const query: FilterQuery<any> = Object.keys(queryObj).reduce((acc, key) => {
+      if (typeof queryObj[key] === 'string') {
+        acc[key] = { $regex: queryObj[key], $options: 'i' }
+      } else {
+        acc[key] = queryObj[key]
+      }
       return acc
-    }, {})
+    }, {} as { [key: string]: any })
+
     let queryStr = JSON.stringify(query)
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`)
     this.query = this.query.find(JSON.parse(queryStr))
 
-    const countQuery = this.query.model.countDocuments(JSON.parse(queryStr))
-    this.total = await countQuery
+    this.total = await this.query.model.countDocuments(JSON.parse(queryStr))
 
     return this
   }
