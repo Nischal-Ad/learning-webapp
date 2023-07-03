@@ -13,7 +13,7 @@ const GetAll = (Model: Model<any>) =>
     const data = await features.query
 
     res.status(200).json({
-      status: 'success',
+      status: true,
       total: features.total,
       totalPages: features.totalPages,
       page: features.page,

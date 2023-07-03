@@ -46,5 +46,10 @@ interface IAuth extends IStatus {
 }
 
 interface ICourseStates extends IStatus {
-  data: ICourse
+  total: number
+  totalPages: number
+  page: number
+  data: {
+    data: ICourse
+  }
 }

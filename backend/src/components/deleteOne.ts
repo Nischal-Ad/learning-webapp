@@ -15,7 +15,7 @@ const Delete = (Model: Model<any>, ModelFor: string) =>
     }
 
     res.status(204).json({
-      status: 'success',
+      status: true,
     })
   })
 

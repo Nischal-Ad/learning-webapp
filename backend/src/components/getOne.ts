@@ -12,7 +12,7 @@ const GetOne = (Model: Model<any>, ModelFor: string) =>
     }
 
     res.status(200).json({
-      status: 'success',
+      status: true,
       data,
     })
   })
