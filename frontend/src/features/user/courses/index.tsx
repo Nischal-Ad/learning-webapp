@@ -56,7 +56,7 @@ const Index = () => {
               )}
             </>
           ) : (
-            <Typography variant="h2" color={'GrayText'} component={'h1'} textAlign={'center'}>
+            <Typography variant="h5" color={'GrayText'} component={'h1'} textAlign={'center'}>
               Sorry! Course couldn't be found
             </Typography>
           )}
