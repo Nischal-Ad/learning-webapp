@@ -7,7 +7,7 @@ const GetAll = (Model: Model<any>) =>
   catchAsync(async (req, res) => {
     const features = (await new ApiFeatures(Model.find(), req.query).filter())
       .sort()
-      .limitFields()
+      // .limitFields()
       .paginate()
 
     const data = await features.query
