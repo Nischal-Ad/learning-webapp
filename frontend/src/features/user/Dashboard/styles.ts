@@ -36,12 +36,10 @@ export const SwipperWrapper = styled(Swiper)`
 `
 
 export const CategoryWrapper = styled(Stack)`
-  margin: 1rem 0;
   border-radius: 50px;
-  background-color: #ece9e9;
-  box-shadow: 0px 10px 60px rgba(38, 45, 118, 0.08);
   overflow-x: auto;
   padding: 8px;
+  margin: 5px 0;
 
   svg {
     margin-right: 5px;
@@ -50,12 +48,11 @@ export const CategoryWrapper = styled(Stack)`
   div {
     display: flex;
     margin: 0;
-    background-color: #fff;
+    background-color: var(--white);
     padding: 5px 15px;
     border-radius: 15px;
     font-weight: 600;
-    color: #5b5b5b;
-    box-shadow: 0px 10px 60px rgba(38, 45, 118, 0.08);
+    color: var(--black);
     white-space: nowrap;
   }
 `
