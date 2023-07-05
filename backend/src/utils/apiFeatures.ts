@@ -28,6 +28,13 @@ class ApiFeatures {
     const excludedFields = ['page', 'sort', 'limit', 'fields']
     excludedFields.forEach((el) => delete queryObj[el])
 
+    const collectionFields = Object.keys(this.query.model.schema.paths)
+    Object.keys(queryObj).forEach((key) => {
+      if (!collectionFields.includes(key)) {
+        delete queryObj[key]
+      }
+    })
+
     const query: FilterQuery<any> = Object.keys(queryObj).reduce((acc, key) => {
       if (typeof queryObj[key] === 'string') {
         acc[key] = { $regex: queryObj[key], $options: 'i' }
