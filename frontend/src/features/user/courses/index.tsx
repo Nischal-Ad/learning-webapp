@@ -47,8 +47,7 @@ const Index = () => {
             <>
               <Stack justifyContent={'space-between'} direction={'row'} pb={1.5}>
                 <Filters>
-                  <MenuItem value={'-ratings'}>Default</MenuItem>
-                  <MenuItem value={'ratings'}>Ratings low to high</MenuItem>
+                  <MenuItem value={'-ratings'}>Best Match</MenuItem>
                   <MenuItem value={'price'}>Price low to high</MenuItem>
                   <MenuItem value={'-price'}>Price high to low</MenuItem>
                 </Filters>

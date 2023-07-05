@@ -24,7 +24,6 @@ const index: React.FC<Required<PropsWithChildren>> = ({ children }) => {
         const params = prev
         params.set('price[gte]', min.toString())
         params.set('price[lte]', max.toString())
-
         return params
       })
     } else if (max) {
@@ -32,7 +31,6 @@ const index: React.FC<Required<PropsWithChildren>> = ({ children }) => {
         const params = prev
         params.set('price[lte]', max.toString())
         params.delete('price[gte]')
-
         return params
       })
     } else if (min) {
@@ -40,7 +38,6 @@ const index: React.FC<Required<PropsWithChildren>> = ({ children }) => {
         const params = prev
         params.set('price[gte]', min.toString())
         params.delete('price[lte]')
-
         return params
       })
     } else {
@@ -48,7 +45,6 @@ const index: React.FC<Required<PropsWithChildren>> = ({ children }) => {
         const params = prev
         params.delete('price[gte]')
         params.delete('price[lte]')
-
         return params
       })
     }
@@ -58,29 +54,11 @@ const index: React.FC<Required<PropsWithChildren>> = ({ children }) => {
     const sort = params.get('sort')
     const minPrice = params.get('price[gte]')
     const maxPrice = params.get('price[lte]')
-    if (sort === '-ratings') {
-      setSort('-ratings')
-    } else if (sort === 'ratings') {
-      setSort('ratings')
-    } else if (sort === 'price') {
-      setSort('price')
-    } else if (sort === '-price') {
-      setSort('-price')
-    } else {
-      setParams((prev) => {
-        const params = prev
-        params.delete('sort')
-        return params
-      })
-    }
 
-    if (minPrice) {
-      setMin(minPrice)
-    }
-    if (maxPrice) {
-      setMax(maxPrice)
-    }
-  }, [sort, min, max])
+    if (sort) setSort(sort)
+    if (minPrice) setMin(minPrice)
+    if (maxPrice) setMax(maxPrice)
+  }, [sort])
 
   return (
     <>
