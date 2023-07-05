@@ -22,16 +22,21 @@ const Details = () => {
   return (
     <>
       <Helmet title={data.data?.title} content={data.data?.title} />
-      {status === 'loading' && <Loading />}
-      <Section id="course-details">
-        {data?.data && (
-          <>
-            <CourseDetailsCard details={data.data} />
-            <HighlightsCourses title="You may also like" courses={courses} />
-          </>
-        )}
-        {status === 'error' && <Error />}
-      </Section>
+      {status === 'loading' ? (
+        <Loading />
+      ) : (
+        <>
+          <Section id="course-details">
+            {data.data && data?.data && (
+              <>
+                <CourseDetailsCard details={data.data} />
+                <HighlightsCourses title="You may also like" courses={courses} />
+              </>
+            )}
+            {status === 'error' && <Error />}
+          </Section>
+        </>
+      )}
     </>
   )
 }

@@ -5,3 +5,6 @@ export const onAllCourses = (payload: string): Promise<ICourseStates> =>
 
 export const onOneCourses = (payload?: string): Promise<ICourseStates> =>
   localAxios.get(`/course/getone/${payload}`)
+
+export const onAllComments = (payload?: string): Promise<ICommentStates> =>
+  localAxios.get(`/comment/getall?${payload}`)

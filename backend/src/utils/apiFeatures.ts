@@ -45,7 +45,7 @@ class ApiFeatures {
     }, {} as { [key: string]: any })
 
     let queryStr = JSON.stringify(query)
-    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`)
+    queryStr = queryStr.replace(/\b(gte|gt|lte|lt|eq)\b/g, (match) => `$${match}`)
     this.query = this.query.find(JSON.parse(queryStr))
 
     this.total = await this.query.model.countDocuments(JSON.parse(queryStr))
