@@ -6,17 +6,17 @@ import { useCourse } from './hooks/useCourse'
 import { useAppSelector } from '@Store'
 import Loading from '@Components/Loader'
 import { useEffect } from 'react'
-import AppCategory from '../Dashboard/components/Category'
+import { Category as AppCategory } from '@Components/Filter'
 import { Category } from '@Data/UserHome'
 import { useSearchParams } from 'react-router-dom'
-import Filters from '@Components/Filter'
+import { PriceRange, Sort } from '@Components/Filter'
 
 const Index = () => {
   const { ongetAllCourses } = useCourse()
   const { status, data } = useAppSelector((store) => store.course)
   const [params, setParams] = useSearchParams()
 
-  const handelSearch = (event: React.ChangeEvent<unknown>, value: number) => {
+  const handelPage = (event: React.ChangeEvent<unknown>, value: number) => {
     setParams((prev) => {
       const params = prev
       params.set('page', value.toString())
@@ -46,11 +46,12 @@ const Index = () => {
           {data && Array.isArray(data?.data) && data.data.length !== 0 ? (
             <>
               <Stack justifyContent={'space-between'} direction={'row'} pb={1.5}>
-                <Filters>
+                <PriceRange />
+                <Sort>
                   <MenuItem value={'-ratings'}>Best Match</MenuItem>
                   <MenuItem value={'price'}>Price low to high</MenuItem>
                   <MenuItem value={'-price'}>Price high to low</MenuItem>
-                </Filters>
+                </Sort>
               </Stack>
               <AppCategory category={Category} />
               <Stack spacing={1} direction={'column'}>
@@ -62,7 +63,7 @@ const Index = () => {
               </Stack>
               {data?.totalPages && data?.totalPages > 1 && (
                 <Pagination
-                  onChange={handelSearch}
+                  onChange={handelPage}
                   count={data?.totalPages}
                   page={data?.page}
                   sx={{ display: 'flex', justifyContent: 'end' }}
