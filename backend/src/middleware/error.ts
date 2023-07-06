@@ -20,8 +20,13 @@ const errorMiddleware = (err: IError, req: Request, res: Response, next: NextFun
 
   // mongoose duplicate key error (MongoError)
   if (err.code === 11000 || err.code === 11001) {
-    const message = `Duplicate data Entered`
-    err = new ErrorHandler(message, 400)
+    if (err?.message?.match(/course:\s*(.*?),\s*user:/)) {
+      const message = `You cannot comment twice`
+      err = new ErrorHandler(message, 400)
+    } else {
+      const message = `Duplicate data Entered`
+      err = new ErrorHandler(message, 400)
+    }
   }
 
   //custom display of mongoose validation error
