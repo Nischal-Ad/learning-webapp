@@ -56,11 +56,6 @@ const courseSchema = new Schema(
       type: Number,
       default: 0,
     },
-    author: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-      required: [true, 'course must belong to a user'],
-    },
   },
   {
     toJSON: { virtuals: true },
@@ -76,9 +71,6 @@ courseSchema.virtual('comments', {
 
 courseSchema.pre(['find', 'findOne'], function (next) {
   this.populate({
-    path: 'author',
-    select: 'name',
-  }).populate({
     path: 'comments',
     select: '-__v -createdAt',
   })
@@ -88,24 +80,12 @@ courseSchema.pre(['find', 'findOne'], function (next) {
 courseSchema.pre(['findOneAndUpdate', 'findOneAndDelete'], async function (next) {
   let doc
 
-  if ('author' in this.getOptions()) {
-    doc = this.getOptions()
-  } else {
-    doc = this.getUpdate()
-  }
-
   const query = this.getQuery()._id
   const course = (await this.model.findOne({ _id: query })) as TCourse | null
 
   if (!course) {
     next(new ErrorHandler('Invalid course!', 400))
-  } else if (
-    doc &&
-    'author' in doc &&
-    (doc as TCourse).author.toString() !== course.author._id.toString()
-  ) {
-    next(new ErrorHandler('Sorry, you are not allowed to perform this action', 400))
-  } else if (doc && 'author' in doc && ('ratings' in doc || 'ratings_qty' in doc)) {
+  } else if (doc && ('ratings' in doc || 'ratings_qty' in doc)) {
     next(new ErrorHandler('Sorry, you are not allowed to perform this action', 400))
   }
   next()
