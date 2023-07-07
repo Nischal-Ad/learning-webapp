@@ -23,6 +23,7 @@
     "react-helmet": "^6.1.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.9.0",
+    "react-share": "^4.4.1",
     "react-stars": "^2.2.5",
     "styled-components": "^5.3.9",
     "swiper": "^9.2.4",

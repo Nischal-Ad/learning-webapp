@@ -18,12 +18,12 @@ import {
   Typography,
 } from '@mui/material'
 import { SearchFormWrapper } from '../style'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import logo from '@Svg/logo_text_black.svg'
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart'
 import SearchIcon from '@mui/icons-material/Search'
-import React from 'react'
+import React, { useEffect } from 'react'
 import LockIcon from '@mui/icons-material/Lock'
 import ExitToAppIcon from '@mui/icons-material/ExitToApp'
 import CloseIcon from '@mui/icons-material/Close'
@@ -34,15 +34,29 @@ import { useAppSelector } from '@Store'
 
 const Index = () => {
   const [userMenu, setUserMenu] = React.useState<null | HTMLElement>(null)
-  const [search, setSearch] = React.useState('')
+  const [params] = useSearchParams()
+  const [search, setSearch] = React.useState(params.get('title') ? params.get('title') : '')
   const [showSearch, setShowSearch] = React.useState(false)
   const { data } = useAppSelector((store) => store.user)
-  const [openNotification, setOpenNotification] =
-    React.useState<null | HTMLElement>(null)
-
+  const [openNotification, setOpenNotification] = React.useState<null | HTMLElement>(null)
   const { onUserLogout } = useAuth()
   const navigate = useNavigate()
   const color = Math.floor(100 + Math.random() * 900)
+
+  useEffect(() => {
+    const getParams: string[] = Array.from(params.keys())
+    if (getParams.length === 0) {
+      setSearch('')
+    } else {
+      setSearch(params.get('title') ? params.get('title') : '')
+    }
+
+    params.forEach((value) => {
+      if (value === '') {
+        navigate('/')
+      }
+    })
+  }, [params])
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setUserMenu(event.currentTarget)
@@ -60,7 +74,10 @@ const Index = () => {
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setShowSearch(false)
-    navigate(`/courses/${search}`)
+    const searchQuery = search && search.trimStart()
+    setSearch(searchQuery)
+    if (!searchQuery) return
+    navigate(`/courses/?title=${searchQuery}`)
   }
 
   const handleLogout = () => {
@@ -79,9 +96,7 @@ const Index = () => {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           InputProps={{
-            startAdornment: (
-              <SearchIcon sx={{ marginRight: 1, color: 'var(--black)' }} />
-            ),
+            startAdornment: <SearchIcon sx={{ marginRight: 1, color: 'var(--black)' }} />,
           }}
         />
       </SearchFormWrapper>
@@ -274,10 +289,7 @@ const Index = () => {
           <DialogTitle>
             <Stack direction={'row'} justifyContent={'space-between'}>
               Search...
-              <IconButton
-                aria-label="close"
-                onClick={() => setShowSearch(false)}
-              >
+              <IconButton aria-label="close" onClick={() => setShowSearch(false)}>
                 <CloseIcon />
               </IconButton>
             </Stack>

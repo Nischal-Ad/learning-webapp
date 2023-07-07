@@ -7,7 +7,7 @@ const Create = (Model: Model<any>) =>
     const data = await Model.create(req.body)
 
     res.status(201).json({
-      status: 'success',
+      status: true,
       data,
     })
   })

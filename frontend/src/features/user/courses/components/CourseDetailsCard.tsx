@@ -1,19 +1,66 @@
-import { CardMedia, Typography, Box, Divider, Stack, CardActions, Button } from '@mui/material'
+import {
+  CardMedia,
+  Typography,
+  Box,
+  Divider,
+  Stack,
+  CardActions,
+  MenuItem,
+  SelectChangeEvent,
+  Button,
+  Select,
+} from '@mui/material'
 import Grid from '@mui/material/Grid'
 import { CourseDetailsBoxWrapper, CourseDetailsOverViewWrapper } from '../style'
-import facebook from '@Svg/facebook.svg'
-import twitter from '@Svg/twitter.svg'
-import instagram from '@Svg/instagram.svg'
-import telegram from '@Svg/telegram.svg'
-import whatapps from '@Svg/whatsapp.svg'
-import youtube from '@Svg/youtube.svg'
 import ReactStars from 'react-stars'
 import ContentWrapper from './ContentWrapper'
 import TestomonialCard from '@Features/user/testomonial'
 import CourseRequirement from './CourseDataList'
 import CourseContent from './CourseDataList'
+import { memo, useEffect, useState } from 'react'
+import { useCourse } from '../hooks/useCourse'
+import { useAppSelector } from '@Store'
+import Loading from '@Components/Loader'
+import {
+  FacebookShareButton,
+  TwitterShareButton,
+  LinkedinShareButton,
+  FacebookIcon,
+  TwitterIcon,
+  WhatsappShareButton,
+  WhatsappIcon,
+  TelegramShareButton,
+  TelegramIcon,
+  LinkedinIcon,
+} from 'react-share'
 
 const CourseDetailsCard = ({ details }: { details: ICourse }) => {
+  const { status, data } = useAppSelector((store) => store.comment)
+  const [filter, setFilter] = useState(0)
+  const [page, setPage] = useState(data?.page || 1)
+  const { ongetAllComments } = useCourse()
+
+  const url = window.location.href
+
+  const handelFilter = (e: SelectChangeEvent<string>) => {
+    setFilter(+e.target.value)
+  }
+
+  const handelPage = (type?: string) => {
+    if (type === 'next') {
+      setPage((p) => p + 1)
+    } else {
+      setPage((p) => p - 1)
+    }
+  }
+
+  useEffect(() => {
+    if (details._id)
+      ongetAllComments(
+        `course[eq]=${details?._id}&limit=5&rating[gte]=${filter}&sort=rating&page=${page}`
+      )
+  }, [filter, page])
+
   return (
     <>
       <CardMedia
@@ -63,19 +110,27 @@ const CourseDetailsCard = ({ details }: { details: ICourse }) => {
                 component={'span'}
                 direction={'row'}
                 spacing={2}
-                mt={2}
                 sx={{
                   img: {
                     cursor: 'pointer',
                   },
                 }}
               >
-                <CardMedia component={'img'} alt="" image={facebook} height={30} />
-                <CardMedia component={'img'} alt="" image={twitter} height={30} />
-                <CardMedia component={'img'} alt="" image={whatapps} height={30} />
-                <CardMedia component={'img'} alt="" image={telegram} height={30} />
-                <CardMedia component={'img'} alt="" image={instagram} height={30} />
-                <CardMedia component={'img'} alt="" image={youtube} height={30} />
+                <FacebookShareButton url={url}>
+                  <FacebookIcon size={30} round={true} />
+                </FacebookShareButton>
+                <TwitterShareButton url={url}>
+                  <TwitterIcon size={30} round={true} />
+                </TwitterShareButton>
+                <WhatsappShareButton url={url}>
+                  <WhatsappIcon size={30} round={true} />
+                </WhatsappShareButton>
+                <TelegramShareButton url={url}>
+                  <TelegramIcon size={30} round={true} />
+                </TelegramShareButton>
+                <LinkedinShareButton url={url}>
+                  <LinkedinIcon size={30} round={true} />
+                </LinkedinShareButton>
               </Stack>
             </Box>
           </CourseDetailsBoxWrapper>
@@ -106,31 +161,76 @@ const CourseDetailsCard = ({ details }: { details: ICourse }) => {
             <ContentWrapper title="Rating">
               {details?.comments?.length > 0 ? (
                 <>
-                  <Typography variant="h5" component={'span'} fontWeight={'bold'}>
-                    Our Ratings
-                  </Typography>
-                  <Stack spacing={1} direction={'row'} my={1} alignItems={'center'}>
-                    <ReactStars
-                      count={5}
-                      size={20}
-                      edit={false}
-                      value={details.ratings}
-                      color2={'#e59819'}
-                    />
-                    <Typography variant="subtitle2" component={'span'} fontWeight={'bold'}>
-                      ({details?.ratings_qty})
-                    </Typography>
+                  <Stack justifyContent={'space-between'} direction={{ sm: 'row', xs: 'column' }}>
+                    <Box>
+                      <Typography variant="h5" component={'span'} fontWeight={'bold'}>
+                        Our Ratings
+                      </Typography>
+                      <Stack spacing={1} direction={'row'} my={1} alignItems={'center'}>
+                        <ReactStars
+                          count={5}
+                          size={20}
+                          edit={false}
+                          value={details.ratings}
+                          color2={'#e59819'}
+                        />
+                        <Typography variant="subtitle2" component={'span'} fontWeight={'bold'}>
+                          ({details?.ratings_qty})
+                        </Typography>
+                      </Stack>
+                    </Box>
+                    <Stack
+                      direction={{ sm: 'row', xs: 'column' }}
+                      spacing={1}
+                      alignItems={{ sm: 'center' }}
+                    >
+                      <Typography variant="body2">Filter By:</Typography>
+                      <Select
+                        id="filter"
+                        value={filter.toString()}
+                        onChange={handelFilter}
+                        size="small"
+                      >
+                        <MenuItem value={0}>All</MenuItem>
+                        <MenuItem value={1}>1 Star</MenuItem>
+                        <MenuItem value={2}>2 Star</MenuItem>
+                        <MenuItem value={3}>3 Star</MenuItem>
+                        <MenuItem value={4}>4 Star</MenuItem>
+                        <MenuItem value={5}>5 Star</MenuItem>
+                      </Select>
+                    </Stack>
                   </Stack>
-                  {details.comments.map((data, i) => {
-                    return <TestomonialCard key={i} testomonial={data} />
-                  })}
+
+                  {status === 'loading' ? (
+                    <Loading />
+                  ) : (
+                    <>
+                      {data?.data &&
+                        data?.data.map((data, i) => {
+                          return <TestomonialCard key={i} testomonial={data} />
+                        })}
+                    </>
+                  )}
                   <CardActions
                     sx={{
                       display: 'flex',
-                      justifyContent: 'end',
+                      justifyContent: 'space-between',
                     }}
                   >
-                    <Button size="medium" color="success">
+                    <Button
+                      size="medium"
+                      color="success"
+                      onClick={() => handelPage()}
+                      disabled={status === 'loading' || data?.totalPages === Number(page)}
+                    >
+                      ← Previous
+                    </Button>
+                    <Button
+                      size="medium"
+                      color="success"
+                      onClick={() => handelPage('next')}
+                      disabled={status === 'loading' || data?.totalPages === Number(page)}
+                    >
                       Next →
                     </Button>
                   </CardActions>
@@ -148,4 +248,4 @@ const CourseDetailsCard = ({ details }: { details: ICourse }) => {
   )
 }
 
-export default CourseDetailsCard
+export default memo(CourseDetailsCard)

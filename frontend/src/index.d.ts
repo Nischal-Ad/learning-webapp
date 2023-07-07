@@ -40,11 +40,22 @@ interface ICourse {
   author: Pick<IUser, 'name'>
   comments: IComment[]
 }
+
 interface IAuth extends IStatus {
   user?: Partial<IUser>
   isAuth?: boolean
 }
 
 interface ICourseStates extends IStatus {
+  total: number
+  totalPages: number
+  page: number
   data: ICourse
+}
+
+interface ICommentStates extends IStatus {
+  data: IComment[]
+  total: number
+  totalPages: number
+  page: number
 }
