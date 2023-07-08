@@ -37,7 +37,6 @@ interface ICourse {
   Dprice: number
   ratings: number
   ratings_qty: number
-  author: Pick<IUser, 'name'>
   comments: IComment[]
 }
 
