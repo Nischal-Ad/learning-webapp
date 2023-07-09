@@ -14,7 +14,7 @@ interface IUser {
   password: string
   name: string
   cpassword: string
-  role: 'student' | 'teacher'
+  role: 'admin' | 'user'
 }
 
 interface IComment {

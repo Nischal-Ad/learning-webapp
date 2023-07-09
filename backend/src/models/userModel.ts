@@ -37,10 +37,10 @@ const userSchema = new Schema({
   role: {
     type: String,
     enum: {
-      values: ['student', 'teacher'] as const,
+      values: ['admin', 'user'] as const,
       message: 'please enter a valid role',
     },
-    default: 'student',
+    default: 'user',
   },
   passwordChangedAt: Date,
   resetPasswordToken: String,
