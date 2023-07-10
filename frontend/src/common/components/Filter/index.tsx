@@ -99,7 +99,7 @@ export const PriceRange = () => {
 }
 
 export const Sort: React.FC<Required<PropsWithChildren>> = ({ children }) => {
-  const [sort, setSort] = useState('-ratings')
+  const [sort, setSort] = useState('-ratings,-ratings_qty')
   const [params, setParams] = useSearchParams()
 
   const handelSort = (e: SelectChangeEvent<string>) => {
