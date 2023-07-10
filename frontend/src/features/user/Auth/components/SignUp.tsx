@@ -1,14 +1,7 @@
 import { useFormik } from 'formik'
 import { TRegister, RegisterSchema } from '../data/auth.model'
 import TextField from '@mui/material/TextField'
-import {
-  Box,
-  Button,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-  Typography,
-} from '@mui/material'
+import { Box, Button } from '@mui/material'
 import { useAuth } from '../hooks/useAuth'
 import { useAppSelector } from '@Store'
 import { useEffect } from 'react'
@@ -33,7 +26,6 @@ const Register = () => {
       email: '',
       password: '',
       cpassword: '',
-      role: 'student',
     },
     validationSchema: RegisterSchema,
     onSubmit: (values) => {
@@ -111,11 +103,6 @@ const Register = () => {
           marginY: 1,
         }}
       />
-      <Typography>Who are you?</Typography>
-      <RadioGroup row value={values.role} name="role" onChange={handleChange}>
-        <FormControlLabel value="student" control={<Radio />} label="Student" />
-        <FormControlLabel value="teacher" control={<Radio />} label="Teacher" />
-      </RadioGroup>
       <Button
         disabled={!isValid || status === 'loading'}
         color="primary"

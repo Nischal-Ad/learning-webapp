@@ -27,9 +27,6 @@ export const RegisterSchema = object().shape({
   cpassword: string()
     .oneOf([ref('password')], 'password doesnot match')
     .required('please enter confirm password'),
-  role: string()
-    .oneOf(['student', 'teacher'], 'Invalid role')
-    .required('Please select a role'),
 })
 
 export const forgetPassowrdSchema = object().shape({

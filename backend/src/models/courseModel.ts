@@ -47,7 +47,16 @@ const courseSchema = new Schema(
       type: Number,
       required: [true, 'Please enter your course price'],
     },
-    Dprice: Number,
+    Dprice: {
+      type: Number,
+      validate: {
+        validator: function (value: number) {
+          if (value <= (this as TCourse).price) {
+            throw new Error('Discount must be greater than the current price.')
+          } else return true
+        },
+      },
+    },
     ratings: {
       type: Number,
       default: 0,
@@ -55,11 +64,6 @@ const courseSchema = new Schema(
     ratings_qty: {
       type: Number,
       default: 0,
-    },
-    author: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-      required: [true, 'course must belong to a user'],
     },
   },
   {
@@ -76,9 +80,6 @@ courseSchema.virtual('comments', {
 
 courseSchema.pre(['find', 'findOne'], function (next) {
   this.populate({
-    path: 'author',
-    select: 'name',
-  }).populate({
     path: 'comments',
     select: '-__v -createdAt',
   })
@@ -86,27 +87,22 @@ courseSchema.pre(['find', 'findOne'], function (next) {
 })
 
 courseSchema.pre(['findOneAndUpdate', 'findOneAndDelete'], async function (next) {
-  let doc
-
-  if ('author' in this.getOptions()) {
-    doc = this.getOptions()
-  } else {
-    doc = this.getUpdate()
-  }
+  const doc = this.getUpdate()
 
   const query = this.getQuery()._id
   const course = (await this.model.findOne({ _id: query })) as TCourse | null
 
   if (!course) {
     next(new ErrorHandler('Invalid course!', 400))
+  } else if (doc && ('ratings' in doc || 'ratings_qty' in doc)) {
+    next(new ErrorHandler('Sorry, you are not allowed to perform this action', 400))
   } else if (
     doc &&
-    'author' in doc &&
-    (doc as TCourse).author.toString() !== course.author._id.toString()
+    'Dprice' in doc &&
+    (doc.Dprice !== undefined || doc.Dprice !== null) &&
+    doc?.Dprice <= course?.price
   ) {
-    next(new ErrorHandler('Sorry, you are not allowed to perform this action', 400))
-  } else if (doc && 'author' in doc && ('ratings' in doc || 'ratings_qty' in doc)) {
-    next(new ErrorHandler('Sorry, you are not allowed to perform this action', 400))
+    next(new ErrorHandler('Discount must be greater than the current price.', 400))
   }
   next()
 })

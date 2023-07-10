@@ -22,7 +22,6 @@ export const Createcourse = catchAsync(async (req, res, next) => {
     img,
     Dprice,
     description,
-    author: req.user?._id,
   })
 
   res.status(201).json({

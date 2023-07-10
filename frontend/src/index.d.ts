@@ -14,7 +14,7 @@ interface IUser {
   password: string
   name: string
   cpassword: string
-  role: 'student' | 'teacher'
+  role: 'admin' | 'user'
 }
 
 interface IComment {
@@ -37,7 +37,6 @@ interface ICourse {
   Dprice: number
   ratings: number
   ratings_qty: number
-  author: Pick<IUser, 'name'>
   comments: IComment[]
 }
 

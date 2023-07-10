@@ -29,7 +29,7 @@ const Index = () => {
 
   useEffect(() => {
     if (!params.has('sort')) {
-      ongetAllCourses(`${searchParams}&sort=-ratings`)
+      ongetAllCourses(`${searchParams}&sort=-ratings,-ratings_qty`)
     }
     ongetAllCourses(searchParams)
   }, [searchParams])
@@ -48,7 +48,7 @@ const Index = () => {
               <Stack justifyContent={'space-between'} direction={'row'} pb={1.5}>
                 <PriceRange />
                 <Sort>
-                  <MenuItem value={'-ratings'}>Best Match</MenuItem>
+                  <MenuItem value={'-ratings,-ratings_qty'}>Best Match</MenuItem>
                   <MenuItem value={'price'}>Price low to high</MenuItem>
                   <MenuItem value={'-price'}>Price high to low</MenuItem>
                 </Sort>
