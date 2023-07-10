@@ -89,8 +89,6 @@ courseSchema.pre(['find', 'findOne'], function (next) {
 courseSchema.pre(['findOneAndUpdate', 'findOneAndDelete'], async function (next) {
   const doc = this.getUpdate()
 
-  console.log(doc)
-
   const query = this.getQuery()._id
   const course = (await this.model.findOne({ _id: query })) as TCourse | null
 
