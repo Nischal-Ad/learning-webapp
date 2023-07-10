@@ -80,13 +80,11 @@ const CourseDetailsCard = ({ details }: { details: ICourse }) => {
           <CourseDetailsBoxWrapper>
             <CardMedia component={'img'} alt="" image={details.img} />
             <Box className="data">
-              <Typography variant="h4" component={'h1'}>
+              <Typography variant="h5" component={'h1'}>
                 {details.title}
               </Typography>
-              <Typography variant="body1" component={'h2'} my={1} color={'var(--primary)'}>
-                Created by: {details.author?.name}
-              </Typography>
-              <Typography variant="h5" component={'span'} fontWeight={'bold'}>
+              <Divider sx={{ marginY: 2 }} />
+              <Typography variant="h5" fontWeight={'bold'}>
                 ${details.price}
                 <Typography variant="h6" component={'span'} className="disable">
                   {details.Dprice && `$${details.Dprice}`}

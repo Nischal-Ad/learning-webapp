@@ -140,6 +140,7 @@ const Index = () => {
             fontWeight={'bold'}
             display={'flex'}
             flexDirection={'column'}
+            width={'100%'}
             textAlign={'center'}
           >
             {data?.user?.name}

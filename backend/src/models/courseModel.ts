@@ -47,7 +47,16 @@ const courseSchema = new Schema(
       type: Number,
       required: [true, 'Please enter your course price'],
     },
-    Dprice: Number,
+    Dprice: {
+      type: Number,
+      validate: {
+        validator: function (value: number) {
+          if (value <= (this as TCourse).price) {
+            throw new Error('Discount must be greater than the current price.')
+          } else return true
+        },
+      },
+    },
     ratings: {
       type: Number,
       default: 0,
@@ -78,7 +87,9 @@ courseSchema.pre(['find', 'findOne'], function (next) {
 })
 
 courseSchema.pre(['findOneAndUpdate', 'findOneAndDelete'], async function (next) {
-  let doc
+  const doc = this.getUpdate()
+
+  console.log(doc)
 
   const query = this.getQuery()._id
   const course = (await this.model.findOne({ _id: query })) as TCourse | null
@@ -87,6 +98,13 @@ courseSchema.pre(['findOneAndUpdate', 'findOneAndDelete'], async function (next)
     next(new ErrorHandler('Invalid course!', 400))
   } else if (doc && ('ratings' in doc || 'ratings_qty' in doc)) {
     next(new ErrorHandler('Sorry, you are not allowed to perform this action', 400))
+  } else if (
+    doc &&
+    'Dprice' in doc &&
+    (doc.Dprice !== undefined || doc.Dprice !== null) &&
+    doc?.Dprice <= course?.price
+  ) {
+    next(new ErrorHandler('Discount must be greater than the current price.', 400))
   }
   next()
 })
