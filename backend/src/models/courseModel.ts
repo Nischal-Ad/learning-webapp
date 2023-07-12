@@ -1,7 +1,7 @@
 import ErrorHandler from '@Utils/errorHandler'
-import { InferSchemaType, Schema, model } from 'mongoose'
+import { InferSchemaType, Schema, model, Document } from 'mongoose'
 
-export type TCourse = InferSchemaType<typeof courseSchema>
+export type TCourse = InferSchemaType<typeof courseSchema> & Document
 
 const courseSchema = new Schema(
   {
@@ -71,6 +71,7 @@ const courseSchema = new Schema(
     toObject: { virtuals: true },
   }
 )
+let data: TCourse[]
 
 courseSchema.virtual('comments', {
   ref: 'Comment',
@@ -84,6 +85,73 @@ courseSchema.pre(['find', 'findOne'], function (next) {
     select: '-__v -createdAt',
   })
   next()
+})
+
+courseSchema.pre('find', async function () {
+  data = await this.model.aggregate([
+    {
+      $group: {
+        _id: '$category',
+        documents: { $push: '$$ROOT' },
+      },
+    },
+    {
+      $project: {
+        documents: {
+          $filter: {
+            input: '$documents',
+            cond: { $gte: ['$$this.ratings_qty', 10] },
+          },
+        },
+      },
+    },
+    {
+      $project: {
+        documents: {
+          $reduce: {
+            input: '$documents',
+            initialValue: { ratings: 0, ratings_qty: 0 },
+            in: {
+              $cond: {
+                if: {
+                  $gt: ['$$this.ratings', '$$value.ratings'],
+                },
+                then: {
+                  ratings: '$$this.ratings',
+                  ratings_qty: '$$this.ratings_qty',
+                  document: '$$this',
+                },
+                else: {
+                  $cond: {
+                    if: {
+                      $and: [
+                        { $eq: ['$$this.ratings', '$$value.ratings'] },
+                        { $gt: ['$$this.ratings_qty', '$$value.ratings_qty'] },
+                      ],
+                    },
+                    then: {
+                      ratings: '$$this.ratings',
+                      ratings_qty: '$$this.ratings_qty',
+                      document: '$$this',
+                    },
+                    else: '$$value',
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    {
+      $replaceRoot: { newRoot: '$documents.document' },
+    },
+  ])
+})
+
+courseSchema.virtual('highRated').get(function () {
+  const isHighest = data.some((course) => course._id.toString() === this._id.toString())
+  return isHighest
 })
 
 courseSchema.pre(['findOneAndUpdate', 'findOneAndDelete'], async function (next) {

@@ -2,6 +2,7 @@ import { Box, Typography, CardMedia } from '@mui/material'
 import { CourseCardWrapper } from './style'
 import ReactStars from 'react-stars'
 import { Link } from 'react-router-dom'
+import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome'
 
 const CourseCard = ({ course, list = true }: { course: ICourse; list?: boolean }) => {
   return (
@@ -34,10 +35,6 @@ const CourseCard = ({ course, list = true }: { course: ICourse; list?: boolean }
               {course?.title}
             </Typography>
             {list && <Typography variant="subtitle2">{course?.description}</Typography>}
-            <Typography variant="caption" fontWeight={'bold'} color={'GrayText'}>
-              {course?.author?.name}
-            </Typography>
-
             <Box display="flex" alignItems="center">
               <ReactStars
                 count={5}
@@ -57,9 +54,11 @@ const CourseCard = ({ course, list = true }: { course: ICourse; list?: boolean }
               </Typography>
             </Typography>
             <br />
-            <Typography variant="body2" component={'span'} className="best">
-              Best Seller
-            </Typography>
+            {course?.highRated && (
+              <Typography variant="body2" component={'span'} className="best">
+                HighRated <AutoAwesomeIcon />
+              </Typography>
+            )}
           </Box>
         </CourseCardWrapper>
       </Link>

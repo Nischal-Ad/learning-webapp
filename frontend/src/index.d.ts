@@ -37,6 +37,7 @@ interface ICourse {
   Dprice: number
   ratings: number
   ratings_qty: number
+  highRated: boolean
   comments: IComment[]
 }
 

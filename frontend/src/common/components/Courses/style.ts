@@ -41,9 +41,19 @@ export const CourseCardWrapper = styled(Box)`
   }
 
   .best {
-    text-align: center;
-    background-color: var(--primary);
-    padding: 3px 20px;
-    color: var(--white);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 5rem;
+    background-color: goldenrod;
+    margin: 0.5rem 0;
+    padding: 2px 8px;
+    border-radius: 2px;
+    color: whitesmoke;
+    font-size: 11px;
+
+    svg {
+      font-size: 11px;
+    }
   }
 `
