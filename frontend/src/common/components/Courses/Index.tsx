@@ -53,7 +53,7 @@ const CourseCard = ({ course, list = true }: { course: ICourse; list?: boolean }
                 {course?.Dprice && `$${course?.Dprice}`}
               </Typography>
             </Typography>
-            <Box display={{ sm: 'flex' }}>
+            <Box display={'flex'}>
               {course?.highRated && (
                 <Typography
                   variant="body2"
