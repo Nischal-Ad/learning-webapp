@@ -16,6 +16,7 @@ import AuthRouter from '@Routes/authRoute'
 import CourseRouter from '@Routes/courseRoute'
 import KhaltiRouter from '@Routes/khaltiRoute'
 import CommentRouter from '@Routes/commentRoute'
+import CartRouter from '@Routes/CartRoute'
 import LearningpathRouter from '@Routes/learningPathRoute'
 
 //start express app
@@ -69,6 +70,7 @@ app.use('/api/v1', AuthRouter)
 app.use('/api/v1', CourseRouter)
 app.use('/api/v1', KhaltiRouter)
 app.use('/api/v1', CommentRouter)
+app.use('/api/v1', CartRouter)
 app.use('/api/v1', LearningpathRouter)
 
 app.all('*', (req, res, next) => {
