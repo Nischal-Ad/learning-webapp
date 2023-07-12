@@ -98,11 +98,11 @@ commentSchema.pre(['findOneAndUpdate', 'findOneAndDelete'], async function (next
   }
 
   const query = this.getQuery()._id
-  const user = (await this.model.findOne({ _id: query })) as TComment | null
+  const comment = (await this.model.findOne({ _id: query })) as TComment | null
 
-  if (!user || user.user === null) {
-    next(new ErrorHandler('invalid user!', 400))
-  } else if (doc && (doc as TComment).user.toString() !== user.user._id.toString()) {
+  if (!comment || comment.user === null) {
+    next(new ErrorHandler('invalid comment!', 400))
+  } else if (doc && (doc as TComment).user.toString() !== comment.user._id.toString()) {
     next(new ErrorHandler('Sorry, you are not allowed to perform this action', 400))
   }
   next()
