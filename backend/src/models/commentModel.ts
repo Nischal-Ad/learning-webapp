@@ -44,7 +44,7 @@ const commentSchema = new Schema(
 commentSchema.index({ course: 1, user: 1 }, { unique: true })
 
 commentSchema.virtual('duration').get(function () {
-  const publishTime = this.updatedAt.getTime()
+  const publishTime: number = this.updatedAt.getTime()
   const currentTime = new Date().getTime()
   const diff = currentTime - publishTime
   const minutes = Math.floor(diff / 60000)

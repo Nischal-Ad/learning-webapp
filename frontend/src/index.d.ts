@@ -38,6 +38,7 @@ interface ICourse {
   ratings: number
   ratings_qty: number
   highRated: boolean
+  new: boolean
   comments: IComment[]
 }
 

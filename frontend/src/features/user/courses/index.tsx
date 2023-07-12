@@ -28,10 +28,9 @@ const Index = () => {
   const searchParams = params.toString().replace(/\+/g, ' ')
 
   useEffect(() => {
-    if (!params.has('sort')) {
-      ongetAllCourses(`${searchParams}&sort=-ratings,-ratings_qty`)
-    }
-    ongetAllCourses(searchParams)
+    if (params.has('sort')) {
+      ongetAllCourses(searchParams)
+    } else ongetAllCourses(`${searchParams}&sort=-ratings,-ratings_qty`)
   }, [searchParams])
   return (
     <>

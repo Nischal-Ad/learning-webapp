@@ -67,11 +67,13 @@ const courseSchema = new Schema(
     },
   },
   {
+    timestamps: true,
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
   }
 )
 let data: TCourse[]
+const currentTime = new Date().getTime()
 
 courseSchema.virtual('comments', {
   ref: 'Comment',
@@ -150,8 +152,15 @@ courseSchema.pre('find', async function () {
 })
 
 courseSchema.virtual('highRated').get(function () {
-  const isHighest = data.some((course) => course._id.toString() === this._id.toString())
+  const isHighest: boolean =
+    data && data.some((course) => course._id.toString() === this._id.toString())
   return isHighest
+})
+
+courseSchema.virtual('new').get(function () {
+  const publishTime = this?.createdAt?.getTime()
+  const diffInDays = Math.floor((currentTime - publishTime) / (1000 * 60 * 60 * 24))
+  return diffInDays <= 7
 })
 
 courseSchema.pre(['findOneAndUpdate', 'findOneAndDelete'], async function (next) {

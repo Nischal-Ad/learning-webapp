@@ -44,16 +44,16 @@ export const CourseCardWrapper = styled(Box)`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 5rem;
-    background-color: goldenrod;
     margin: 0.5rem 0;
     padding: 2px 8px;
     border-radius: 2px;
     color: whitesmoke;
     font-size: 11px;
+    margin-right: 5px;
 
     svg {
       font-size: 11px;
+      margin-left: 8px;
     }
   }
 `

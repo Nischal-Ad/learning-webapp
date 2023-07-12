@@ -53,12 +53,28 @@ const CourseCard = ({ course, list = true }: { course: ICourse; list?: boolean }
                 {course?.Dprice && `$${course?.Dprice}`}
               </Typography>
             </Typography>
-            <br />
-            {course?.highRated && (
-              <Typography variant="body2" component={'span'} className="best">
-                HighRated <AutoAwesomeIcon />
-              </Typography>
-            )}
+            <Box display={{ sm: 'flex' }}>
+              {course?.highRated && (
+                <Typography
+                  variant="body2"
+                  component={'span'}
+                  className="best"
+                  bgcolor={'goldenrod'}
+                >
+                  HighRated <AutoAwesomeIcon />
+                </Typography>
+              )}
+              {course?.new && (
+                <Typography
+                  variant="body2"
+                  component={'span'}
+                  className="best"
+                  bgcolor={'blueviolet'}
+                >
+                  new <AutoAwesomeIcon />
+                </Typography>
+              )}
+            </Box>
           </Box>
         </CourseCardWrapper>
       </Link>
