@@ -48,6 +48,7 @@ const Index = () => {
                 <PriceRange />
                 <Sort>
                   <MenuItem value={'-ratings,-ratings_qty'}>Best Match</MenuItem>
+                  <MenuItem value={'-createdAt'}>Latest</MenuItem>
                   <MenuItem value={'price'}>Price low to high</MenuItem>
                   <MenuItem value={'-price'}>Price high to low</MenuItem>
                 </Sort>
