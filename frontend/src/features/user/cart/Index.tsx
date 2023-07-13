@@ -26,8 +26,6 @@ const Index = () => {
   }, [])
 
   const displayOptions = (id: string) => {
-    console.log(id)
-
     return (
       <Menu
         id="notification"
@@ -47,11 +45,7 @@ const Index = () => {
     <>
       <Helmet title="My-Cart" content="my fovourate courses" />
       <Section id="my-cart">
-        {!data.data || !data.data.cartItems || data.data.cartItems.length === 0 ? (
-          <Typography variant="h5" color={'GrayText'} component={'h1'} textAlign={'center'}>
-            There is no any items in cart!
-          </Typography>
-        ) : (
+        {data.success && (data?.data || data?.data?.cartItems) ? (
           data.data.cartItems.map((cart, i) => {
             return (
               <Box key={i} position={'relative'}>
@@ -76,6 +70,10 @@ const Index = () => {
               </Box>
             )
           })
+        ) : (
+          <Typography variant="h5" color={'GrayText'} component={'h1'} textAlign={'center'}>
+            There is no any items in cart!
+          </Typography>
         )}
       </Section>
     </>

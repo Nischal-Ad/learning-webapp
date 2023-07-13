@@ -35,7 +35,7 @@ export const createCart = catchAsync(async (req, res, next) => {
 
 export const deleteCart = catchAsync(async (req, res, next) => {
   const { id } = req.params
-
+  let cartData
   const cart = await cartModel.findOne({ user: req.user?._id })
 
   if (!cart || !cart.cartItems) return next(new ErrorHandler('cart not found', 404))
@@ -50,11 +50,15 @@ export const deleteCart = catchAsync(async (req, res, next) => {
 
   if (cart.cartItems?.length === 0) {
     await cartModel.findByIdAndDelete(cart?._id)
+  } else {
+    cartData = await cartModel.findOne({ user: req.user?._id })
   }
 
-  res.status(204).json({
+  res.status(200).json({
     success: true,
+    message: 'item deleted',
+    data: cartData,
   })
 })
 
-export const allCart = GetAllByUser(cartModel, 'cart')
+export const allCart = GetAllByUser(cartModel)

@@ -33,17 +33,24 @@ import {
   TelegramIcon,
   LinkedinIcon,
 } from 'react-share'
+import { useCart } from '@Features/user/cart/hooks/useCart'
 
 const CourseDetailsCard = ({ details }: { details: ICourse }) => {
   const { status, data } = useAppSelector((store) => store.comment)
+  const { data: cartData } = useAppSelector((store) => store.cart)
   const [filter, setFilter] = useState(0)
   const [page, setPage] = useState(data?.page || 1)
   const { ongetAllComments } = useCourse()
+  const { onAddCart } = useCart()
 
   const url = window.location.href
 
   const handelFilter = (e: SelectChangeEvent<string>) => {
     setFilter(+e.target.value)
+  }
+
+  const handelAddCart = (id: string) => {
+    onAddCart([id])
   }
 
   const handelPage = (type?: string) => {
@@ -90,7 +97,12 @@ const CourseDetailsCard = ({ details }: { details: ICourse }) => {
                   {details.Dprice && `$${details.Dprice}`}
                 </Typography>
               </Typography>
-              <Button variant="contained" color="secondary">
+              <Button
+                disabled={cartData.data?.cartItems.some((i) => i._id === details._id)}
+                variant="contained"
+                color="secondary"
+                onClick={() => handelAddCart(details._id)}
+              >
                 Add to Cart
               </Button>
               <Button variant="contained" className="buy" disableElevation>

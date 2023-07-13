@@ -25,14 +25,14 @@ export const useCart = () => {
 
       const res = await onDeleteCart(payload)
       dispatch(cartSlice.actions.setData(res))
-      notifySuccess('Cart deleted successfully')
+      notifySuccess(res.message)
     } catch (error: any) {
       dispatch(cartSlice.actions.setError(error.response.data.message))
       notifyError(error.response.data.message)
     }
   }
 
-  const onAddCart = async (payload: [string]) => {
+  const onAddCart = async (payload: string[]) => {
     try {
       dispatch(cartSlice.actions.setLoading())
 
