@@ -10,12 +10,13 @@ const cartSchema = new Schema(
       ref: 'User',
       required: true,
     },
-
-    course: {
-      type: Schema.Types.ObjectId,
-      ref: 'Course',
-      required: true,
-    },
+    cartItems: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Course',
+        required: true,
+      },
+    ],
     totalPrice: {
       type: Number,
       default: 0,
@@ -24,13 +25,23 @@ const cartSchema = new Schema(
   { timestamps: true }
 )
 
-cartSchema.index({ course: 1, user: 1 }, { unique: true })
-
-cartSchema.pre(['find', 'findOne'], function (next) {
+cartSchema.pre('find', async function (next) {
   this.populate({
-    path: 'course',
+    path: 'cartItems',
     select: 'img title description price ratings ratings_qty',
   })
+
+  const totalPrice = await this.model.aggregate([
+    {
+      $group: {
+        _id: '$user',
+        totalPrice: { $sum: '$course.price' },
+      },
+    },
+  ])
+
+  console.log(totalPrice)
+
   next()
 })
 
