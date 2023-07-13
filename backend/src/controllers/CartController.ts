@@ -1,6 +1,5 @@
 import catchAsync from '@Middleware/catchAsync'
 import cartModel, { TCart } from '@Models/CartModel'
-import Delete from '@Components/deleteOne'
 import ErrorHandler from '@Utils/errorHandler'
 import { GetAllByUser } from '@Components/GetAllByUser'
 
@@ -34,6 +33,27 @@ export const createCart = catchAsync(async (req, res, next) => {
   })
 })
 
-export const allCart = GetAllByUser(cartModel, 'cart')
+export const deleteCart = catchAsync(async (req, res, next) => {
+  const { id } = req.params
 
-export const deleteCart = Delete(cartModel, 'cart')
+  const cart = await cartModel.findOne({ user: req.user?._id })
+
+  if (!cart || !cart.cartItems) return next(new ErrorHandler('cart not found', 404))
+
+  const courseIndex = cart?.cartItems.findIndex((item) => item.toString() === id)
+  if (courseIndex === -1 || courseIndex === undefined) {
+    return next(new ErrorHandler('Course not found in the cart', 400))
+  }
+  cart.cartItems && cart.cartItems.splice(courseIndex, 1)
+  await cart.save()
+
+  if (cart.cartItems?.length === 0) {
+    await cartModel.findByIdAndDelete(cart?._id)
+  }
+
+  res.status(204).json({
+    success: true,
+  })
+})
+
+export const allCart = GetAllByUser(cartModel, 'cart')
