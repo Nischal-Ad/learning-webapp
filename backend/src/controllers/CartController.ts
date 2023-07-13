@@ -15,12 +15,11 @@ export const createCart = catchAsync(async (req, res, next) => {
     const courseExist = await cartModel.findOne({ cartItems: { $in: cartItems } })
     if (courseExist) {
       return next(new ErrorHandler('course already exist in cart', 400))
-    } else
-      cart = await cartModel.findOneAndUpdate(
-        { user: req.user?._id },
-        { $push: { cartItems: { $each: cartItems } } },
-        { new: true }
-      )
+    } else {
+      cart = await cartModel.findOne({ user: req.user?._id })
+      cart?.cartItems?.push(...cartItems)
+      await cart?.save()
+    }
   } else {
     cart = await cartModel.create({
       cartItems,
