@@ -40,7 +40,8 @@ export const deleteCart = catchAsync(async (req, res, next) => {
 
   if (!cart || !cart.cartItems) return next(new ErrorHandler('cart not found', 404))
 
-  const courseIndex = cart?.cartItems.findIndex((item) => item.toString() === id)
+  const courseIndex = cart?.cartItems.findIndex((item) => item._id.toString() === id)
+
   if (courseIndex === -1 || courseIndex === undefined) {
     return next(new ErrorHandler('Course not found in the cart', 400))
   }

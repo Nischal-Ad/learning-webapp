@@ -1,9 +1,9 @@
 import localAxios from '@Utils/localAxios'
 
-export const onCreateCart = (payload: [string]): Promise<ICourseStates> =>
+export const onCreateCart = (payload: [string]): Promise<ICartStates> =>
   localAxios.post(`/user/addcart`, payload)
 
-export const onAllCart = (): Promise<ICourseStates> => localAxios.get(`/user/allcart`)
+export const onAllCart = (): Promise<ICartStates> => localAxios.get(`/user/allcart`)
 
-export const onDeleteCart = (payload: string): Promise<IStatus> =>
+export const onDeleteCart = (payload: string): Promise<ICartStates> =>
   localAxios.delete(`/user/cart/delete/${payload}`)

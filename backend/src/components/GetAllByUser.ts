@@ -5,7 +5,7 @@ import { Model } from 'mongoose'
 
 export const GetAllByUser = (Model: Model<any>, ModelFor: string) =>
   catchAsync(async (req, res, next) => {
-    const data = await Model.find({ user: req.user?._id })
+    const data = await Model.findOne({ user: req.user?._id })
 
     if (!data) {
       return next(new ErrorHandler(`No ${ModelFor} found`, 404))

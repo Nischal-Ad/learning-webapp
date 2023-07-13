@@ -44,10 +44,7 @@ interface ICourse {
 
 interface ICart {
   _id: string
-  cartItems: Pick<
-    ICourse,
-    'price' | 'img' | 'title' | 'description' | 'ratings' | 'ratings_qty' | '_id'
-  >[]
+  cartItems: Omit<ICourse, 'contents' | 'requirements' | 'category'>[]
   totalPrice: number
 }
 
@@ -71,5 +68,5 @@ interface ICommentStates extends IStatus {
 }
 
 interface ICartStates extends IStatus {
-  data: ICart[]
+  data: ICart
 }

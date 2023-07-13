@@ -17,18 +17,15 @@ const cartSchema = new Schema(
         required: true,
       },
     ],
-    totalPrice: {
-      type: Number,
-      default: 0,
-    },
+    totalPrice: Number,
   },
   { timestamps: true }
 )
 
-cartSchema.pre('find', async function (next) {
+cartSchema.pre('findOne', async function (next) {
   this.populate({
     path: 'cartItems',
-    select: 'img title description price ratings ratings_qty',
+    select: 'img title description price ratings ratings_qty Dprice',
   })
   next()
 })

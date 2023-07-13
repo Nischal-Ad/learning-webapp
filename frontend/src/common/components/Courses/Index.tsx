@@ -4,7 +4,7 @@ import ReactStars from 'react-stars'
 import { Link } from 'react-router-dom'
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome'
 
-const CourseCard = ({ course, list = true }: { course: ICourse; list?: boolean }) => {
+const CourseCard = ({ course, list = true }: { course: Partial<ICourse>; list?: boolean }) => {
   return (
     <Box
       sx={{
