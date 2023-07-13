@@ -42,6 +42,15 @@ interface ICourse {
   comments: IComment[]
 }
 
+interface ICart {
+  _id: string
+  cartItems: Pick<
+    ICourse,
+    'price' | 'img' | 'title' | 'description' | 'ratings' | 'ratings_qty' | '_id'
+  >[]
+  totalPrice: number
+}
+
 interface IAuth extends IStatus {
   user?: Partial<IUser>
   isAuth?: boolean
@@ -59,4 +68,8 @@ interface ICommentStates extends IStatus {
   total: number
   totalPages: number
   page: number
+}
+
+interface ICartStates extends IStatus {
+  data: ICart[]
 }
